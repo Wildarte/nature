@@ -1,0 +1,196 @@
+@import 'styles';
+
+header {
+    overflow-x: hidden;
+    padding-bottom: 0;
+}
+.post-summary {
+    display: none;
+}
+
+.news-carousel {
+    max-width: 48.125rem;
+    // overflow: hidden;
+    margin: auto;
+    position: relative;
+
+
+    .owl-nav,
+    .carousel-pagination {
+        display: none;
+    }
+
+    .owl-nav,
+    .news-item {
+        max-width: 100%;
+        margin: auto;
+    }
+    .navigation {
+        .owl-prev,
+        .owl-next {
+            z-index: 10;
+        }
+    }
+    .news-item {
+        position: relative;
+    }
+
+    .owl-item:not(.active) .navigation {
+        // display: none;
+        transform: scaleX(0);
+    }
+    .active {
+        .navigation {
+            opacity: 0;
+            transition: all .15s ease-in-out;
+
+            .owl-prev,
+            .owl-next {
+                transform: scaleX(0);
+                transition: all .15s ease-in-out;
+            }
+            .owl-prev {
+                transform-origin: left;
+            }
+            .owl-next {
+                transform-origin: right;
+            }
+
+        }
+        &:hover {
+            .item-head {
+                img {
+                    opacity: .9;
+                    transform: scale(1.05);
+                }
+            }
+            .navigation {
+                .owl-prev,
+                .owl-next {
+                    transform: scaleX(1);
+                }
+                opacity: 1;
+
+            }
+        }
+    }
+
+
+    .news-item {
+        box-shadow: 0 0.1875rem 1.125rem #0000004a;
+        border-radius: 0.3125rem;
+        background-color: var(--white);
+        margin: auto;
+
+
+        .owl-prev,
+        .owl-next {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            border: none;
+            padding: 1.75rem;
+            cursor: pointer;
+            background-color: transparent;
+
+            &:hover {
+                background-color: #0000004a;
+            }
+
+
+            .prev,
+            .next {
+                background-color: #FFF;
+                width: 3.125rem;
+                height: 2.875rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 0.3125rem;
+
+                img {
+                    height: 1.875rem;
+                }
+            }
+        }
+        .owl-next {
+            right: 0;
+        }
+
+
+        .item-head {
+            border-radius: 0.3125rem 0.3125rem 0 0;
+            position: relative;
+            overflow: hidden;
+
+            img {
+                transition: all .15s ease-in-out;
+                border-radius: 0.3125rem 0.3125rem 0 0;
+                max-width: 100%;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        .item-body {
+            padding: 1.375rem 1.125rem;
+
+            a {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                color: var(--dark-grey);
+                transition: all .15s ease-in-out;
+            }
+        }
+    }
+}
+
+
+
+
+
+.owl-stage {
+    display: flex;
+    align-items: center;
+}
+
+
+
+
+@media (min-width: 992px) {
+    .news-carousel {
+        width: 100%;
+        padding-bottom: 60px;
+
+        .news-item {
+            .item-head .banner {
+                max-height: 220px;
+                object-fit: cover;
+            }
+            .item-body {
+                padding: 1.375rem 1.75rem;
+                .title {
+                    font-size: 28px;
+                    line-height: 40px;
+                    margin-bottom: 10px;
+                }
+                .category-tag {
+                    font-size: 14px;
+                }
+
+                .post-summary {
+                    display: block;
+                    font-size: 18px;
+                    line-height: 27px;
+                    opacity: .7;
+                    color: #484B57;
+                    margin-bottom: 20px;
+                }
+            }
+        }
+
+    }
+}

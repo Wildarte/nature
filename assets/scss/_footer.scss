@@ -1,0 +1,223 @@
+@import "variables";
+
+
+footer {
+    margin: var(--footer-margin);
+    padding: var(--footer-padding) 0;
+    opacity: .65;
+    border-top: 0.0625rem solid #70707066;
+
+    * {
+        color: var(--dark-grey);
+    }
+
+    .contact-info {
+        text-align: center;
+
+        .logo {
+            img {
+                width: 12.1875rem;
+            }
+
+            p {
+                font-size: 0.75rem;
+                line-height: 1.25rem;
+                font-weight: 400;
+            }
+        }
+
+        .social-links {
+            margin: 2.5rem 0 0;
+
+            a {
+                margin: 0 0.625rem;
+                text-decoration: none;
+
+                img {
+                    width: 1.875rem;
+                }
+            }
+        }
+
+        .account {
+            display: none;
+            margin-top: 48px;
+
+            a {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                color: var(--dark-grey);
+
+                img {
+                    width: 22px;
+                    margin-right: 8px;
+                }
+
+                &.login {
+                    font-size: 20px;
+                    font-weight: 700;
+                    color: var(--dark-grey);
+                }
+                &.signup {
+                    margin: 5px 0 0 30px;
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+
+    .links {
+        display: flex;
+        justify-content: space-between;
+        padding: 2.5rem 1.25rem;
+        border-bottom: 0.0625rem solid #70707066;
+
+        .pages {
+            li {
+                margin-bottom: 2.3rem;
+                font-size: 1.25rem;
+            }
+        }
+
+        .help {
+            li {
+                font-weight: 400;
+                margin-bottom: 2.65rem;
+                font-size: 1rem;
+            }
+        }
+
+        ul li:last-of-type {
+            margin-bottom: 0;
+        }
+    }
+
+    .other-links {
+        padding: 2.5rem 0;
+        ul {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+
+            li {
+                margin: 0 1.5625rem;
+                a {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+
+                    img {
+                        margin-top: 1.25rem;
+                        max-width: 4.375rem;
+                        border-radius: 0.625rem;
+                    }
+                }
+            }
+            li:nth-child(2)>a>img {
+                max-width: 6.875rem;
+                border-radius: 0;
+            }
+        }
+    }
+
+    .text {
+        opacity: .65;
+
+        p {
+            font-size: .85rem;
+            line-height: 1.25rem;
+            margin-bottom: 1.25rem;
+
+
+            @media (min-width: 375px) {
+                font-size: 0.75rem;
+            }
+        }
+
+        .notice {
+            border: 0.0625rem solid #706F6F66;
+            padding: 0.75rem;
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+    }
+
+
+    >div {
+        max-width: 600px;
+        margin: auto;
+    }
+}
+
+@media (min-width: 992px) {
+    footer .links .pages li a {
+        font-weight: 400;
+    }
+    footer .links .help li a {
+        color: #3c4258a7;
+    }
+}
+
+@media (min-width: 1100px) {
+    footer {
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+
+            >div {
+                padding: 0;
+            }
+        }
+
+        .contact-info {
+
+            .logo {
+                text-align: left;
+
+                p {
+                    margin-top: 16px;
+                }
+            }
+
+            .social-links {
+                text-align: left;
+                margin-top: 22px;
+
+                a {
+                    margin-left: 0;
+                }
+            }
+
+            .account {
+                display: block;
+            }
+        }
+
+        .links {
+            border: none;
+
+            .pages {
+                padding-right: 90px;
+            }
+        }
+
+        .text {
+            margin-top: 78px;
+        }
+
+        >div {
+            max-width: 100%;
+        }
+    }
+
+}
+
+@media (min-width: 1200px) {
+    footer {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: var(--max-content-width);
+    }
+}

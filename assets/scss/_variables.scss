@@ -1,0 +1,42 @@
+:root {
+
+    // Cores
+    --orange: #FF594E;
+    --grey: #484B57;
+    --dark-grey: #3B4157;
+    --white: #FFF;
+    --dark-white: #F5F5F5;
+    --green: #1FAB36;
+
+
+    // Tamanhos
+    --menu-height: 65px;
+    --max-content-width: 1168px; // largura do conteúdo
+
+
+    // Títulos
+    --section-title-size: 31px;
+    --section-title-margin-bottom: 60px;
+
+
+    // Espaçamentos
+    --body-padding: 20px;
+    --footer-padding: 50px;
+    --footer-margin: 120px var(--body-padding) 20px;
+
+
+    // Outros
+    --box-shadow: 0px 3px 6px #00000029;
+    --card-border-radius: 5px;
+}
+
+@media (min-width: 992px) {
+    :root {
+        --menu-height: 152px;
+        --title-h2--font-size: 42px;
+
+        --footer-margin: 150px var(--body-padding);
+
+        --section-title-margin-bottom: 120px;
+    }
+}

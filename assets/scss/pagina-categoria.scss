@@ -1,0 +1,14 @@
+@import 'styles';
+
+#latest-posts{
+    background-color: transparent;
+
+    .tab{
+        display: none;
+    }
+
+    .latest-posts-item:first-child{
+        padding-top: 0;
+    }
+}
+

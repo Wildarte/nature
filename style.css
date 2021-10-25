@@ -1,0 +1,14 @@
+/*
+Theme Name: doutor nature
+Theme URI: https://doutornature.com
+Author: doutor nature
+Author URI: https://doutornature.com
+Description: Tema desenvolvido para a empresa Doutor Nature
+Version: 1.0
+*/
+
+
+@import 'lib/owl-carousel/owl.carousel.min.css';
+@import 'lib/owl-carousel/owl.theme.default.min.css';
+@import 'assets/css/reseter.css';
+@import 'assets/css/home.css';
