@@ -6,8 +6,6 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        
-        <link rel="stylesheet" href="<?= get_stylesheet_directory_uri(); ?>/style.css">
         <!-- wp header -->
         <?php wp_head(); ?>
         <!-- wp header -->
@@ -45,14 +43,25 @@
                         <a href="#" class="login"><img src="<?= get_template_directory_uri(); ?>/assets/img/icons/login.svg"> Acesse sua conta</a>
                     </div>
 
-                    <hr>
+                    <hr style="height: 0.0625rem; margin: 0; padding: 0; border: 0; border-top: 0.0625rem solid #E6E8E9;">
 
                     <div class="line-2">
+
+                        <?php
+                            $args = array(
+                                'menu' => 'menu principal',
+                                'theme_location' => 'menu-principal',
+                                'container' => false
+                            );
+                            wp_nav_menu( $args );
+                        ?>
+                        <!-- 
                         <a class="page-links" href="#">Protocolos</a>
                         <a class="page-links" href="#">Livraria</a>
                         <a class="page-links" href="#">Conteúdo</a>
                         <a class="page-links" href="#">Contato</a>
                         <a class="page-links" href="#">Quem Somos</a>
+                         -->
                     </div>
                 </div>
             </div>

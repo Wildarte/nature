@@ -1,4 +1,4 @@
-<footer>
+        <footer>
             <div class="row">
                 <div class="contact-info">
                     <div class="logo">
@@ -24,6 +24,15 @@
                 </div>
 
                 <div class="links">
+                    <?php
+                        $args = array(
+                            'menu' => 'menu footer 1',
+                            'theme_location' => 'menu-footer-1',
+                            'container' => false
+                        );
+                        wp_nav_menu( $args );
+                    ?>
+                    <!-- 
                     <ul class="pages">
                         <li><a href="#">Assinaturas</a></li>
                         <li><a href="#">Livraria</a></li>
@@ -31,13 +40,23 @@
                         <li><a href="#">Quem Somos</a></li>
                         <li><a href="#">Ajuda</a></li>
                     </ul>
-
+                     -->
+                     <?php
+                        $args = array(
+                            'menu' => 'menu footer 2',
+                            'theme_location' => 'menu-footer-2',
+                            'container' => false
+                        );
+                        wp_nav_menu( $args );
+                    ?>
+                    <!-- 
                     <ul class="help">
                         <li><a href="#">Política de Privacidade</a></li>
                         <li><a href="#">Termos de Uso</a></li>
                         <li><a href="#">Imprensa</a></li>
                         <li><a href="#">Trabalhe Conosco</a></li>
                     </ul>
+                     -->
                 </div>
 
 
@@ -77,10 +96,6 @@
 
 
         <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-        <script src="<?= get_template_directory_uri(); ?>/lib/owl-carousel/owl.carousel.min.js"></script>
-        <script src="<?= get_template_directory_uri(); ?>/lib/sticky-js/sticky.jquery.js"></script>
-        <script src="<?= get_template_directory_uri(); ?>/assets/js/script.js"></script>
-        <script src="<?= get_template_directory_uri(); ?>/assets/js/home.js"></script>
 
         <!-- wp footer -->
         <?php wp_footer(); ?>

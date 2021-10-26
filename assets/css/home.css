@@ -418,7 +418,8 @@ nav .search-form.not-empty input {
     padding: 0;
   }
   nav .desktop .content .line-1,
-  nav .desktop .content .line-2 {
+  /* add .menu */
+  nav .desktop .content .line-2 .menu {
     display: -ms-grid;
     display: grid;
     -webkit-box-align: center;
@@ -460,52 +461,69 @@ nav .search-form.not-empty input {
     display: -ms-flexbox;
     display: flex;
   }
-  nav .desktop .content .line-2 {
+
+
+  /* add .menu */
+  nav .desktop .content .line-2 .menu {
     padding: 1.25rem 1.25rem;
     grid-area: line-2;
-        grid-template-areas: "link-1 link-2 link-3 link-4 link-5";
+    grid-template-areas: "link-1 link-2 link-3 link-4 link-5";
+    display: flex;
+    justify-content: space-between;
   }
-  nav .desktop .content .line-2 .page-links {
+
+  /* remove .page-links and add .menu li a */
+  nav .desktop .content .line-2 .menu li a {
     font-size: 1.125rem;
     font-weight: 500;
     -webkit-transition: all .1s ease-in-out;
     transition: all .1s ease-in-out;
   }
-  nav .desktop .content .line-2 .page-links:hover {
+
+  /* remove .page-links and add .menu li a */
+  nav .desktop .content .line-2 .menu li a:hover {
     color: var(--orange);
   }
-  nav .desktop .content .line-2 .page-links:nth-child(1) {
+  nav
+
+  /* remove .page-links and add .menu li a 
+  nav .desktop .content .line-2 .menu li:nth-child(1) {
     -ms-grid-row: 1;
     -ms-grid-column: 1;
     grid-area: link-1;
   }
-  nav .desktop .content .line-2 .page-links:nth-child(2) {
+
+  /* remove .page-links and add .menu li a 
+  nav .desktop .content .line-2 .menu li:nth-child(2) {
     -ms-grid-row: 1;
     -ms-grid-column: 2;
     grid-area: link-2;
     -ms-grid-column-align: center;
         justify-self: center;
   }
-  nav .desktop .content .line-2 .page-links:nth-child(3) {
+
+  /* remove .page-links and add .menu li a 
+  nav .desktop .content .line-2 .menu li:nth-child(3) {
     -ms-grid-row: 1;
     -ms-grid-column: 3;
     grid-area: link-3;
     -ms-grid-column-align: center;
         justify-self: center;
   }
-  nav .desktop .content .line-2 .page-links:nth-child(4) {
+  nav .desktop .content .line-2 .menu li:nth-child(4) {
     -ms-grid-row: 1;
     -ms-grid-column: 4;
     grid-area: link-4;
     -ms-grid-column-align: center;
         justify-self: center;
   }
-  nav .desktop .content .line-2 .page-links:nth-child(5) {
+  nav .desktop .content .line-2 .menu li:nth-child(5) {
     -ms-grid-row: 1;
     -ms-grid-column: 5;
     grid-area: link-5;
     justify-self: flex-end;
   }
+   */
   nav .desktop .content hr {
     height: 0.0625rem;
     margin: 0;
@@ -682,13 +700,14 @@ footer .links {
   padding: 2.5rem 1.25rem;
   border-bottom: 0.0625rem solid #70707066;
 }
-
-footer .links .pages li {
+/* remove .pages add #menu-footer-1 */
+footer .links #menu-menu-footer-1 li {
   margin-bottom: 2.3rem;
   font-size: 1.25rem;
 }
 
-footer .links .help li {
+/* remove .help add #menu-menu-footer-2 */
+footer .links #menu-menu-footer-2 li {
   font-weight: 400;
   margin-bottom: 2.65rem;
   font-size: 1rem;
@@ -771,10 +790,12 @@ footer > div {
 }
 
 @media (min-width: 992px) {
-  footer .links .pages li a {
+  /* remove .pages add #menu-footer-1 */
+  footer .links #menu-menu-footer-1 li a {
     font-weight: 400;
   }
-  footer .links .help li a {
+  /* remove .help add #menu-menu-footer-2 */
+  footer .links #menu-menu-footer-2 li a {
     color: #3c4258a7;
   }
 }
@@ -813,7 +834,8 @@ footer > div {
   footer .links {
     border: none;
   }
-  footer .links .pages {
+  /* remove .pages add menu-footer-1 */
+  footer .links #menu-menu-footer-1 {
     padding-right: 90px;
   }
   footer .text {
@@ -1129,7 +1151,8 @@ div.author {
   -ms-grid-rows: 1fr 1fr;
       grid-template-rows: 1fr 1fr;
   gap: 0px 0px;
-      grid-template-areas: "avatar name" "avatar time";
+      grid-template-areas: "avatar name"
+ "avatar time";
 }
 
 div.author .name {
@@ -1727,7 +1750,10 @@ div.author img {
     -ms-grid-rows: auto 1fr;
         grid-template-rows: auto 1fr;
     gap: 0;
-        grid-template-areas: "header aside" "main aside" "card card" "footer footer";
+        grid-template-areas: "header aside"
+ "main aside"
+ "card card"
+ "footer footer";
   }
   body.with-sidebar header {
     -ms-grid-row: 1;
