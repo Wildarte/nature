@@ -6,6 +6,10 @@
             <h2 class="main-title">Conteúdo</h2>
             <div class="news-carousel">
                 <div class="carousel-wrapper">
+
+                    
+
+                    <!--  -->
                     <div class="news-item">
                         <div class="item-head">
                             <img class="banner" src="<?= get_template_directory_uri(); ?>/assets/img/carousel/1.png">
