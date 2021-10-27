@@ -1,15 +1,19 @@
 <?php get_header(); ?>
+<link rel="stylesheet" href="<?= get_template_directory_uri();?>/assets/css/pagina-interna.css">
 
+<?php if(have_posts()): while(have_posts()): the_post(); ?>
         <main>
             <article>
                 <div class="article-head">
                     <p class="category-tag">Diário da Saúde Natural</p>
-                    <h1>Descoberta sobre os ossos revela elo perdido no equilíbrio dos minerais</h1>
+                    
+                    <h1><?= get_the_title(); ?></h1>
 
                     <div class="author">
-                        <img src="./assets/img/doctors/rafael-avatar.png">
-                        <p class="name">Dr. Rafael Freitas</p>
-                        <time>Há 2 horas</time>
+                        <?php $mail_user = strval(get_the_author_meta('user_email', false)); ?>
+                        <img src="<?= get_avatar_url($mail_user, '32', '', '', null) ?>">
+                        <p class="name"><?= get_the_author(); ?></p>
+                        <time><?= the_date();  ?> às <?= the_time(); ?></time>
                     </div>
 
                     <img class="banner mobile-tablet" src="./assets/img/posts/banner-mobile.png">
@@ -116,5 +120,5 @@
             </section>
         </main>
 
-
+<?php endwhile; endif; ?>
 <?php get_footer(); ?>

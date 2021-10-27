@@ -700,14 +700,14 @@ footer .links {
   padding: 2.5rem 1.25rem;
   border-bottom: 0.0625rem solid #70707066;
 }
-/* remove .pages add #menu-footer-1 */
-footer .links #menu-menu-footer-1 li {
+/* remove .pages add .menu:nth-child(1) */
+footer .links .menu:nth-child(1) li {
   margin-bottom: 2.3rem;
   font-size: 1.25rem;
 }
 
-/* remove .help add #menu-menu-footer-2 */
-footer .links #menu-menu-footer-2 li {
+/* remove .help add .menu:nth-child(2) */
+footer .links .menu:nth-child(2) li {
   font-weight: 400;
   margin-bottom: 2.65rem;
   font-size: 1rem;
@@ -790,12 +790,12 @@ footer > div {
 }
 
 @media (min-width: 992px) {
-  /* remove .pages add #menu-footer-1 */
-  footer .links #menu-menu-footer-1 li a {
+  /* remove .pages add .menu:nth-child(1) */
+  footer .links .menu:nth-child(1) li a {
     font-weight: 400;
   }
-  /* remove .help add #menu-menu-footer-2 */
-  footer .links #menu-menu-footer-2 li a {
+  /* remove .help add .menu:nth-child(2)*/
+  footer .links .menu:nth-child(2) li a {
     color: #3c4258a7;
   }
 }
@@ -834,8 +834,8 @@ footer > div {
   footer .links {
     border: none;
   }
-  /* remove .pages add menu-footer-1 */
-  footer .links #menu-menu-footer-1 {
+  /* remove .pages add .menu:nth-child(1) */
+  footer .links .menu:nth-child(1) {
     padding-right: 90px;
   }
   footer .text {
@@ -1191,6 +1191,8 @@ div.author img {
   -ms-grid-row-span: 2;
   -ms-grid-column: 1;
   grid-area: avatar;
+  border-radius: 50%;
+  overflow: hidden;
 }
 
 .owl-dots {
@@ -1213,7 +1215,8 @@ div.author img {
   background-color: var(--dark-grey);
 }
 
-.category-tag {
+/* remove .category-tag add ul.post-categories li a*/
+ul.post-categories li a{
   max-width: -webkit-fit-content;
   max-width: -moz-fit-content;
   max-width: fit-content;
@@ -1431,8 +1434,8 @@ div.author img {
   padding-bottom: 0;
   border: none;
 }
-
-#latest-posts .latest-posts-item .category-tag,
+/* remove .category-tag add ul.post-categories li a*/
+#latest-posts .latest-posts-item ul.post-categories li a
 #latest-posts .latest-posts-item .post-summary {
   display: none;
 }
@@ -1487,21 +1490,31 @@ div.author img {
 #latest-posts .latest-posts-item.hidden[data-categoria] {
   display: none;
 }
-
-#latest-posts .see-more {
-  display: block;
-  margin: 50px auto 0;
+.navigation-posts{
+  display: flex;
+  justify-content: center;
+}
+#latest-posts .see-more, #latest-posts .see-less{
+  display: flex;
+  margin: 50px auto;
   border: none;
   background-color: transparent;
   font-size: 23px;
   font-weight: 700;
   cursor: pointer;
-  color: var(--dark-grey);
   -webkit-transition: all .15s ease-in-out;
   transition: all .15s ease-in-out;
 }
+#latest-posts .see-more{
+  flex-basis: 50%;
 
-#latest-posts .see-more:hover {
+}
+#latest-posts .see-more a, #latest-posts .see-less a{
+  color: var(--dark-grey);
+
+}
+
+#latest-posts .see-more a:hover, #latest-posts .see-less a:hover {
   text-decoration: underline;
   color: var(--orange);
 }
@@ -1673,11 +1686,13 @@ div.author img {
   #latest-posts .latest-posts-item:first-child {
     padding-top: 0;
   }
-  #latest-posts .latest-posts-item .category-tag,
+  /* remove .category-tag add ul.post-categories li a*/
+  #latest-posts .latest-posts-item ul.post-categories li a,
   #latest-posts .latest-posts-item .post-summary {
     display: block;
   }
-  #latest-posts .latest-posts-item .category-tag {
+  /* remove .category-tag add ul.post-categories li a*/
+  #latest-posts .latest-posts-item ul.post-categories li a {
     margin-bottom: 20px;
     color: var(--dark-grey);
     opacity: .7;
@@ -1706,7 +1721,7 @@ div.author img {
   #latest-posts .tab {
     margin-bottom: 60px;
   }
-  #latest-posts .see-more {
+  #latest-posts .see-more, #latest-posts .see-less {
     font-size: 1.75rem;
     margin: 100px auto 50px;
   }
@@ -2066,7 +2081,8 @@ header {
     line-height: 40px;
     margin-bottom: 10px;
   }
-  .news-carousel .news-item .item-body .category-tag {
+  /* remove .category-tag add ul.post-categories li a*/
+  .news-carousel .news-item .item-body ul.post-categories li a {
     font-size: 14px;
   }
   .news-carousel .news-item .item-body .post-summary {

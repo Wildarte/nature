@@ -418,7 +418,7 @@ nav .search-form.not-empty input {
     padding: 0;
   }
   nav .desktop .content .line-1,
-  nav .desktop .content .line-2 {
+  nav .desktop .content .line-2 .menu {
     display: -ms-grid;
     display: grid;
     -webkit-box-align: center;
@@ -460,20 +460,24 @@ nav .search-form.not-empty input {
     display: -ms-flexbox;
     display: flex;
   }
-  nav .desktop .content .line-2 {
+  nav .desktop .content .line-2 .menu  {
     padding: 1.25rem 1.25rem;
     grid-area: line-2;
-        grid-template-areas: "link-1 link-2 link-3 link-4 link-5";
+    grid-template-areas: "link-1 link-2 link-3 link-4 link-5";
+    display: flex;
+    justify-content: space-between;    
   }
-  nav .desktop .content .line-2 .page-links {
+  nav .desktop .content .line-2 .menu li a {
     font-size: 1.125rem;
     font-weight: 500;
     -webkit-transition: all .1s ease-in-out;
     transition: all .1s ease-in-out;
   }
-  nav .desktop .content .line-2 .page-links:hover {
+  nav .desktop .content .line-2 .menu li a:hover {
     color: var(--orange);
   }
+
+  /*
   nav .desktop .content .line-2 .page-links:nth-child(1) {
     -ms-grid-row: 1;
     -ms-grid-column: 1;
@@ -513,6 +517,7 @@ nav .search-form.not-empty input {
     border: 0;
     border-top: 0.0625rem solid #E6E8E9;
   }
+  */
   nav .desktop.compact {
     height: 5.625rem;
   }
@@ -1129,7 +1134,8 @@ div.author {
   -ms-grid-rows: 1fr 1fr;
       grid-template-rows: 1fr 1fr;
   gap: 0px 0px;
-      grid-template-areas: "avatar name" "avatar time";
+      grid-template-areas: "avatar name"
+ "avatar time";
 }
 
 div.author .name {
@@ -1727,7 +1733,10 @@ div.author img {
     -ms-grid-rows: auto 1fr;
         grid-template-rows: auto 1fr;
     gap: 0;
-        grid-template-areas: "header aside" "main aside" "card card" "footer footer";
+        grid-template-areas: "header aside"
+ "main aside"
+ "card card"
+ "footer footer";
   }
   body.with-sidebar header {
     -ms-grid-row: 1;
@@ -2096,7 +2105,8 @@ img.desktop {
     -ms-grid-rows: 1fr 1fr;
         grid-template-rows: 1fr 1fr;
     gap: 0rem 0rem;
-        grid-template-areas: "avatar name" "avatar time";
+        grid-template-areas: "avatar name"
+ "avatar time";
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;

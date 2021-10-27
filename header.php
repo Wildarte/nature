@@ -5,6 +5,17 @@
         <title><?php bloginfo('name'); ?></title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <?php
+            $page_type_r;
+            if(is_single()):
+                $page_type_r = get_template_directory_uri() . '/assets/css/pagina-interna.css';
+            else:
+                $page_type_r = get_template_directory_uri() . '/assets/css/home.css';
+            endif;
+            
+        ?>
+        <link rel="stylesheet" href="<?= get_stylesheet_directory_uri(); ?>/assets/css/reseter.css">
+        <link rel="stylesheet" href="<?= $page_type_r; ?>">
         <!-- wp header -->
         <?php wp_head(); ?>
         <!-- wp header -->
