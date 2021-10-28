@@ -16,6 +16,15 @@
         ?>
         <link rel="stylesheet" href="<?= get_stylesheet_directory_uri(); ?>/assets/css/reseter.css">
         <link rel="stylesheet" href="<?= $page_type_r; ?>">
+        <style>
+            .space-banner-post{
+                max-width: 810px;
+                height: 320px;
+                background-color: #ccc;
+                border-radius: 16px;
+                overflow: hidden;
+            }
+        </style>
         <!-- wp header -->
         <?php wp_head(); ?>
         <!-- wp header -->

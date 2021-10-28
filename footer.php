@@ -91,15 +91,29 @@
             </div>
         </footer>
 
-
-
-
-
         <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+        
+       
 
         <!-- wp footer -->
         <?php wp_footer(); ?>
         <!-- wp footer -->
+        <?php
+
+if(is_single()):
+    ?>
+        <script src="<?= get_template_directory_uri(); ?>/assets/js/pagina-interna.js"></script>
+        <script>
+            document.querySelector(".with-sidebar").classList.remove("with-sidebar");
+
+        </script>
+    <?php
+else:
+    ?>
+        <script src="<?= get_template_directory_uri(); ?>/assets/js/home.js"></script>
+    <?php
+endif;
+?>
     </body>
 
 </html>

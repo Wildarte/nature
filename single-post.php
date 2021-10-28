@@ -1,5 +1,5 @@
 <?php get_header(); ?>
-<link rel="stylesheet" href="<?= get_template_directory_uri();?>/assets/css/pagina-interna.css">
+
 
 <?php if(have_posts()): while(have_posts()): the_post(); ?>
         <main>
@@ -11,16 +11,20 @@
 
                     <div class="author">
                         <?php $mail_user = strval(get_the_author_meta('user_email', false)); ?>
-                        <img src="<?= get_avatar_url($mail_user, '32', '', '', null) ?>">
+                        <img style="border-radius: 50%" src="<?= get_avatar_url($mail_user, '32', '', '', null) ?>">
                         <p class="name"><?= get_the_author(); ?></p>
                         <time><?= the_date();  ?> às <?= the_time(); ?></time>
                     </div>
 
-                    <img class="banner mobile-tablet" src="./assets/img/posts/banner-mobile.png">
-                    <img class="banner desktop" src="./assets/img/posts/banner-desktop.png">
+                    <img class="banner mobile-tablet" src="<?= get_the_post_thumbnail_url(null, 'medium'); ?>">
+                    <img class="banner desktop" src="<?= get_the_post_thumbnail_url(null, 'large'); ?>">
                 </div>
 
                 <div class="article-body">
+                    
+                    <?php the_content(); ?>
+
+                    <!-- 
                     <p>Caro(a) leitor(a) do Diário da Saúde Natural!</p>
                     <p>O quão legal seria curtir uma caminhada… praticar um esporte… jardinagem…</p>
                     <p>Tudo isso em um fim de semana?</p>
@@ -28,8 +32,8 @@
                     <p>Tenho boas notícias para você hoje, meu amigo.</p>
                     <p>Isso PODE ser uma realidade.</p>
 
-                    <img class="banner mobile-tablet" src="./assets/img/posts/placeholder-mobile.png">
-                    <img class="banner desktop" src="./assets/img/posts/placeholder-desktop.png">
+                    <img class="banner mobile-tablet" src="<?= get_template_directory_uri(); ?>/assets/img/posts/placeholder-mobile.png">
+                    <img class="banner desktop" src="<?= get_template_directory_uri(); ?>/assets/img/posts/placeholder-desktop.png">
 
                     <p>Você NÃO PRECISA se preocupar com o envelhecimento.</p>
                     <p>Na verdade, pode haver uma maneira de ajudar a fazer com que suas frustrações e medos a respeito simplesmente desapareçam!</p>
@@ -54,24 +58,147 @@
                     <p>Passar um tempo em contato com a natureza tem se mostrado altamente benéfico para o humor. Estudos demonstram que pessoas que caminham ao menos uma vez por semana experimentam emoções mais positivas e menos stress.</p>
                     <p>Pela saúde,</p>
                     <p>Sou o Dr. Rafael Freitas</p>
+                    -->
 
-                    <img class="banner mobile-tablet" src="./assets/img/posts/placeholder-mobile.png">
-                    <img class="banner desktop" src="./assets/img/posts/placeholder-desktop.png">
+
+                    <div class="space-banner-post"></div>
+                    <!-- 
+                    <img class="banner mobile-tablet" src=".<?= get_template_directory_uri(); ?>/assets/img/posts/placeholder-mobile.png">
+                    <img class="banner desktop" src="<?= get_template_directory_uri(); ?>/assets/img/posts/placeholder-desktop.png">
+                     -->
                 </div>
             </article>
+            
+            <script>
+
+                //get all p element in article-body class
+                var count_paragraph = document.querySelectorAll(".article-body p");
+
+                //contagem de palavras em toodo artigo
+                var all_text = "";
+                for(var n = 0; n < count_paragraph.length; n++){
+                    all_text += count_paragraph[n].innerHTML;
+                }
+                //contagem de palavras em toodo artigo
+
+                //get the count of words in article
+                var count_words_all_text = all_text.split(" ").length;
+
+                //get the article-body class
+                var content_article = document.querySelector(".article-body");
+
+                //create the new element that will add to article
+                var new_element = document.createElement("div");
+                new_element.classList.add("space-banner-post");
+
+
+                //se existir mais de 3 parágrafos no artigo e mais de 150 palavras, será exibido um banner dentro do texto do artigo
+                if(count_paragraph.length > 3 && count_words_all_text > 150){
+                    console.log(count_paragraph.length);
+                    console.log(count_words_all_text);
+                    console.log(all_text.length);
+
+                    //get count of words in paragraph
+                    var avg_words = count_paragraph[0].innerHTML.split(" ").length;
+                    if(avg_words > 50){
+                        content_article.insertBefore(new_element, count_paragraph[1]);
+                    }else{
+                        content_article.insertBefore(new_element, count_paragraph[2]);
+                    }
+
+                }
+
+                //console.log(par);
+                //var text1 = par[1]
+                //console.log(text1.innerHTML);
+                //var str_count = text1.innerHTML;
+                /*
+                if(typeof str_count === "string"){
+                    console.log("é string");
+                }else{
+                    console.log("não é string");
+                }
+                console.log(str_count.split(" "));
+
+                var count_words = str_count.split(" ");
+                console.log("contagem de palavras no texto: ", count)
+                */
+
+                
+                //console.log("Texto da variável"+all_text);
+                //console.log("número de palavras completo no texto: ", all_text.split(" ").length);
+                //if(count_paragraph.length > 3 && ){
+
+                //}
+                
+            </script>
 
             <section id="related-posts">
                 <h2>Postagens relacionadas</h2>
 
                 <div class="related-posts-container">
+
+                    <?php   
+                        $args_query = [
+                            'post_type' => 'post',
+                            'post__not_in' => [get_the_ID()],//especifica o post que não é para ser recuperado, e usamos o get_the_ID para pegar o post pelo ID
+                            'order' => 'DESC',
+                            'posts_per_page' => 3
+                        ];
+
+                        $the_resp = new WP_Query($args_query);
+                        if($the_resp->have_posts()):
+                        
+                            while($the_resp->have_posts()): 
+                                $the_resp->the_post();
+                    ?>
                     <div class="post">
                         <div class="image">
-                            <img src="./assets/img/related-posts/1.png">
+                            <?php 
+                                $thumb_post_rel = get_the_post_thumbnail_url(null, 'medium');
+                                $thumb_post_rel == "" ? $thumb_post_rel = get_template_directory_uri().'/assets/img/thumb-default.jpg' : "";
+                            ?>
+                            <img src="<?= $thumb_post_rel ?>">
+                        </div>
+                        <div class="text">
+                            <h4 class="title"><?php the_title(); ?></h4>
+                            <div class="author">
+                                <?php $mail_user = strval(get_the_author_meta('user_email', false)); ?>
+                                <img src="<?= get_avatar_url($mail_user, '32', '', '', null) ?>" class="avatar">
+                                <p class="name"><?= get_the_author(); ?></p>
+                                <time> <?= the_date();  ?> às <?= the_time(); ?> </time>
+                            </div>
+                        </div>
+                        <a href="#" class="link"></a>
+                    </div>
+                    <?php
+                        endwhile; endif;
+                        wp_reset_query(); wp_reset_postdata();
+                    ?>
+
+                    <!-- 
+                    <div class="post">
+                        <div class="image">
+                            <img src="<?= get_template_directory_uri(); ?>/assets/img/related-posts/2.png">
                         </div>
                         <div class="text">
                             <h4 class="title">Esta “Cura Eslava” Para Úlceras Não é Nada Para se Estranhar Esta “Cura Eslava”</h4>
                             <div class="author">
-                                <img src="./assets/img/doctors/rafael-avatar.png" class="avatar">
+                                <img src="<?= get_template_directory_uri(); ?>/assets/img/doctors/rafael-avatar.png" class="avatar">
+                                <p class="name">Dr. Rafael Freitas</p>
+                                <time>Há 2 horas</time>
+                            </div>
+                        </div>
+                        <a href="#" class="link"></a>
+                    </div>
+                    <div class="post">
+                        <div class="image">
+                            <img src="<?= get_template_directory_uri(); ?>/assets/img/related-posts/2.png">
+                        </div>
+                        <div class="text">
+                            <h4 class="title">Esta “Cura Eslava” Para Úlceras Não é Nada Para se Estranhar Esta “Cura Eslava”</h4>
+                            <div class="author">
+                                <img src="<?= get_template_directory_uri(); ?>/assets/img/doctors/rafael-avatar.png" class="avatar">
                                 <p class="name">Dr. Rafael Freitas</p>
                                 <time>Há 2 horas</time>
                             </div>
@@ -81,33 +208,19 @@
 
                     <div class="post">
                         <div class="image">
-                            <img src="./assets/img/related-posts/2.png">
+                            <img src="<?= get_template_directory_uri(); ?>/assets/img/related-posts/3.png">
                         </div>
                         <div class="text">
                             <h4 class="title">Esta “Cura Eslava” Para Úlceras Não é Nada Para se Estranhar Esta “Cura Eslava”</h4>
                             <div class="author">
-                                <img src="./assets/img/doctors/rafael-avatar.png" class="avatar">
+                                <img src="<?= get_template_directory_uri(); ?>/assets/img/doctors/rafael-avatar.png" class="avatar">
                                 <p class="name">Dr. Rafael Freitas</p>
                                 <time>Há 2 horas</time>
                             </div>
                         </div>
                         <a href="#" class="link"></a>
                     </div>
-
-                    <div class="post">
-                        <div class="image">
-                            <img src="./assets/img/related-posts/3.png">
-                        </div>
-                        <div class="text">
-                            <h4 class="title">Esta “Cura Eslava” Para Úlceras Não é Nada Para se Estranhar Esta “Cura Eslava”</h4>
-                            <div class="author">
-                                <img src="./assets/img/doctors/rafael-avatar.png" class="avatar">
-                                <p class="name">Dr. Rafael Freitas</p>
-                                <time>Há 2 horas</time>
-                            </div>
-                        </div>
-                        <a href="#" class="link"></a>
-                    </div>
+                     -->
                 </div>
             </section>
 
