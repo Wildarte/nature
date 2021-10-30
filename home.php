@@ -110,7 +110,7 @@
         <aside>
                 <?php
                     //busca pelos posts mais lidos
-                    $popularpost = new WP_Query( array( 'posts_per_page' => 4, 'meta_key' => 'wpb_post_views_count', 'orderby' => 'meta_value_num', 'order' => 'DESC'  ) );
+                    $popularpost = new WP_Query( array( 'posts_per_page' => 5, 'meta_key' => 'wpb_post_views_count', 'orderby' => 'meta_value_num', 'order' => 'DESC'  ) );
                     if($popularpost->have_posts()):
                 ?>
             <section id="most-read">
@@ -182,36 +182,7 @@
                 </div>
             </section>
             
-
-            <section id="categories">
-                <h2>Explore por categoria</h2>
-                <div class="categories">
-
-                <?php
-                    $terms = get_terms([
-                        'taxonomy' => 'category',
-                        'hide_empty' => false
-                    ]);
-                    foreach($terms as $term){
-                        echo "<a class='category' href='". get_home_url() ."/category/". $term->name. "'>".$term->name."<img src='".get_template_directory_uri()."/assets/img/icons/next.svg'></a>";        
-                    }         
-                ?>
-
-                    <!-- 
-                    <a class="category" href="#">
-                        Diário da Saúde Natural <img src="<?= get_template_directory_uri(); ?>/assets/img/icons/next.svg">
-                    </a>
-
-                    <a class="category" href="#">
-                        Viva sem Dores <img src="<?= get_template_directory_uri(); ?>/assets/img/icons/next.svg">
-                    </a>
-
-                    <a class="category" href="#">
-                        Carta ao homem <img src="<?= get_template_directory_uri(); ?>/assets/img/icons/next.svg">
-                    </a>
-                     -->
-                </div>
-            </section>
+            <?php include 'inc/asideCategory.php'; ?>
 
             <section id="products">
                 <div class="all-suplements">
@@ -229,9 +200,20 @@
             <section id="latest-posts">
                 <h2>Últimas postagens</h2>
                 <div class="tab">
+                    <?php
+                        $terms = get_terms([
+                            'taxonomy' => 'category',
+                            'hide_empty' => false
+                        ]);
+                        foreach($terms as $term){
+                            echo "<h4 data-categoria='".$term->slug."'>".$term->name."</h4>";        
+                        }         
+                    ?>
+                    <!-- 
                     <h4 data-categoria="saude-natural">Saúde <br> Natural</h4>
                     <h4 data-categoria="viva-sem-dores" class="active">Viva <br> Sem Dores</h4>
                     <h4 data-categoria="carta-ao-homem">Carta ao <br> Homem</h4>
+                     -->
                 </div>
 
 
@@ -239,7 +221,7 @@
 
                     <?php if(have_posts()): while(have_posts()): the_post(); ?>
 
-                    <div class="latest-posts-item" data-categoria="saude-natural">
+                    <div class="latest-posts-item" data-categoria="<?= get_the_category()[0]->slug; ?>">
                         <?php 
                             $thumb = get_the_post_thumbnail_url(null, 'medium');
                             $thumb == "" ? $thumb = get_template_directory_uri().'/assets/img/thumb-default.jpg' : "";

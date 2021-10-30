@@ -60,7 +60,7 @@
 
 
 
-    //code for count view post
+    //function for count view more popular posts
     function wpb_set_post_views($postID) {
         $count_key = 'wpb_post_views_count';
         $count = get_post_meta($postID, $count_key, true);

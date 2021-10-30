@@ -49,9 +49,9 @@
             <div class="desktop">
                 <div class="content">
                     <div class="line-1">
-                        <form action="#" class="search-form">
+                        <form action="<?= home_url(); ?>" class="search-form">
                             <label class="label-search">
-                                <input type="search" class="search" placeholder="Buscar">
+                                <input type="search" class="search" name="s" placeholder="Buscar">
                             </label>
 
                             <button type="submit">
@@ -102,9 +102,9 @@
 
                         <ul>
                             <li>
-                                <form action="#" class="search-form">
+                                <form action="<?= home_url(); ?>" class="search-form">
                                     <label class="label-search">
-                                        <input type="search" class="search" placeholder="Buscar">
+                                        <input type="search" name="s" class="search" placeholder="Buscar">
                                     </label>
 
                                     <button type="submit">
