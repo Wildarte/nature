@@ -108,10 +108,31 @@
         </header>
 
         <aside>
+                <?php
+                    //busca pelos posts mais lidos
+                    $popularpost = new WP_Query( array( 'posts_per_page' => 4, 'meta_key' => 'wpb_post_views_count', 'orderby' => 'meta_value_num', 'order' => 'DESC'  ) );
+                    if($popularpost->have_posts()):
+                ?>
             <section id="most-read">
                 <h2>Artigos mais lidos</h2>
 
                 <div class="most-read-news">
+                    <?php
+                        while ( $popularpost->have_posts() ) : $popularpost->the_post();            
+                    ?>
+
+                    <div class="most-read-item">
+                        <div class="item-number"></div>
+                        <div class="item-body">
+                            <h4 class="title"><?php the_title(); ?></h4>
+                            <div class="author"><?= get_the_author(); ?> - <?= the_date(); ?></div>
+                            <a href="<?php the_permalink(); ?>" class="item-link"></a>
+                        </div>
+                    </div>
+
+                    <?php endwhile; endif; wp_reset_query(); wp_reset_postdata(); ?>
+                    
+                    <!-- 
                     <div class="most-read-item">
                         <div class="item-number"></div>
                         <div class="item-body">
@@ -156,8 +177,11 @@
                             <a href="#" class="item-link"></a>
                         </div>
                     </div>
+                     -->
+
                 </div>
             </section>
+            
 
             <section id="categories">
                 <h2>Explore por categoria</h2>
@@ -170,8 +194,7 @@
                     ]);
                     foreach($terms as $term){
                         echo "<a class='category' href='". get_home_url() ."/category/". $term->name. "'>".$term->name."<img src='".get_template_directory_uri()."/assets/img/icons/next.svg'></a>";        
-                    }
-                    
+                    }         
                 ?>
 
                     <!-- 
@@ -406,6 +429,6 @@
                 <a href="#" class="link"></a>
             </div>
         </section>
-
+       
 
 <?php get_footer(); ?>

@@ -76,4 +76,21 @@
     //To keep the count accurate, lets get rid of prefetching
     remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0);
     
+    require 'admin/postbox.php';
+    require 'admin/field_post.php';
+
+
+    //funcao para verificar se existem posts
+    function verifa_posts($args){
+        $the_resp = new WP_Query($args);
+        if($the_resp->have_posts()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
+
+    
 ?>

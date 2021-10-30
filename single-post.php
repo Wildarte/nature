@@ -2,6 +2,7 @@
 
 
 <?php if(have_posts()): while(have_posts()): the_post(); ?>
+<?php wpb_set_post_views(get_the_ID()); ?>
         <main>
             <article>
                 <div class="article-head">
@@ -60,8 +61,16 @@
                     <p>Sou o Dr. Rafael Freitas</p>
                     -->
 
+                    
+                    
+                    <!--  caso o campo banner esteja vazio nao mostra as divs de banner -->
+                    <?php if(get_post_meta(get_the_ID(), 'meta_textarea_banner', true) != ""): ?>
+                        <div class="space-banner-post"></div>
+                    <?php endif; ?>
+                    <!--  caso o campo banner esteja vazio nao mostra as divs de banner -->
 
-                    <div class="space-banner-post"></div>
+
+
                     <!-- 
                     <img class="banner mobile-tablet" src=".<?= get_template_directory_uri(); ?>/assets/img/posts/placeholder-mobile.png">
                     <img class="banner desktop" src="<?= get_template_directory_uri(); ?>/assets/img/posts/placeholder-desktop.png">
@@ -90,13 +99,12 @@
                 //create the new element that will add to article
                 var new_element = document.createElement("div");
                 new_element.classList.add("space-banner-post");
-
+                var code_banner = '<?= get_post_meta(get_the_ID(), 'meta_textarea_banner', true); ?>';
+                
+                
 
                 //se existir mais de 3 parágrafos no artigo e mais de 150 palavras, será exibido um banner dentro do texto do artigo
                 if(count_paragraph.length > 3 && count_words_all_text > 150){
-                    console.log(count_paragraph.length);
-                    console.log(count_words_all_text);
-                    console.log(all_text.length);
 
                     //get count of words in paragraph
                     var avg_words = count_paragraph[0].innerHTML.split(" ").length;
@@ -108,47 +116,203 @@
 
                 }
 
-                //console.log(par);
-                //var text1 = par[1]
-                //console.log(text1.innerHTML);
-                //var str_count = text1.innerHTML;
-                /*
-                if(typeof str_count === "string"){
-                    console.log("é string");
-                }else{
-                    console.log("não é string");
-                }
-                console.log(str_count.split(" "));
+                var banners = document.querySelectorAll(".space-banner-post");
 
-                var count_words = str_count.split(" ");
-                console.log("contagem de palavras no texto: ", count)
-                */
+                banners.forEach(function(banner){
+                    banner.innerHTML = code_banner;
+                })
 
-                
-                //console.log("Texto da variável"+all_text);
-                //console.log("número de palavras completo no texto: ", all_text.split(" ").length);
-                //if(count_paragraph.length > 3 && ){
-
-                //}
+                //caso o campo banner esteja vazio nao mostra as divs de banner
+                <?php if(get_post_meta(get_the_ID(), 'meta_textarea_banner', true) == ""): ?>
+                    document.querySelector(".space-banner-post").style.display = "none";
+                <?php endif; ?>
                 
             </script>
 
             <section id="related-posts">
+                
+                <?php
+
+                    
+
+                    //$custom_indica armazena o valor de SIM ou NAO se o usuario optou por escolher se quer configurar a indicação dos posts
+                    $custom_indica = get_post_meta(get_the_ID(), 'indica_post_myself', true);
+                    echo "Indica: ".$custom_indica;
+                    var_dump($custom_indica);
+                    //armazena a(s) categorias do post
+                    $category_post = get_the_category();
+                    
+                    var_dump($category_post[0]->slug);//apenas para debugar
+
+                    //se a variavel que armazena a escolha do usuário sobre a indicação de posts estiver vazia ou com o valor "no", entao os posts de indicação serão listados por categoria
+                    if(empty($custom_indica) || $custom_indica == "no"):
+                        echo "<p>Contagem de categorias: ".count($category_post)."</p>";
+                        if(count($category_post) >= 1):
+                            echo "caiu no if";
+                            switch(count($category_post)):
+                                
+                                case 1:
+                                    
+                                    $args_query = [
+                                        'post_type' => 'post',
+                                        'post__not_in' => [get_the_ID()],//especifica o post que não é para ser recuperado, e usamos o get_the_ID para pegar o post pelo ID
+                                        'category_name' => $category_post[0]->slug,
+                                        'order' => 'DESC',
+                                        'posts_per_page' => 3
+                                    ];
+
+                                    if(!verifa_posts($args_query))://caso nao retorne nenhum post a query recebe novos argumentos
+                                        echo "caiu no if";
+                                        $args_query = [
+                                            'post_type' => 'post',
+                                            'post__not_in' => [get_the_ID()],//especifica o post que não é para ser recuperado, e usamos o get_the_ID para pegar o post pelo ID
+                                            'order' => 'DESC',
+                                            'posts_per_page' => 3
+                                        ];
+                                    else:
+                                        echo "nao caiu no if";
+                                    endif;
+                                break;
+                                case 2:
+                                    $args_query = [
+                                        'post_type' => 'post',
+                                        'post__not_in' => [get_the_ID()],//especifica o post que não é para ser recuperado, e usamos o get_the_ID para pegar o post pelo ID
+                                        'tax_query' => [
+                                            'relation' => 'or',[
+                                                'taxonomy' => 'category',
+                                                'field' => 'slug',
+                                                'terms' => [
+                                                    $category_post[0]->slug,
+                                                    $category_post[1]->slug
+                                                ]
+                                            ]
+                                        ],
+                                        'order' => 'DESC',
+                                        'posts_per_page' => 3
+                                    ];
+                                break;
+                                case 3:
+                                    $args_query = [
+                                        'post_type' => 'post',
+                                        'post__not_in' => [get_the_ID()],//especifica o post que não é para ser recuperado, e usamos o get_the_ID para pegar o post pelo ID
+                                        'tax_query' => [
+                                            'relation' => 'or',[
+                                                'taxonomy' => 'category',
+                                                'field' => 'slug',
+                                                'terms' => [
+                                                    $category_post[0]->slug,
+                                                    $category_post[1]->slug,
+                                                    $category_post[2]->slug
+                                                ]
+                                            ]
+                                        ],
+                                        'order' => 'DESC',
+                                        'posts_per_page' => 3
+                                    ];
+                                break;
+                                default:
+                                    $args_query = [
+                                        'post_type' => 'post',
+                                        'post__not_in' => [get_the_ID()],//especifica o post que não é para ser recuperado, e usamos o get_the_ID para pegar o post pelo ID
+                                        'category_name' => $category_post[0]->slug,
+                                        'order' => 'DESC',
+                                        'posts_per_page' => 3
+                                    ];
+                                endswitch;
+                            
+                        else:
+                            $args_query = [
+                                'post_type' => 'post',
+                                'post__not_in' => [get_the_ID()],//especifica o post que não é para ser recuperado, e usamos o get_the_ID para pegar o post pelo ID
+                                'order' => 'DESC',
+                                'posts_per_page' => 3
+                            ];
+                        endif;
+                       
+
+                    elseif($custom_indica == "yes"):
+                        
+                        $opcao_listagem = get_post_meta(get_the_ID(), 'meta_indica_select', true);
+                        echo "<p>".$opcao_listagem."</p>";
+                        switch($opcao_listagem):
+
+                            case "lastPost":
+                                $args_query = [
+                                    'post_type' => 'post',
+                                    'post__not_in' => [get_the_ID()],//especifica o post que não é para ser recuperado, e usamos o get_the_ID para pegar o post pelo ID
+                                    'order' => 'DESC',
+                                    'posts_per_page' => 3
+                                ];
+                            break;
+                            case "category":
+                                $args_query = [
+                                    'post_type' => 'post',
+                                    'post__not_in' => [get_the_ID()],//especifica o post que não é para ser recuperado, e usamos o get_the_ID para pegar o post pelo ID
+                                    'category_name' => get_post_meta(get_the_ID(), 'meta_indica_categoria', true),
+                                    'order' => 'DESC',
+                                    'posts_per_page' => 3
+                                ];
+                            break;
+                            case "keyword":
+                                $search_keyword = get_post_meta(get_the_ID(), 'meta_indica_keyword', true);
+                                $args_query = [
+                                    'post_type' => 'post',
+                                    'post__not_in' => [get_the_ID()],//especifica o post que não é para ser recuperado, e usamos o get_the_ID para pegar o post pelo ID
+                                    's' => $search_keyword,
+                                    'posts_per_page' => 3
+                                ];
+                            break;
+                            case "moreread":
+                                $args_query = array( 
+                                    'posts_per_page' => 3,
+                                    'post__not_in' => [get_the_ID()],//especifica o post que não é para ser recuperado, e usamos o get_the_ID para pegar o post pelo ID
+                                    'meta_key' => 'wpb_post_views_count',
+                                    'orderby' => 'meta_value_num',
+                                    'order' => 'DESC' );
+                            break;
+                            default:
+                                $args_query = [
+                                    'post_type' => 'post',
+                                    'post__not_in' => [get_the_ID()],//especifica o post que não é para ser recuperado, e usamos o get_the_ID para pegar o post pelo ID
+                                    'category_name' => get_post_meta(get_the_ID(), 'meta_indica_categoria', true),
+                                    'order' => 'DESC',
+                                    'posts_per_page' => 3
+                                ];
+
+
+                        endswitch;
+
+                    endif;
+                    
+                ?>
+                
                 <h2>Postagens relacionadas</h2>
 
                 <div class="related-posts-container">
 
-                    <?php   
+                    <?php
+                        /*
                         $args_query = [
                             'post_type' => 'post',
                             'post__not_in' => [get_the_ID()],//especifica o post que não é para ser recuperado, e usamos o get_the_ID para pegar o post pelo ID
+                            'tax_query' => [
+                                'relation' => 'or',[
+                                    'taxonomy' => 'category',
+                                    'field' => 'slug',
+                                    'terms' => [
+                                        'diario-da-saude-natural',
+                                        'viva-sem-dores'
+                                    ]
+                                ]
+                            ],
                             'order' => 'DESC',
                             'posts_per_page' => 3
                         ];
-
+                        */
                         $the_resp = new WP_Query($args_query);
+                    
                         if($the_resp->have_posts()):
-                        
+                            
                             while($the_resp->have_posts()): 
                                 $the_resp->the_post();
                     ?>
@@ -164,15 +328,15 @@
                             <h4 class="title"><?php the_title(); ?></h4>
                             <div class="author">
                                 <?php $mail_user = strval(get_the_author_meta('user_email', false)); ?>
-                                <img src="<?= get_avatar_url($mail_user, '32', '', '', null) ?>" class="avatar">
+                                <img style="border-radius: 50%" src="<?= get_avatar_url($mail_user, '32', '', '', null) ?>" class="avatar">
                                 <p class="name"><?= get_the_author(); ?></p>
                                 <time> <?= the_date();  ?> às <?= the_time(); ?> </time>
                             </div>
                         </div>
-                        <a href="#" class="link"></a>
+                        <a href="<?php the_permalink(); ?>" class="link"></a>
                     </div>
                     <?php
-                        endwhile; endif;
+                        endwhile; else: echo "nenhum post encontrado"; endif;
                         wp_reset_query(); wp_reset_postdata();
                     ?>
 
