@@ -59,7 +59,7 @@
                             </button>
                         </form>
                         <img src="<?= get_template_directory_uri(); ?>/assets/img/logos/dr-nature.svg" class="logo">
-                        <a href="#" class="login"><img src="<?= get_template_directory_uri(); ?>/assets/img/icons/login.svg"> Acesse sua conta</a>
+                        <a href="<?= get_option('link_acesse_conta'); ?>" class="login"><img src="<?= get_template_directory_uri(); ?>/assets/img/icons/login.svg"> Acesse sua conta</a>
                     </div>
 
                     <hr style="height: 0.0625rem; margin: 0; padding: 0; border: 0; border-top: 0.0625rem solid #E6E8E9;">
@@ -89,7 +89,7 @@
                 <img src="<?= get_template_directory_uri(); ?>/assets/img/icons/menu.svg" class="menu-toggler">
                 <img src="<?= get_template_directory_uri(); ?>/assets/img/logos/dr-nature.svg" class="nav-logo">
                 <a href="#" class="login">
-                    <img src="./assets/img/icons/login.svg">
+                    <img src="<?= get_template_directory_uri(); ?>/assets/img/icons/login.svg">
                     Entrar
                 </a>
 
@@ -112,11 +112,22 @@
                                     </button>
                                 </form>
                             </li>
+                            <?php
+                                $args = array(
+                                    'menu' => 'menu principal',
+                                    'theme_location' => 'menu-principal',
+                                    'container' => false
+                                );
+                                wp_nav_menu( $args );
+                            ?>
+
+                            <!-- 
                             <li><a href="#">Protocolos</a></li>
                             <li><a href="#">Livraria</a></li>
                             <li><a href="#">Conteúdo</a></li>
                             <li><a href="#">Quem Somos</a></li>
                             <li><a href="#">Contato</a></li>
+                             -->
                         </ul>
                     </div>
                     <div class="bg"></div>

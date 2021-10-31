@@ -1,26 +1,11 @@
-<?php get_header(); $s = $_GET['s'];?>
+<?php get_header(); $cat = get_category(get_query_var('cat'))->name; ?>
 
         <aside>
-            <section id="categories">
-                <h2 style="margin-top: unset;">Explore por categoria</h2>
-                <div class="categories">
-
-                <?php
-                    $terms = get_terms([
-                        'taxonomy' => 'category',
-                        'hide_empty' => false
-                    ]);
-                    foreach($terms as $term){
-                        echo "<a class='category' href='". get_home_url() ."/category/". $term->slug. "'>".$term->name."<img src='".get_template_directory_uri()."/assets/img/icons/next.svg'></a>";        
-                    }         
-                ?>
-
-                </div>
-            </section>
+            <?php include 'inc/asideCategory.php'; ?>
 
             <section id="products">
                 <div class="all-suplements">
-                    <img src="<?= get_template_directory_uri(); ?>/assets/img/products/vital-4k-sidebar.png">
+                    <img src="./assets/img/products/vital-4k-sidebar.png">
                     <h4>A família Doutor Nature está crescendo...</h4>
                     <p>Conheça a <b class="orange">Nature Vitaminas</b>! <br>
                         Todos os suplementos nutricionais que você confia agora estão de casa nova!</p>
@@ -28,28 +13,11 @@
                     <a href="#" class="link"></a>
                 </div>
             </section>
-
         </aside>
 
-        <main>
-
-        <?php
-
-            $args_query = [
-                's' => $s
-            ];
-
-            $the_resp = new WP_Query($args_query);
-            $count_posts = $the_resp->found_posts;
-
-        ?>
+        <h1><?= $cat; ?></h1>
         
-
-            <section id="search-results">
-                <h2>Resultados da busca por “<?= $s; ?>”</h2>
-                <p>Foram encontrados <b class="results-count"><?= $count_posts; ?></b> posts para sua pesquisa.</p>
-            </section>
-
+        <main>
             <section id="latest-posts">
                 <div class="tab">
 
@@ -62,19 +30,21 @@
                             echo "<h4 data-categoria='".$term->slug."'>".$term->name."</h4>";        
                         }         
                     ?>
-                    <!-- 
-                    <h4 data-categoria="saude-natural">Saúde <br> Natural</h4>
-                    <h4 data-categoria="viva-sem-dores" class="active">Viva <br> Sem Dores</h4>
-                    <h4 data-categoria="carta-ao-homem">Carta ao <br> Homem</h4>
-                     -->
                 </div>
 
 
                 <div class="content">
+                    <?php
 
-                    <?php if($the_resp->have_posts()): while($the_resp->have_posts()): $the_resp->the_post(); ?>
+                        $args_cat = [
+                            'category_name' => $cat
+                        ];
+                        $result_cat = new WP_Query($args_cat);
 
-                    <div class="latest-posts-item" data-categoria="<?= get_the_category()[0]->slug; ?>">
+                        if($result_cat->have_posts()): while($result_cat->have_posts()): $result_cat->the_post();
+
+                    ?>
+                    <div class="latest-posts-item" data-categoria="<?= get_the_category()[0]->slug ?>">
                         <?php 
                             $thumb = get_the_post_thumbnail_url(null, 'medium');
                             $thumb == "" ? $thumb = get_template_directory_uri().'/assets/img/thumb-default.jpg' : "";
@@ -82,24 +52,22 @@
                         <img class="image" src="<?= $thumb; ?>">
 
                         <div class="text">
-                            <?= the_category() ?>
-                            <h4 class="title"><?= get_the_title(); ?></h4>
+                            <?php the_category(); ?>
+                            <h4 class="title"><?php the_title(); ?></h4>
                             <p class="post-summary"><?= get_the_excerpt(); ?></p>
                             <div class="author">
                                 <?php $mail_user = strval(get_the_author_meta('user_email', false)); ?>
                                 <img src="<?= get_avatar_url($mail_user, '32', '', '', null) ?>">
                                 <p class="name"><?= get_the_author(); ?></p>
-                                <time> <?= the_date();  ?> às <?= the_time(); ?></time>
+                                <time> <?php the_time("d/m/Y");  ?> às <?= the_time("H:m"); ?> </time>
                             </div>
 
-                            <a class="link" href="<?php the_permalink(); ?>"></a>
+                            <a class="link" href="#"></a>
                         </div>
                     </div>
 
-                    <?php
-                        endwhile; endif;
-                        wp_reset_query(); wp_reset_postdata();
-                    ?>
+                    <?php endwhile; endif; ?>
+
                     <!-- 
                     <div class="latest-posts-item" data-categoria="viva-sem-dores">
                         <img class="image" src="./assets/img/news/2.png">
@@ -168,21 +136,21 @@
                             <a class="link" href="#"></a>
                         </div>
                     </div>
+                     -->
+
                 </div>
-                 -->
 
                 <div class="navigation-posts">
                     <button href="#" class="see-less"><?php previous_posts_link('- Voltar ');?></button>
                     <button href="#" class="see-more"><?php next_posts_link('Veja mais +'); ?></button>
-                </div>
-
+                 </div>
             </section>
         </main>
 
         <section id="cards">
             <div class="card">
                 <div class="card-image">
-                    <img src="<?= get_template_directory_uri(); ?>/assets/img/icons/padlock.svg">
+                    <img src="./assets/img/icons/padlock.svg">
                 </div>
                 <div class="card-text">
                     <h4 class="title">Um segredo super simples para fortalecer a imunidade.</h4>
@@ -196,7 +164,7 @@
                 <h4>A família Doutor Nature está crescendo...</h4>
                 <p>Conheça a <b class="orange">Nature Vitaminas</b>! Todos os suplementos nutricionais que você confia agora estão de casa nova!</p>
                 <button class="btn btn-blue">Saiba mais</button>
-                <img src="<?= get_template_directory_uri(); ?>/assets/img/products/vital-4k.png">
+                <img src="./assets/img/products/vital-4k.png">
                 <a href="#" class="link"></a>
             </div>
         </section>

@@ -3,13 +3,62 @@
 ?>
 
         <header>
+            <style>
+                .news-carousel .news-item .item-body ul.post-categories li a{
+                         position: unset;
+                         top: unset; 
+                         left: unset; 
+                         width: unset;
+                         height: unset;
+                         display: block;
+                        }
+            </style>
             <h2 class="main-title">Conteúdo</h2>
             <div class="news-carousel">
+                
                 <div class="carousel-wrapper">
 
+                    <?php
+
+                        $args_post_slide = [
+                            'post_type' => 'post',
+                            'orbder' => 'DESC',
+                            'posts_per_page' => 4
+                        ];
+                        $result_post_slide = new WP_query($args_post_slide);
+
+                    ?>
+
+                    <?php if($result_post_slide->have_posts()): while($result_post_slide->have_posts()): $result_post_slide->the_post(); ?>
                     
+                    <div class="news-item">
+                        <div class="item-head">
+                            <?php 
+                                $thumb = get_the_post_thumbnail_url(null, 'larger');
+                                $thumb == "" ? $thumb = get_template_directory_uri().'/assets/img/thumb-default.jpg' : "";
+                            ?>
+                            <img class="banner" src="<?= $thumb; ?>">
+                            <div class="navigation"></div>
+                        </div>
 
-                    <!--  -->
+                        <div class="item-body">
+                            <?= the_category() ?>
+                            <h3 class="title"><?= get_the_title(); ?></h3>
+                            <p class="post-summary"><?= get_the_excerpt(); ?></p>
+
+                            <div class="author">
+                            <?php $mail_user = strval(get_the_author_meta('user_email', false)); ?>
+                                <img src="<?= get_avatar_url($mail_user, '32', '', '', null) ?>" class="avatar">
+                                <p class="name"><?= get_the_author(); ?></p>
+                                <time> <?php the_time("d/m/Y");  ?> às <?= the_time("H:m"); ?> </time>
+                            </div>
+
+                            <a href="<?= the_permalink(); ?>"></a>
+                        </div>
+                    </div>
+                    <?php endwhile; endif; ?>
+
+                    <!-- 
                     <div class="news-item">
                         <div class="item-head">
                             <img class="banner" src="<?= get_template_directory_uri(); ?>/assets/img/carousel/1.png">
@@ -72,27 +121,7 @@
                             <a href="#"></a>
                         </div>
                     </div>
-
-                    <div class="news-item">
-                        <div class="item-head">
-                            <img class="banner" src="<?= get_template_directory_uri(); ?>/assets/img/carousel/1.png">
-                            <div class="navigation"></div>
-                        </div>
-
-                        <div class="item-body">
-                            <p class="category-tag">Diário da Saúde Natural</p>
-                            <h3 class="title">Suas articulações estão doloridas? resolva com isso</h3>
-                            <p class="post-summary">Os cuidados de saúde na época do coronavírus são como uma paisagem estranha. dos de saúde na época do coronavírus são como uma paisagem estranha E não...</p>
-
-                            <div class="author">
-                                <img src="<?= get_template_directory_uri(); ?>/assets/img/doctors/rafael-avatar.png" class="avatar">
-                                <p class="name">Dr. Rafael Freitas</p>
-                                <time>Há 2 horas</time>
-                            </div>
-
-                            <a href="#"></a>
-                        </div>
-                    </div>
+                     -->
                 </div>
 
                 <div class="carousel-pagination">
@@ -236,7 +265,7 @@
                                 <?php $mail_user = strval(get_the_author_meta('user_email', false)); ?>
                                 <img src="<?= get_avatar_url($mail_user, '32', '', '', null) ?>">
                                 <p class="name"><?= get_the_author(); ?></p>
-                                <time> <?= the_date();  ?> às <?= the_time(); ?> </time>
+                                <time> <?php the_time("d/m/Y");  ?> às <?= the_time("H:m"); ?> </time>
                                 
                             </div>
 
@@ -380,8 +409,9 @@
                             <a class="link" href="#"></a>
                         </div>
                     </div>
+                     -->
                 </div>
-                 -->
+                
                  <div class="navigation-posts">
                     <button href="#" class="see-less"><?php previous_posts_link('- Voltar ');?></button>
                     <button href="#" class="see-more"><?php next_posts_link('Veja mais +'); ?></button>

@@ -78,6 +78,7 @@
     
     require 'admin/postbox.php';
     require 'admin/field_post.php';
+    require 'admin/controlPage.php';
 
 
     //funcao para verificar se existem posts

@@ -18,7 +18,7 @@
 
                     <ul class="account">
                         <li>
-                            <a href="#" class="login"><img src="<?= get_template_directory_uri(); ?>/assets/img/icons/login.svg"> Acesse sua conta</a>
+                            <a href="<?= get_option('link_acesse_conta'); ?>" class="login"><img src="<?= get_template_directory_uri(); ?>/assets/img/icons/login.svg"> Acesse sua conta</a>
                         </li>
                     </ul>
                 </div>
