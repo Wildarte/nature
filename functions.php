@@ -81,6 +81,8 @@
     require 'admin/controlPage.php';
 
 
+    //MY FUNCTIONS ======================================================
+
     //funcao para verificar se existem posts
     function verifa_posts($args){
         $the_resp = new WP_Query($args);
@@ -91,6 +93,42 @@
         }
     }
 
+    //get id term by slug term
+    function get_idterm_by_slugterm($slugTerm){
+        $get_id_term_query = [
+            'taxonomy' => 'category',
+            'hide_empty' => false,
+            'slug' => $slugTerm,
+        ];
+        $get_id_term = get_terms($get_id_term_query);
+
+        if($get_id_term){
+            return $get_id_term[0]->term_id;
+            echo "retornou true";
+        }else{
+            false;
+            echo "retornou false";
+        }
+    }
+    
+    //get name term by slug term
+    function get_nameterm_by_slugterm($slugTerm){
+        $get_id_term_query = [
+            'taxonomy' => 'category',
+            'hide_empty' => false,
+            'slug' => $slugTerm,
+        ];
+        $get_id_term = get_terms($get_id_term_query);
+
+        if($get_id_term){
+            return $get_id_term[0]->name;
+            echo "retornou true";
+        }else{
+            false;
+            echo "retornou false";
+        }
+    }
+    //MY FUNCTIONS ======================================================
 
 
     

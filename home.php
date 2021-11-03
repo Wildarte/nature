@@ -19,12 +19,56 @@
                 <div class="carousel-wrapper">
 
                     <?php
+                        
+                        $slide_post = get_option('show_slide_post');
+                        $slide_post_count = get_option('show_slide_post_count');
+                        $slide_cat = get_option('show_slide_post_category');
+                        
+                        //se variavel que armazena a quantidade posts estiver vazia entao ela recebe o valor 4
+                        if(empty($slide_post_count)) $slide_post_count = 4;
 
-                        $args_post_slide = [
-                            'post_type' => 'post',
-                            'orbder' => 'DESC',
-                            'posts_per_page' => 4
-                        ];
+                        switch($slide_post):
+                            case "lastPost":
+                                $args_post_slide = [
+                                    'post_type' => 'post',
+                                    'orbder' => 'DESC',
+                                    'posts_per_page' => $slide_post_count
+                                ];
+                            break;
+                            case "category":
+                                $slide_post_cat = get_option('show_slide_post_category');
+                                $args_post_slide = [
+                                    'post_type' => 'post',
+                                    'category_name' => $slide_post_cat,
+                                    'order' => 'DESC',
+                                    'posts_per_page' => $slide_post_count
+                                ];
+                            break;
+                            case "keyword":
+                                $search_keyword = get_option('show_slide_post_keyword');
+                                $args_post_slide = [
+                                    'post_type' => 'post',
+                                    's' => $search_keyword,
+                                    'posts_per_page' => $slide_post_count
+                                ];
+                            break;
+                            case "moreread":
+                                $args_post_slide = [
+                                    'posts_per_page' => $slide_post_count,
+                                    'meta_key' => 'wpb_post_views_count',
+                                    'orderby' => 'meta_value_num',
+                                    'order' => 'DESC'
+                                ];
+                            break;
+                            default:
+                                $args_post_slide = [
+                                    'post_type' => 'post',
+                                    'orbder' => 'DESC',
+                                    'posts_per_page' => $slide_post_count
+                                ];
+                        endswitch;
+                       
+                        
                         $result_post_slide = new WP_query($args_post_slide);
 
                     ?>
@@ -58,70 +102,6 @@
                     </div>
                     <?php endwhile; endif; ?>
 
-                    <!-- 
-                    <div class="news-item">
-                        <div class="item-head">
-                            <img class="banner" src="<?= get_template_directory_uri(); ?>/assets/img/carousel/1.png">
-                            <div class="navigation"></div>
-                        </div>
-
-                        <div class="item-body">
-                            <p class="category-tag">Diário da Saúde Natural</p>
-                            <h3 class="title">Suas articulações estão doloridas? resolva com isso</h3>
-                            <p class="post-summary">Os cuidados de saúde na época do coronavírus são como uma paisagem estranha. dos de saúde na época do coronavírus são como uma paisagem estranha E não...</p>
-
-                            <div class="author">
-                                <img src="<?= get_template_directory_uri(); ?>/assets/img/doctors/rafael-avatar.png" class="avatar">
-                                <p class="name">Dr. Rafael Freitas</p>
-                                <time>Há 2 horas</time>
-                            </div>
-
-                            <a href="#"></a>
-                        </div>
-                    </div>
-
-                    <div class="news-item">
-                        <div class="item-head">
-                            <img class="banner" src="<?= get_template_directory_uri(); ?>/assets/img/carousel/1.png">
-                            <div class="navigation"></div>
-                        </div>
-
-                        <div class="item-body">
-                            <p class="category-tag">Diário da Saúde Natural</p>
-                            <h3 class="title">Suas articulações estão doloridas? resolva com isso</h3>
-                            <p class="post-summary">Os cuidados de saúde na época do coronavírus são como uma paisagem estranha. dos de saúde na época do coronavírus são como uma paisagem estranha E não...</p>
-
-                            <div class="author">
-                                <img src="<?= get_template_directory_uri(); ?>/assets/img/doctors/rafael-avatar.png" class="avatar">
-                                <p class="name">Dr. Rafael Freitas</p>
-                                <time>Há 2 horas</time>
-                            </div>
-
-                            <a href="#"></a>
-                        </div>
-                    </div>
-
-                    <div class="news-item">
-                        <div class="item-head">
-                            <img class="banner" src="<?= get_template_directory_uri(); ?>/assets/img/carousel/1.png">
-                            <div class="navigation"></div>
-                        </div>
-
-                        <div class="item-body">
-                            <p class="category-tag">Diário da Saúde Natural</p>
-                            <h3 class="title">Suas articulações estão doloridas? resolva com isso</h3>
-                            <p class="post-summary">Os cuidados de saúde na época do coronavírus são como uma paisagem estranha. dos de saúde na época do coronavírus são como uma paisagem estranha E não...</p>
-
-                            <div class="author">
-                                <img src="<?= get_template_directory_uri(); ?>/assets/img/doctors/rafael-avatar.png" class="avatar">
-                                <p class="name">Dr. Rafael Freitas</p>
-                                <time>Há 2 horas</time>
-                            </div>
-
-                            <a href="#"></a>
-                        </div>
-                    </div>
-                     -->
                 </div>
 
                 <div class="carousel-pagination">
@@ -138,6 +118,20 @@
 
         <aside>
                 <?php
+
+                    $option_mais_lidos = get_option('show_sidebar_post');
+                    
+                    switch($option_mais_lidos):
+                        case "last": 
+                            $args_last_post = [
+                                'post_type' => 'post',
+                                'order' => 'DESC'
+                            ];
+                        break;
+                        case "category":
+                            $cat_mais_lidos = "";
+
+                    endswitch;
                     //busca pelos posts mais lidos
                     $popularpost = new WP_Query( array( 'posts_per_page' => 5, 'meta_key' => 'wpb_post_views_count', 'orderby' => 'meta_value_num', 'order' => 'DESC'  ) );
                     if($popularpost->have_posts()):

@@ -340,51 +340,6 @@
                         wp_reset_query(); wp_reset_postdata();
                     ?>
 
-                    <!-- 
-                    <div class="post">
-                        <div class="image">
-                            <img src="<?= get_template_directory_uri(); ?>/assets/img/related-posts/2.png">
-                        </div>
-                        <div class="text">
-                            <h4 class="title">Esta “Cura Eslava” Para Úlceras Não é Nada Para se Estranhar Esta “Cura Eslava”</h4>
-                            <div class="author">
-                                <img src="<?= get_template_directory_uri(); ?>/assets/img/doctors/rafael-avatar.png" class="avatar">
-                                <p class="name">Dr. Rafael Freitas</p>
-                                <time>Há 2 horas</time>
-                            </div>
-                        </div>
-                        <a href="#" class="link"></a>
-                    </div>
-                    <div class="post">
-                        <div class="image">
-                            <img src="<?= get_template_directory_uri(); ?>/assets/img/related-posts/2.png">
-                        </div>
-                        <div class="text">
-                            <h4 class="title">Esta “Cura Eslava” Para Úlceras Não é Nada Para se Estranhar Esta “Cura Eslava”</h4>
-                            <div class="author">
-                                <img src="<?= get_template_directory_uri(); ?>/assets/img/doctors/rafael-avatar.png" class="avatar">
-                                <p class="name">Dr. Rafael Freitas</p>
-                                <time>Há 2 horas</time>
-                            </div>
-                        </div>
-                        <a href="#" class="link"></a>
-                    </div>
-
-                    <div class="post">
-                        <div class="image">
-                            <img src="<?= get_template_directory_uri(); ?>/assets/img/related-posts/3.png">
-                        </div>
-                        <div class="text">
-                            <h4 class="title">Esta “Cura Eslava” Para Úlceras Não é Nada Para se Estranhar Esta “Cura Eslava”</h4>
-                            <div class="author">
-                                <img src="<?= get_template_directory_uri(); ?>/assets/img/doctors/rafael-avatar.png" class="avatar">
-                                <p class="name">Dr. Rafael Freitas</p>
-                                <time>Há 2 horas</time>
-                            </div>
-                        </div>
-                        <a href="#" class="link"></a>
-                    </div>
-                     -->
                 </div>
             </section>
 
