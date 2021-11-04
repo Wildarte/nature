@@ -73,6 +73,8 @@ function display_options()
     add_settings_field("show_sidebar_post_count", "Contagem de Posts", "display_sidebar_post_count", "theme-options", "header_section");
     add_settings_field("show_sidebar_post_category", "", "display_sidebar_post_category", "theme-options", "header_section");
     add_settings_field("show_sidebar_post_keyword", "", "display_sidebar_post_keyword", "theme-options", "header_section");
+    add_settings_field("show_pina_sidebar_post", "Fixar primeiro Post no sidebar", "display_pina_sidebar_post", "theme-options", "header_section");
+    add_settings_field("show_lista_posts_sidebar", "Fixar primeiro Post no sidebar", "display_lista_posts_sidebar", "theme-options", "header_section");
     //config listagem posts sidedar
 
    
@@ -91,6 +93,8 @@ function display_options()
     register_setting("header_section", "show_sidebar_post_count");
     register_setting("header_section", "show_sidebar_post_category");
     register_setting("header_section", "show_sidebar_post_keyword");
+    register_setting("header_section", "show_pina_sidebar_post");
+    register_setting("header_section", "show_lista_posts_sidebar");
     //register fields sidebar post
 
 }
@@ -246,18 +250,58 @@ function display_slide_post_keyword(){
     <?php
 }
 
-//display inputs slider posts
+//display inputs slider posts ==================================================
 
 
-//display inputs sidebar posts
+//display inputs sidebar posts =================================================
 function display_sidebar_post(){
     ?>
         <hr>
         <select name="show_sidebar_post" id="show_sidebar_post">
-            <option value="lastPost">Últimos posts</option>
-            <option value="category">Categoria</option>
-            <option value="keyword">Palavra-chave</option>
-            <option value="moreread">Mais lidos</option>
+        <?php 
+                $option_sidebar_post = get_option('show_sidebar_post');
+                switch($option_sidebar_post):
+                    case "lastPost":
+                        ?>
+                            <option value="lastPost">Últimos posts</option>
+                            <option value="category">Categoria</option>
+                            <option value="keyword">Palavra-chave</option>
+                            <option value="moreread">Mais lidos</option>
+                        <?php
+                    break;
+                    case "category":
+                        ?>
+                            <option value="category">Categoria</option>
+                            <option value="keyword">Palavra-chave</option>
+                            <option value="moreread">Mais lidos</option>
+                            <option value="lastPost">Últimos posts</option>
+                        <?php
+                    break;
+                    case "keyword":
+                        ?>
+                            <option value="keyword">Palavra-chave</option>
+                            <option value="moreread">Mais lidos</option>
+                            <option value="lastPost">Últimos posts</option>
+                            <option value="category">Categoria</option>
+                        <?php
+                    break;
+                    case "moreread":
+                        ?>
+                            <option value="moreread">Mais lidos</option>
+                            <option value="lastPost">Últimos posts</option>
+                            <option value="category">Categoria</option>
+                            <option value="keyword">Palavra-chave</option>
+                        <?php
+                    break;
+                    default:
+                        ?>
+                        <option value="lastPost">Últimos posts</option>
+                        <option value="category">Categoria</option>
+                        <option value="keyword">Palavra-chave</option>
+                        <option value="moreread">Mais lidos</option>
+                        <?php
+                endswitch;
+            ?>
         </select>
 
         
@@ -265,18 +309,23 @@ function display_sidebar_post(){
 }
 function display_sidebar_post_count(){
     ?>
-        <input type="number" style="width: 64px" name="show_slide_post_count" id="show_slide_post_count" value="<?= get_option('show_sidebar_post_count') != "" ? get_option('show_slide_post_count') : "5"; ?>"> Padrão é 5
+        <input type="number" style="width: 64px" name="show_sidebar_post_count" id="show_sidebar_post_count" value="<?= get_option('show_sidebar_post_count') != "" ? get_option('show_sidebar_post_count') : "5"; ?>"> Padrão é 5
         
     <?php
 }
 function display_sidebar_post_category(){
-    
+    $option_sidebar_post = get_option('show_sidebar_post');
+    $option_category = get_option('show_sidebar_post_category');
     ?>
-        <select name="show_sidebar_post_category" id="show_sidebar_post_category" style="display: none">
+        <select name="show_sidebar_post_category" id="show_sidebar_post_category" style="display:<?= $option_sidebar_post == "category" ? "display" : "none" ?>">
+        <?php $name_term = get_nameterm_by_slugterm($option_category); ?>
+            <option value="<?= $option_category ?>"><?= $name_term; ?></option>
+            <?php $term_id = get_idterm_by_slugterm($option_category); ?>
             <?php
                 $terms = get_terms([
                     'taxonomy' => 'category',
                     'hide_empty' => false,
+                    'exclude' => $term_id
                 ]);
                 foreach($terms as $term){
                     echo "<option value='".$term->slug."'>".$term->name. "</option>";      
@@ -287,8 +336,10 @@ function display_sidebar_post_category(){
 }
 
 function display_sidebar_post_keyword(){
+    $option_sidebar_post3 = get_option('show_sidebar_post');
+    $option_keyword = get_option('show_sidebar_post_keyword');
     ?>
-        <input type="text" name="show_sidebar_post_keyword" id="show_sidebar_post_keyword" style="display: none" placeholder="keyword...">
+        <input type="text" name="show_sidebar_post_keyword" id="show_sidebar_post_keyword" style="display: <?= $option_sidebar_post3 == "keyword" ? "display" : "none" ?>" placeholder="keyword..." value="<?= $option_keyword; ?>" placeholder="keyword...">
         <script>
             document.getElementById("show_sidebar_post").addEventListener("change", function(){
                 var val_type = document.getElementById("show_sidebar_post").value;
@@ -337,6 +388,40 @@ function display_sidebar_post_keyword(){
 
             
         ; ?>
+    <?php
+}
+function display_pina_sidebar_post(){
+    ?>
+    <hr>
+        <select name="show_pina_sidebar_post" id="show_pina_sidebar_post">
+            <option value="no">NÃO</option>
+            <option value="yes">SIM</option>
+        </select>
+    <?php
+}
+function display_lista_posts_sidebar(){
+    ?>
+        
+        <select class="select-search-input" name="state">
+            <?php
+                $args_post_slide = [
+                    'post_type' => 'post',
+                    'orbder' => 'DESC'
+                ];
+                $result_post_slide = new WP_query($args_post_slide);
+            if($result_post_slide->have_posts()): while($result_post_slide->have_posts()): $result_post_slide->the_post(); ?>
+                <option value="<?= the_title(); ?>"><?= the_title(); ?></option>
+            <?php endwhile; endif; ?>
+        </select>
+        <script src="<?= get_template_directory_uri(); ?>/assets/js/jquery-3.5.1.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+        <script>
+            
+            $(document).ready(function() {
+                $('.select-search-input').select2();
+            });
+        </script>
     <?php
 }
 //display inputs sidebar posts

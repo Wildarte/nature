@@ -154,53 +154,6 @@
                     </div>
 
                     <?php endwhile; endif; wp_reset_query(); wp_reset_postdata(); ?>
-                    
-                    <!-- 
-                    <div class="most-read-item">
-                        <div class="item-number"></div>
-                        <div class="item-body">
-                            <h4 class="title">Se Prepare Para Uma TSUNAMI Sexual Com Esta "Erva da Intimidade"</h4>
-                            <div class="author">Por Dr. Rafael Freitas - 20 de junho de 2021</div>
-                            <a href="#" class="item-link"></a>
-                        </div>
-                    </div>
-
-                    <div class="most-read-item">
-                        <div class="item-number"></div>
-                        <div class="item-body">
-                            <h4 class="title">Condição GRAVE Afeta 90% dos Homens Acima de 60 Anos</h4>
-                            <div class="author">Por Dr. Rafael Freitas - 20 de junho de 2021</div>
-                            <a href="#" class="item-link"></a>
-                        </div>
-                    </div>
-
-                    <div class="most-read-item">
-                        <div class="item-number"></div>
-                        <div class="item-body">
-                            <h4 class="title">EXPULSE a Dor da Artrite Com Esta Alternativa “Angelical”</h4>
-                            <div class="author">Por Dr. Rafael Freitas - 20 de junho de 2021</div>
-                            <a href="#" class="item-link"></a>
-                        </div>
-                    </div>
-
-                    <div class="most-read-item">
-                        <div class="item-number"></div>
-                        <div class="item-body">
-                            <h4 class="title">DOMINE a Dor da Artrite Com Esta Frutinha</h4>
-                            <div class="author">Por Dr. Rafael Freitas - 20 de junho de 2021</div>
-                            <a href="#" class="item-link"></a>
-                        </div>
-                    </div>
-
-                    <div class="most-read-item">
-                        <div class="item-number"></div>
-                        <div class="item-body">
-                            <h4 class="title">DOMINE a Dor da Artrite Com Esta Frutinha</h4>
-                            <div class="author">Por Dr. Rafael Freitas - 20 de junho de 2021</div>
-                            <a href="#" class="item-link"></a>
-                        </div>
-                    </div>
-                     -->
 
                 </div>
             </section>
@@ -232,11 +185,6 @@
                             echo "<h4 data-categoria='".$term->slug."'>".$term->name."</h4>";        
                         }         
                     ?>
-                    <!-- 
-                    <h4 data-categoria="saude-natural">Saúde <br> Natural</h4>
-                    <h4 data-categoria="viva-sem-dores" class="active">Viva <br> Sem Dores</h4>
-                    <h4 data-categoria="carta-ao-homem">Carta ao <br> Homem</h4>
-                     -->
                 </div>
 
 

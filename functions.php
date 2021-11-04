@@ -1,7 +1,8 @@
 <?php
 
     function nature_scripts(){
-        wp_register_script('owl-carousel', get_template_directory_uri() . '/lib/owl-carousel/owl.carousel.min.js', [], false, true);
+        wp_register_script("n-jquery", get_template_directory_uri().'/assets/js/jquery-3.5.1.min.js', [], false, true);
+        wp_register_script('owl-carousel', get_template_directory_uri() . '/lib/owl-carousel/owl.carousel.min.js', ['n-jquery'], false, true);
         wp_register_script('sticky-js', get_template_directory_uri() . '/lib/sticky-js/sticky.jquery.js', [], false, true);
         wp_register_script('script', get_template_directory_uri() . '/assets/js/script.js', [], false, true);
         //wp_register_script('pagina-interna', get_template_directory_uri() . '/assets/js/pagina-interna.js', [], false, true);
