@@ -89,12 +89,14 @@
 
                 <p class="copyright">® 2021 DOUTOR NATURE. Todos os direitos reservados.</p>
             </div>
+        
         </footer>
+
         <!-- 
         <script src="<?= get_template_directory_uri(); ?>/assets/js/jquery-3.5.1.min.js"></script>
-         -->
+        -->
        
-
+        
         <!-- wp footer -->
         <?php wp_footer(); ?>
         <!-- wp footer -->
@@ -105,7 +107,6 @@ if(is_single()):
         <script src="<?= get_template_directory_uri(); ?>/assets/js/pagina-interna.js"></script>
         <script>
             document.querySelector(".with-sidebar").classList.remove("with-sidebar");
-
         </script>
     <?php
 else:
