@@ -15,13 +15,7 @@
             </style>
             <h2 class="main-title">Conteúdo</h2>
             <div class="news-carousel">
-                <?php
-                    echo "<h5> opção de listagem: ".get_option('show_slide_post')."</h5>";
-                    echo "<h5> Fixar post? ".get_option('show_pina_slide_post')."</h5>";
-                    echo "<h5> Contagem de posts do slide: ".get_option('show_slide_post_count')."</h5>";
-                    echo "<h5> Categoria selecionada: ".get_option('show_slide_post_category')."</h5>";
-                    echo "<h5> Post fixado: ".get_option('show_lista_posts_slide')."</h5>";
-                ?>
+              
                 <div class="carousel-wrapper">
 
                     <?php
@@ -33,8 +27,7 @@
                         $post_pinado_slide = get_option('show_lista_posts_slide');//add
                         $post_id_page_slide = get_page_by_title($post_pinado_slide, OBJECT, 'post');//add
                         
-                        echo "id do post pinado: " . $post_id_page_slide->ID;
-                        echo "valor de slide_post_count: " .$slide_post_count;
+                       
                         
                        
 
@@ -75,7 +68,7 @@
                                         'post__not_in' => [$post_id_page_slide->ID]
                                     ];
                                 }else{
-                                    echo "caiu no else de category";
+                                    
                                     $args_post_slide = [
                                         'post_type' => 'post',
                                         'category_name' => $slide_post_cat,
@@ -144,7 +137,7 @@
 
                     ?>
 
-                    <?php if($result_post_slide->have_posts() && $slide_post_count >= 1): echo "caiu no if value de slide_post_count: ".$slide_post_count; ?>
+                    <?php if($result_post_slide->have_posts() && $slide_post_count >= 1): ?>
                         
                         <?php
                         if($option_pina_slide_post == "yes"): 
@@ -243,17 +236,14 @@
                     if($option_pina_sidebar == 'yes'){
                         $post_id_page = get_page_by_title($post_pinado_sidebar, OBJECT, 'post');
                     }
-                    //echo "pina post sidebar? ".$option_pina_sidebar."<br>";
-                    //echo "title post pinado: ".$post_pinado_sidebar."<br>";
-                    //echo "id do post pinado: " . $post_id_page->ID;
-                    //echo "<strong>contagem de posts: ".$option_sidebar_post_count."</strong>";
+                    
                     
                     if($option_sidebar_post_count <= 1){
                         $new_val_count_posts_sidebar = 1;
                     }else{
                         $new_val_count_posts_sidebar = $option_sidebar_post_count;
                     }
-                    echo "novo valor de post_count = " . $new_val_count_posts_sidebar;
+                    
                     switch($option_mais_lidos):
                         case "lastPost":
                             if($option_pina_sidebar == 'yes'){
@@ -282,7 +272,7 @@
                                     'post__not_in' => [$post_id_page->ID]
                                 ];
                             }else{
-                                echo "caiu no else de category";
+                                
                                 $args_last_post = [
                                     'post_type' => 'post',
                                     'category_name' => $sidebar_post_cat,
@@ -354,9 +344,6 @@
                     $popularpost = new WP_Query($args_last_post);
                     // array( 'posts_per_page' => 5, 'meta_key' => 'wpb_post_views_count', 'orderby' => 'meta_value_num', 'order' => 'DESC', 'post__not_in' => [49] ) 
 
-                    echo "<h5>". get_option('show_sidebar_post_category') ."</h5>";
-                    echo "<h5>". get_option('show_sidebar_post') ."</h5>";
-                    echo "<h5> listagem de posts sidebar: ".$option_sidebar_post_count."</h5>";
 
                     if($popularpost->have_posts() && $option_sidebar_post_count >= 1):
                 ?>

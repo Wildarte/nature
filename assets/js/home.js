@@ -19,4 +19,7 @@ $('.news-carousel .carousel-wrapper').owlCarousel(homeCarouselOpt);
 
 window.addEventListener('resize', function() {
     refreshCarousel($('.news-carousel .carousel-wrapper'), homeCarouselOpt)
-})
+});
+
+
+

@@ -96,7 +96,27 @@
         <script src="<?= get_template_directory_uri(); ?>/assets/js/jquery-3.5.1.min.js"></script>
         -->
        
-        
+        <script>
+            <?php
+                $popup_cookie = get_option('popup_cookie');
+                if($popup_cookie == "custom" && !isset($_COOKIE['cnature'])): ?>
+                function setCookie(cname, cvalue, exdays) {
+                    const d = new Date();
+                    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+                    let expires = "expires="+ d.toUTCString();
+                    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+                }
+                    var setup_cookie_days = <?= get_option('setup_popup_cookie'); ?>;
+                    document.querySelector(".strip .close").addEventListener("click", function(){
+                        setCookie('cnature', 'content', setup_cookie_days);
+                    });
+                <?php
+                else:
+                    echo "nao caiu no if de setup cookie";
+                endif;
+            ?>
+            
+        </script>
         <!-- wp footer -->
         <?php wp_footer(); ?>
         <!-- wp footer -->
@@ -105,9 +125,6 @@
 if(is_single()):
     ?>
         <script src="<?= get_template_directory_uri(); ?>/assets/js/pagina-interna.js"></script>
-        <script>
-            document.querySelector(".with-sidebar").classList.remove("with-sidebar");
-        </script>
     <?php
 else:
     ?>
@@ -115,6 +132,7 @@ else:
     <?php
 endif;
 ?>
+
     </body>
 
 </html>

@@ -119,7 +119,8 @@ function display_fields_links_acesse_conta(){
 }
 function display_links_popup(){
     ?>
-        <h2>Configuração do links e popup</h2>
+        <hr>
+        <h2>Configuração de links</h2>
     <?php
 }
 add_action("admin_init", "display_fields_links_acesse_conta");
@@ -131,16 +132,24 @@ function display_fields_popup(){
     add_settings_field("popup_link", "Link da Popup", "display_link_popup", "theme-options", "popup_section");
     add_settings_field("popup_aviso_link", "Texto do link da Popup", "display_link_aviso_popup", "theme-options", "popup_section");
     add_settings_field("popup_aviso_label", "Texto do Label da Popup", "display_popup_aviso_label", "theme-options", "popup_section");
+    add_settings_field("popup_aviso_label_color", "Cor do label", "display_popup_aviso_label_color", "theme-options", "popup_section");
     add_settings_field("popup_icon_attachment_id", "ícone da Popup", "display_icon_popup", "theme-options", "popup_section");
-    add_settings_field("popup_cookie", "Tempo de exibição", "display_cookie_popup", "theme-options", "popup_section");
-    add_settings_field("popup_show", "Controle de exibição", "display_show_popup", "theme-options", "popup_section");
+    add_settings_field("popup_color", "Cor da Popup", "display_popup_color", "theme-options", "popup_section");
+    add_settings_field("popup_cookie", "Controle de exibição", "display_cookie_popup", "theme-options", "popup_section");
+    add_settings_field("setup_popup_cookie", "", "display_setup_cookie_popup", "theme-options", "popup_section");
+    add_settings_field("popup_show", "Oculpar Popup em", "display_show_popup", "theme-options", "popup_section");
+    add_settings_field("onoff_popup", "ON/OFF Popup", "display_onoff_popup", "theme-options", "popup_section");
 
     register_setting("links_popup_section", "popup_link");
     register_setting("links_popup_section", "popup_aviso_link");
     register_setting("links_popup_section", "popup_aviso_label");
+    register_setting("links_popup_section", "popup_aviso_label_color");
     register_setting("links_popup_section", "popup_icon_attachment_id");
-    register_setting("links_popup_section", "popup_tempo");
+    register_setting("links_popup_section", "popup_color");
+    register_setting("links_popup_section", "popup_cookie");
+    register_setting("links_popup_section", "setup_popup_cookie");
     register_setting("links_popup_section", "popup_show");
+    register_setting("links_popup_section", "onoff_popup");
 }
 function display_popup(){
     ?>
@@ -164,17 +173,69 @@ function display_link_aviso_popup(){
 function display_popup_aviso_label(){
     ?>
         <input type="text" name="popup_aviso_label" id="popup_aviso_label" value="<?= get_option('popup_aviso_label'); ?>">
-
+    <?php
+}
+function display_popup_aviso_label_color(){
+    $color_label = get_option('popup_aviso_label_color');
+    ?>
+        <style>
+            .btn_reset_color_label{
+                display: inline;
+                border: none;
+                height: 27px;
+                width: 27px;
+                padding: 2px;
+                border: 1px solid #333;
+                border-radius: 50%;
+                color: #000;
+                font-size: 1.4em;
+                font-weight: 600;
+            }
+            .btn_reset_color_label:hover{
+                cursor: pointer;
+            }
+        </style>
+        <input type="color" name="popup_aviso_label_color" id="popup_aviso_label_color" value="<?= $color_label != "" ? $color_label : "#3E659A"; ?>">
+        <span class="btn_reset_color_label">&#8635;</span>
         <script>
-            wp.
+            document.querySelector(".btn_reset_color_label").addEventListener("click", function(){
+                document.getElementById("popup_aviso_label_color").value = "#3E659A";
+            });
+        </script>
+    <?php
+}
+function display_popup_color(){
+    $color_popup = get_option('popup_color');
+    ?>
+        <style>
+            .btn_reset_color_popup{
+                display: inline;
+                border: none;
+                height: 27px;
+                width: 27px;
+                padding: 2px;
+                border: 1px solid #333;
+                border-radius: 50%;
+                color: #000;
+                font-size: 1.4em;
+                font-weight: 600;
+            }
+            .btn_reset_color_popup:hover{
+                cursor: pointer;
+            }
+        </style>
+        <input type="color" name="popup_color" id="popup_color" value="<?= $color_popup != " " ? $color_popup : "#5B90B9"; ?>">
+        <span class="btn_reset_color_popup">&#8635;</span>
+        <script>
+            document.querySelector(".btn_reset_color_popup").addEventListener("click", function(){
+                document.getElementById("popup_color").value = "#5B90B9";
+            });
         </script>
     <?php
 }
 function display_icon_popup(){
     ?>
-        <!-- 
-        <input type="file" name="popup_icon" id="popup_icon">
-        <p><?= get_option('popup_icon'); ?></p> -->
+        
         <?php $id_image = get_option('popup_icon_attachment_id'); ?>
         <img src="<?= wp_get_attachment_image_url( $id_image, 'thumbnail' ); ?>" alt="" srcset="">
          
@@ -188,9 +249,9 @@ if ( isset( $_POST['submit_image_selector'] ) && isset( $_POST['popup_icon_attac
         <div class='image-preview-wrapper'>
             <img id='image-preview' src='<?php echo wp_get_attachment_url( get_option( 'media_selector_attachment_id' ) ); ?>' width='200'>
         </div>
-        <input id="upload_image_button" type="button" class="button" value="<?php _e( 'Upload image' ); ?>" />
+        <input id="upload_image_button" type="button" class="button" value="<?php _e( 'Atualizar imagem' ); ?>" />
         <input type='hidden' name='popup_icon_attachment_id' id='popup_icon_attachment_id' value='<?php echo get_option( 'popup_icon_attachment_id' ); ?>'>
-        <input type="submit" name="submit_image_selector" value="Save" class="button-primary">
+        <input type="submit" name="submit_image_selector" value="Salvar" class="button-primary">
     </form>
 <?php
 
@@ -205,23 +266,12 @@ $my_saved_attachment_post_id = get_option( 'media_selector_attachment_id', 0 );
             jQuery('#upload_image_button').on('click', function( event ){
                 event.preventDefault();
                 // If the media frame already exists, reopen it.
-                /*
-                if ( file_frame ) {
-                    // Set the post ID to what we want
-                    file_frame.uploader.uploader.param( 'post_id', set_to_post_id );
-                    // Open frame
-                    file_frame.open();
-                    return;
-                } else {
-                    // Set the wp.media post id so the uploader grabs the ID we want when initialised
-                    wp.media.model.settings.post.id = set_to_post_id;
-                }
-                */
+                
                 // Create the media frame.
                 file_frame = wp.media.frames.file_frame = wp.media({
                     title: 'Selecione a imagem',
                     button: {
-                        text: 'Use this image',
+                        text: 'Usar imagem',
                     },
                     multiple: false // Set to true to allow multiple files to be selected
                 });
@@ -247,6 +297,56 @@ $my_saved_attachment_post_id = get_option( 'media_selector_attachment_id', 0 );
     
     <?php
     
+}
+
+function display_cookie_popup(){
+    $option_popup_cookie = get_option('popup_cookie');
+    ?>
+        <select name="popup_cookie" id="popup_cookie">
+            <option value="always" <?= $option_popup_cookie == "always" ? "selected" : "" ?>>Sempre exibir ao acessar o site</option>
+            <option value="custom" <?= $option_popup_cookie == "custom" ? "selected" : "" ?>>Personalizar</option>
+        </select>
+    <?php
+}
+function display_setup_cookie_popup(){
+    $option_dias_cookie = get_option('setup_popup_cookie');
+    $option_popup_cookie = get_option('popup_cookie');
+    ?>
+    <div id="choose_days"  style="display: <?= $option_popup_cookie == "custom" ? "block" : "none"; ?>">
+        <strong>Não exibir novamente após usuário fechar janela no intervalo de <input type="number" name="setup_popup_cookie" id="setup_popup_cookie" value="<?= !empty($option_dias_cookie) ? $option_dias_cookie : ""; ?>" style="width: 64px"> dia(s)</strong>
+    </div>
+    <script>
+        document.getElementById("popup_cookie").addEventListener("change", function(){
+            var val_popup_cookie = document.getElementById("popup_cookie");
+            if(val_popup_cookie.value == "custom"){
+                document.getElementById("choose_days").style.display = "block";
+            }else{
+                document.getElementById("choose_days").style.display = "none";
+            }
+        });
+    </script>
+    <?php
+}
+
+function display_show_popup(){
+    $option_show_popup = get_option('popup_show');
+    ?>
+        <select name="popup_show" id="popup_show">
+            <option value="no">nenhum</option>
+            <option value="mobile" <?= $option_show_popup == "mobile" ? "selected" : ""; ?>>Mobile</option>
+            <option value="mobile&tablet" <?= $option_show_popup == "mobile&tablet" ? "selected" : ""; ?>>Mobile/tablet</option>
+            <option value="desktop" <?= $option_show_popup == "desktop" ? "selected" : ""; ?>>Desktop/laptop</option>
+        </select>
+    <?php
+}
+function display_onoff_popup(){
+    ?>
+        <style>.switch{position:relative;display:inline-block;width:50px;height:24px}.switch input{opacity:0;width:0;height:0}.slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:green;-webkit-transition:.4s;transition:.4s}.slider:before{position:absolute;content:"";height:16px;width:16px;left:4px;bottom:4px;background-color:#fff;-webkit-transition:.4s;transition:.4s}input:checked+.slider{background-color:#999}input:focus+.slider{box-shadow:0 0 1px #2196f3}input:checked+.slider:before{-webkit-transform:translateX(26px);-ms-transform:translateX(26px);transform:translateX(26px)}.slider.round{border-radius:34px}.slider.round:before{border-radius:50%}</style>
+        <label class="switch">
+            <input type="checkbox" name="onoff_popup" id="onoff_popup" <?= get_option('onoff_popup') == "on" ? "checked" : "" ?>>
+            <span class="slider round"></span>
+        </label>
+    <?php
 }
 
 
