@@ -5,14 +5,15 @@ function add_new_menu_items(){
     //Add um item de menu. This is a top level menu item i.e., this menu item can have sub menus
     add_menu_page(
         "Configuração Geral", //Required. esse é o título da página do menu
-        "Configuração de links", //Required. Texto do menu
+        "Configuração do tema", //Required. Texto do menu
         "manage_options", //Required. The required capability of users to access this menu item.
         "theme-options", //Required. identificador único desse menu
-        "theme_options_page", //Optional. This callback outputs the content of the page associated with this menu item.
+        "callback_links_popup", //Optional. This callback outputs the content of the page associated with this menu item.
         "", //Optional. The URL to the menu item icon.
         100 //Optional. Position of the menu item in the menu.
     );
-
+    
+    
     add_submenu_page(
         "theme-options",
         "Configuração de Posts",
@@ -27,13 +28,14 @@ function add_new_menu_items(){
         "Ads", //Required. Text to be displayed in title.
         "Ads", //Required. Text to be displayed in menu.
         "manage_options", //Required. The required capability of users.
-        "options_apresentacao", //Required. A unique identifier to the sub menu item.
-        "apresentacao_options_page", //Optional. This callback outputs the content of the page associated //with this menu item.
+        "options_ads", //Required. A unique identifier to the sub menu item.
+        "callback_options_ads", //Optional. This callback outputs the content of the page associated //with this menu item.
         "" //Optional. The URL of the menu item icon
     );
 
 }
-function theme_options_page(){
+
+function callback_links_popup(){
     ?>
     <div class="wrap">
         <div id="icon-options-general" class="icon32"></div><!-- run the settings_errors() function here. -->
@@ -43,7 +45,7 @@ function theme_options_page(){
             <?php
             
                 //add_settings_section callback is displayed here. For every new section we need to call settings_fields.
-                settings_fields("header_section");
+                settings_fields("links_popup_section");
                 
                 // all the add_settings_field callbacks is displayed here
                 do_settings_sections("theme-options");
@@ -70,7 +72,30 @@ function callback_posts_option(){
                 settings_fields("posts_section");
                 
                 // all the add_settings_field callbacks is displayed here
+                
                 do_settings_sections("options_list_posts");
+
+                // Add the submit button to serialize the options
+                submit_button();
+                
+            ?>         
+        </form>
+    </div>
+    <?php
+}
+function callback_options_ads(){
+    ?>
+    <div>
+        <?php settings_errors(); ?>
+        <h1>Configuração dos anúncios</h1>
+        <form method="post" action="options.php">
+            <?php
+            
+                //add_settings_section callback is displayed here. For every new section we need to call settings_fields.
+                settings_fields("posts_section");
+                
+                // all the add_settings_field callbacks is displayed here
+                do_settings_sections("options_ads");
             
                 // Add the submit button to serialize the options
                 submit_button();
@@ -80,12 +105,154 @@ function callback_posts_option(){
     </div>
     <?php
 }
-
 add_action("admin_menu", "add_new_menu_items");
 
+
+
+//fields para a section de config dos links e popups ======================================================================
+function display_fields_links_acesse_conta(){
+    add_settings_section("links_popup_section", "", "display_links_popup", "theme-options");
+
+    add_settings_field("link_acesse_conta", "Link de 'Acesse sua conta'", "display_link_conta", "theme-options", "links_popup_section");
+
+    register_setting("links_popup_section", "link_acesse_conta");
+}
+function display_links_popup(){
+    ?>
+        <h2>Configuração do links e popup</h2>
+    <?php
+}
+add_action("admin_init", "display_fields_links_acesse_conta");
+
+
+function display_fields_popup(){
+    add_settings_section("popup_section", "", "display_popup", "theme-options");
+
+    add_settings_field("popup_link", "Link da Popup", "display_link_popup", "theme-options", "popup_section");
+    add_settings_field("popup_aviso_link", "Texto do link da Popup", "display_link_aviso_popup", "theme-options", "popup_section");
+    add_settings_field("popup_aviso_label", "Texto do Label da Popup", "display_popup_aviso_label", "theme-options", "popup_section");
+    add_settings_field("popup_icon_attachment_id", "ícone da Popup", "display_icon_popup", "theme-options", "popup_section");
+    add_settings_field("popup_cookie", "Tempo de exibição", "display_cookie_popup", "theme-options", "popup_section");
+    add_settings_field("popup_show", "Controle de exibição", "display_show_popup", "theme-options", "popup_section");
+
+    register_setting("links_popup_section", "popup_link");
+    register_setting("links_popup_section", "popup_aviso_link");
+    register_setting("links_popup_section", "popup_aviso_label");
+    register_setting("links_popup_section", "popup_icon_attachment_id");
+    register_setting("links_popup_section", "popup_tempo");
+    register_setting("links_popup_section", "popup_show");
+}
+function display_popup(){
+    ?>
+        <hr>
+        <h2>Popup de aviso</h2>
+    <?php
+}
+add_action("admin_init", "display_fields_popup");
+//fields para a section de config dos links e popups ======================================================================
+
+function display_link_popup(){
+    ?>
+        <input type="url" name="popup_link" id="popup_link" value="<?= get_option('popup_link'); ?>">
+    <?php
+}
+function display_link_aviso_popup(){
+    ?>
+        <input type="text" name="popup_aviso_link" id="popup_aviso_link" value="<?= get_option('popup_aviso_link'); ?>">
+    <?php
+}
+function display_popup_aviso_label(){
+    ?>
+        <input type="text" name="popup_aviso_label" id="popup_aviso_label" value="<?= get_option('popup_aviso_label'); ?>">
+
+        <script>
+            wp.
+        </script>
+    <?php
+}
+function display_icon_popup(){
+    ?>
+        <!-- 
+        <input type="file" name="popup_icon" id="popup_icon">
+        <p><?= get_option('popup_icon'); ?></p> -->
+        <?php $id_image = get_option('popup_icon_attachment_id'); ?>
+        <img src="<?= wp_get_attachment_image_url( $id_image, 'thumbnail' ); ?>" alt="" srcset="">
+         
+        
+        <?php
+if ( isset( $_POST['submit_image_selector'] ) && isset( $_POST['popup_icon_attachment_id'] ) ) :
+        update_option( 'media_selector_attachment_id', absint( $_POST['popup_icon_attachment_id'] ) );
+    endif;
+    wp_enqueue_media();
+    ?><form method='post'>
+        <div class='image-preview-wrapper'>
+            <img id='image-preview' src='<?php echo wp_get_attachment_url( get_option( 'media_selector_attachment_id' ) ); ?>' width='200'>
+        </div>
+        <input id="upload_image_button" type="button" class="button" value="<?php _e( 'Upload image' ); ?>" />
+        <input type='hidden' name='popup_icon_attachment_id' id='popup_icon_attachment_id' value='<?php echo get_option( 'popup_icon_attachment_id' ); ?>'>
+        <input type="submit" name="submit_image_selector" value="Save" class="button-primary">
+    </form>
+<?php
+
+
+$my_saved_attachment_post_id = get_option( 'media_selector_attachment_id', 0 );
+    ?><script type='text/javascript'>
+        jQuery( document ).ready( function( $ ) {
+            // Uploading files
+            var file_frame;
+            var wp_media_post_id = wp.media.model.settings.post.id; // Store the old id
+            var set_to_post_id = <?php echo $my_saved_attachment_post_id; ?>; // Set this
+            jQuery('#upload_image_button').on('click', function( event ){
+                event.preventDefault();
+                // If the media frame already exists, reopen it.
+                /*
+                if ( file_frame ) {
+                    // Set the post ID to what we want
+                    file_frame.uploader.uploader.param( 'post_id', set_to_post_id );
+                    // Open frame
+                    file_frame.open();
+                    return;
+                } else {
+                    // Set the wp.media post id so the uploader grabs the ID we want when initialised
+                    wp.media.model.settings.post.id = set_to_post_id;
+                }
+                */
+                // Create the media frame.
+                file_frame = wp.media.frames.file_frame = wp.media({
+                    title: 'Selecione a imagem',
+                    button: {
+                        text: 'Use this image',
+                    },
+                    multiple: false // Set to true to allow multiple files to be selected
+                });
+                // When an image is selected, run a callback.
+                file_frame.on( 'select', function() {
+                    // We set multiple to false so only get one image from the uploader
+                    attachment = file_frame.state().get('selection').first().toJSON();
+                    // Do something with attachment.id and/or attachment.url here
+                    $( '#image-preview' ).attr( 'src', attachment.url ).css( 'width', 'auto' );
+                    $( '#popup_icon_attachment_id' ).val( attachment.id );
+                    // Restore the main post ID
+                    wp.media.model.settings.post.id = wp_media_post_id;
+                });
+                    // Finally, open the modal
+                    file_frame.open();
+            });
+            // Restore the main ID when the add media button is pressed
+            jQuery( 'a.add_media' ).on( 'click', function() {
+                wp.media.model.settings.post.id = wp_media_post_id;
+            });
+        });
+    </script>
+    
+    <?php
+    
+}
+
+
+/*
 function display_options()
 {
-    
 
     //config setting API formulário de contato
     add_settings_section("header_section", "", "display_header_options_content", "theme-options");
@@ -96,21 +263,23 @@ function display_options()
 
 
     //section posts
-    add_settings_section("posts_section", "", "display_posts_options_content", "options_list_posts");
+    //add_settings_section("posts_section", "", "display_posts_options_content", "options_list_posts");
+    //add_settings_section("posts_section_sidebar","", "display_posts_options_content_sidebar", "options_list_posts");
     //config listagem posts sliders
-    add_settings_field("show_slide_post", "<span style='display: flex; padding: 5px; border: 1px solid #999; border-radius: 10px'>Forma de listagem dos slider post</span>", "display_slide_post", "options_list_posts", "posts_section");
-    add_settings_field("show_slide_post_category", "", "display_slide_post_category", "options_list_posts", "posts_section");
-    add_settings_field("show_slide_post_keyword", "", "display_slide_post_keyword", "options_list_posts", "posts_section");
-    add_settings_field("show_pina_slide_post", "Fixar primeiro post do slide", "display_pina_slide_post", "options_list_posts", "posts_section");
-    add_settings_field("show_lista_posts_slide", "", "display_lista_posts_slide", "options_list_posts", "posts_section");add_settings_field("show_slide_post_count", "Contagem de Posts", "display_slide_post_count", "options_list_posts", "posts_section");
+    //add_settings_field("show_slide_post", "Forma de listagem dos slider post", "display_slide_post", "options_list_posts", //"posts_section");
+    //add_settings_field("show_slide_post_category", "", "display_slide_post_category", "options_list_posts", "posts_section");
+    //add_settings_field("show_slide_post_keyword", "", "display_slide_post_keyword", "options_list_posts", "posts_section");
+    //add_settings_field("show_pina_slide_post", "Fixar primeiro post do slide", "display_pina_slide_post", "options_list_posts", //"posts_section");
+    //add_settings_field("show_lista_posts_slide", "", "display_lista_posts_slide", "options_list_posts", "posts_section");//add_settings_field("show_slide_post_count", "Contagem de Posts", "display_slide_post_count", "options_list_posts", "posts_section");
     //config listagem posts sliders
 
     //config listagem posts sidedar
-    add_settings_field("show_sidebar_post", "<span style='display: flex; padding: 5px; border: 1px solid #999; border-radius: 10px'>Forma de listagem dos posts laterais (Artigos mais lidos)</span>", "display_sidebar_post", "options_list_posts", "posts_section");
-    add_settings_field("show_sidebar_post_category", "", "display_sidebar_post_category", "options_list_posts", "posts_section");
-    add_settings_field("show_sidebar_post_keyword", "", "display_sidebar_post_keyword", "options_list_posts", "posts_section");
-    add_settings_field("show_pina_sidebar_post", "Fixar primeiro Post no sidebar", "display_pina_sidebar_post", "options_list_posts", "posts_section");
-    add_settings_field("show_lista_posts_sidebar", "", "display_lista_posts_sidebar", "options_list_posts", "posts_section");add_settings_field("show_sidebar_post_count", "Contagem de Posts", "display_sidebar_post_count", "options_list_posts", "posts_section");
+    //add_settings_field("show_sidebar_post", "Forma de listagem dos posts laterais (Artigos mais lidos)", "display_sidebar_post", //"options_list_posts", "posts_section_sidebar");
+    //add_settings_field("show_sidebar_post_category", "", "display_sidebar_post_category", "options_list_posts", //"posts_section_sidebar");
+    //add_settings_field("show_sidebar_post_keyword", "", "display_sidebar_post_keyword", "options_list_posts", //"posts_section_sidebar");
+    //add_settings_field("show_pina_sidebar_post", "Fixar primeiro Post no sidebar", "display_pina_sidebar_post", //"options_list_posts", "posts_section_sidebar");
+    //add_settings_field("show_lista_posts_sidebar", "", "display_lista_posts_sidebar", "options_list_posts", //"posts_section_sidebar");
+    //add_settings_field("show_sidebar_post_count", "Contagem de Posts", "display_sidebar_post_count", "options_list_posts", //"posts_section_sidebar");
     //config listagem posts sidedar
     //section posts
 
@@ -120,24 +289,88 @@ function display_options()
     register_setting("header_section", "link_visite_site");
     
     //register fields post sliders
+    //register_setting("posts_section", "show_slide_post");
+    //register_setting("posts_section", "show_slide_post_count");
+    //register_setting("posts_section", "show_slide_post_category");
+    //register_setting("posts_section", "show_slide_post_keyword");
+    //register_setting("posts_section", "show_pina_slide_post");
+    //register_setting("posts_section", "show_lista_posts_slide");
+    //register fields post sliders
+
+    //register fields sidebar post
+    //register_setting("posts_section_sidebar", "show_sidebar_post");
+    //register_setting("posts_section_sidebar", "show_sidebar_post_count");
+    //register_setting("posts_section_sidebar", "show_sidebar_post_category");
+    //register_setting("posts_section_sidebar", "show_sidebar_post_keyword");
+    //register_setting("posts_section_sidebar", "show_pina_sidebar_post");
+    //register_setting("posts_section_sidebar", "show_lista_posts_sidebar");
+    //register fields sidebar post
+
+}
+add_action("admin_init", "display_options");
+*/
+
+
+//fields para a section de config posts slide ======================================================================
+add_action("admin_init", "display_fields_posts_slide");
+function display_fields_posts_slide(){
+    
+    add_settings_section("posts_section_slide", "", "display_posts_options_content", "options_list_posts");
+
+    add_settings_field("show_slide_post", "Forma de listagem dos slider post", "display_slide_post", "options_list_posts", "posts_section_slide");
+    add_settings_field("show_slide_post_category", "", "display_slide_post_category", "options_list_posts", "posts_section_slide");
+    add_settings_field("show_slide_post_keyword", "", "display_slide_post_keyword", "options_list_posts", "posts_section_slide");
+    add_settings_field("show_pina_slide_post", "Fixar primeiro post do slide", "display_pina_slide_post", "options_list_posts", "posts_section_slide");
+    add_settings_field("show_lista_posts_slide", "", "display_lista_posts_slide", "options_list_posts", "posts_section_slide");add_settings_field("show_slide_post_count", "Contagem de Posts", "display_slide_post_count", "options_list_posts", "posts_section_slide");
+
     register_setting("posts_section", "show_slide_post");
     register_setting("posts_section", "show_slide_post_count");
     register_setting("posts_section", "show_slide_post_category");
     register_setting("posts_section", "show_slide_post_keyword");
     register_setting("posts_section", "show_pina_slide_post");
     register_setting("posts_section", "show_lista_posts_slide");
-    //register fields post sliders
+}
 
-    //register fields sidebar post
+function display_posts_options_content(){
+    ?>
+    <hr>
+        <h2>Configuração da listagem de Posts do Slide</h2>
+    <?php
+}
+//fields para a section de config posts slide ======================================================================
+
+
+
+
+//fields para a section de config posts sidebar ======================================================================
+add_action("admin_init", "display_fields_posts_sidebar");
+function display_fields_posts_sidebar(){
+    add_settings_section("posts_section","", "display_posts_options_content_sidebar", "options_list_posts");
+
+    add_settings_field("show_sidebar_post", "Forma de listagem dos posts laterais (Artigos mais lidos)", "display_sidebar_post", "options_list_posts", "posts_section");
+    add_settings_field("show_sidebar_post_category", "", "display_sidebar_post_category", "options_list_posts", "posts_section");
+    add_settings_field("show_sidebar_post_keyword", "", "display_sidebar_post_keyword", "options_list_posts", "posts_section");
+    add_settings_field("show_pina_sidebar_post", "Fixar primeiro Post no sidebar", "display_pina_sidebar_post", "options_list_posts", "posts_section");
+    add_settings_field("show_lista_posts_sidebar", "", "display_lista_posts_sidebar", "options_list_posts", "posts_section");
+    add_settings_field("show_sidebar_post_count", "Contagem de Posts", "display_sidebar_post_count", "options_list_posts", "posts_section");
+
     register_setting("posts_section", "show_sidebar_post");
     register_setting("posts_section", "show_sidebar_post_count");
     register_setting("posts_section", "show_sidebar_post_category");
     register_setting("posts_section", "show_sidebar_post_keyword");
     register_setting("posts_section", "show_pina_sidebar_post");
     register_setting("posts_section", "show_lista_posts_sidebar");
-    //register fields sidebar post
-
 }
+function display_posts_options_content_sidebar(){
+    ?>
+        <hr>
+        <h2>Configuração dos Posts Sidebar</h2>
+    <?php
+}
+//fields para a section de config posts slide ======================================================================
+
+
+
 
 
 //display links
@@ -156,7 +389,7 @@ function display_link_visite_site(){
 //display inputs slider posts
 function display_slide_post(){
     ?>
-    <hr>
+    
         <select name="show_slide_post" id="show_slide_post">
             <?php 
                 $option_slide_post = get_option('show_slide_post');
@@ -275,7 +508,7 @@ function display_lista_posts_slide(){
     $val_list_post2 = get_option("show_lista_posts_slide");
     ?>
         
-        <select class="select-search-input" name="show_lista_posts_slide" id="show_lista_posts_slide" <?= $val_select2 == "yes" ? "enable" : "disabled" ?>>
+        Todos os Posts <select class="select-search-input" name="show_lista_posts_slide" id="show_lista_posts_slide" <?= $val_select2 == "yes" ? "enable" : "disabled" ?>>
             <?php
                 $args_post_slide = [
                     'post_type' => 'post',
@@ -343,7 +576,7 @@ function display_slide_post_count(){
 //display inputs sidebar posts =================================================
 function display_sidebar_post(){
     ?>
-        <hr>
+        
         <select name="show_sidebar_post" id="show_sidebar_post">
         <?php 
                 $option_sidebar_post = get_option('show_sidebar_post');
@@ -459,7 +692,7 @@ function display_lista_posts_sidebar(){
     $val_list_post_sidebar = get_option("show_lista_posts_sidebar");
     ?>
         
-        <select class="select-search-input" name="show_lista_posts_sidebar" id="show_lista_posts_sidebar" <?= $val_pina_sidebar2 == "yes" ? "enable" : "disabled" ?>>
+        Todos os Posts <select class="select-search-input" name="show_lista_posts_sidebar" id="show_lista_posts_sidebar" <?= $val_pina_sidebar2 == "yes" ? "enable" : "disabled" ?>>
             <?php
                 $args_post_slide = [
                     'post_type' => 'post',
@@ -534,12 +767,5 @@ function display_header_options_content(){
     echo "Aqui ficam as configurações gerais do site";
 }
 
-function display_posts_options_content(){
-    echo "Configure a listagem de posts";
-}
-
-
-
-add_action("admin_init", "display_options");
 
 ?>

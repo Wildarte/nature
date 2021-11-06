@@ -38,10 +38,11 @@
                     <img src="<?= get_template_directory_uri(); ?>/assets/img/icons/close-top.png">
                     <span>Fechar</span>
                 </p>
-                <span class="label">novidade</span>
-                <a href="#" class="link">
-                    <img src="<?= get_template_directory_uri(); ?>/assets/img/icons/fire-top.png" class="fire">
-                    Visite nosso site de suplementos
+                <span class="label"><?= get_option('popup_aviso_label'); ?></span>
+                <a href="<?= get_option('popup_link'); ?>" class="link">
+                    <?php $id_image = get_option('popup_icon_attachment_id'); ?>
+                    <img src="<?= wp_get_attachment_image_url( $id_image, 'thumbnail' ); ?>" class="fire">
+                    <?= get_option('popup_aviso_link'); ?>
                     <img src="<?= get_template_directory_uri(); ?>/assets/img/icons/arrow-right.svg">
                 </a>
             </div>
@@ -74,13 +75,6 @@
                             );
                             wp_nav_menu( $args );
                         ?>
-                        <!-- 
-                        <a class="page-links" href="#">Protocolos</a>
-                        <a class="page-links" href="#">Livraria</a>
-                        <a class="page-links" href="#">Conteúdo</a>
-                        <a class="page-links" href="#">Contato</a>
-                        <a class="page-links" href="#">Quem Somos</a>
-                         -->
                     </div>
                 </div>
             </div>
@@ -88,7 +82,7 @@
             <div class="mobile">
                 <img src="<?= get_template_directory_uri(); ?>/assets/img/icons/menu.svg" class="menu-toggler">
                 <img src="<?= get_template_directory_uri(); ?>/assets/img/logos/dr-nature.svg" class="nav-logo">
-                <a href="#" class="login">
+                <a href="<?= get_option('link_acesse_conta'); ?>" class="login">
                     <img src="<?= get_template_directory_uri(); ?>/assets/img/icons/login.svg">
                     Entrar
                 </a>
@@ -121,13 +115,6 @@
                                 wp_nav_menu( $args );
                             ?>
 
-                            <!-- 
-                            <li><a href="#">Protocolos</a></li>
-                            <li><a href="#">Livraria</a></li>
-                            <li><a href="#">Conteúdo</a></li>
-                            <li><a href="#">Quem Somos</a></li>
-                            <li><a href="#">Contato</a></li>
-                             -->
                         </ul>
                     </div>
                     <div class="bg"></div>
