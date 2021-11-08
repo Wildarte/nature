@@ -7,12 +7,35 @@
                     </div>
 
                     <div class="social-links">
+                        <?php
+                            $social_instagram = get_option('');
+                        ?>
                         <a href="#">
                             <img src="<?= get_template_directory_uri(); ?>/assets/img/icons/instagram.svg">
                         </a>
 
                         <a href="#">
                             <img src="<?= get_template_directory_uri(); ?>/assets/img/icons/facebook.svg">
+                        </a>
+
+                        <a href="#">
+                            <img src="<?= get_template_directory_uri(); ?>/assets/img/icons/pinterest.svg">
+                        </a>
+
+                        <a href="#">
+                            <img src="<?= get_template_directory_uri(); ?>/assets/img/icons/youtube.svg">
+                        </a>
+
+                        <a href="#">
+                            <img src="<?= get_template_directory_uri(); ?>/assets/img/icons/linkedin.svg">
+                        </a>
+
+                        <a href="#">
+                            <img src="<?= get_template_directory_uri(); ?>/assets/img/icons/twitter.svg">
+                        </a>
+
+                        <a href="#">
+                            <img src="<?= get_template_directory_uri(); ?>/assets/img/icons/tiktok.svg">
                         </a>
                     </div>
 
@@ -32,15 +55,7 @@
                         );
                         wp_nav_menu( $args );
                     ?>
-                    <!-- 
-                    <ul class="pages">
-                        <li><a href="#">Assinaturas</a></li>
-                        <li><a href="#">Livraria</a></li>
-                        <li><a href="#">Conteúdo</a></li>
-                        <li><a href="#">Quem Somos</a></li>
-                        <li><a href="#">Ajuda</a></li>
-                    </ul>
-                     -->
+                    
                      <?php
                         $args = array(
                             'menu' => 'menu footer 2',
@@ -49,14 +64,6 @@
                         );
                         wp_nav_menu( $args );
                     ?>
-                    <!-- 
-                    <ul class="help">
-                        <li><a href="#">Política de Privacidade</a></li>
-                        <li><a href="#">Termos de Uso</a></li>
-                        <li><a href="#">Imprensa</a></li>
-                        <li><a href="#">Trabalhe Conosco</a></li>
-                    </ul>
-                     -->
                 </div>
 
 
@@ -87,7 +94,7 @@
                 <p>Elaborada por editores independentes da Doutor Nature, esta publicação é de uso exclusivo de seu destinatário. São estritamente proibidos, sem autorização por escrito do detentor dos direitos autorais, sob as penalidades previstas em lei, a comunicação ou a distribuição dos materiais incluídos neste boletim, bem como a reprodução total ou parcial, por qualquer meio ou processo, incluindo fotocópias e distribuição via computador.</p>
                 <p>Rodovia Governador Mario Covas, S/N Primavera - Viana - KM 9,5- CEP: 29135-160 - Doutor Nature, CNPJ 26.434.850/0001-91</p>
 
-                <p class="copyright">® 2021 DOUTOR NATURE. Todos os direitos reservados.</p>
+                <p class="copyright">® <?= Date("Y"); ?> DOUTOR NATURE. Todos os direitos reservados.</p>
             </div>
         
         </footer>
@@ -96,27 +103,30 @@
         <script src="<?= get_template_directory_uri(); ?>/assets/js/jquery-3.5.1.min.js"></script>
         -->
        
-        <script>
+        
             <?php
                 $popup_cookie = get_option('popup_cookie');
                 if($popup_cookie == "custom" && !isset($_COOKIE['cnature'])): ?>
-                function setCookie(cname, cvalue, exdays) {
-                    const d = new Date();
-                    d.setTime(d.getTime() + (exdays*24*60*60*1000));
-                    let expires = "expires="+ d.toUTCString();
-                    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-                }
+                <script>
+
+                    function setCookie(cname, cvalue, exdays) {
+                        const d = new Date();
+                        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+                        let expires = "expires="+ d.toUTCString();
+                        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+                    }
+
                     var setup_cookie_days = <?= get_option('setup_popup_cookie'); ?>;
                     document.querySelector(".strip .close").addEventListener("click", function(){
                         setCookie('cnature', 'content', setup_cookie_days);
                     });
+
+                </script>
                 <?php
-                else:
-                    echo "nao caiu no if de setup cookie";
+                
                 endif;
             ?>
             
-        </script>
         <!-- wp footer -->
         <?php wp_footer(); ?>
         <!-- wp footer -->

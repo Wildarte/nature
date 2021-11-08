@@ -193,7 +193,16 @@ function meta_box_banner() {
             <label for="" style="font-size: 1.3em; margin-right: 10px">Bloco de código</label>
             <textarea style="background-color: #343434; color: #22ee11" id="" name="meta_textarea_banner" placeholder="..." cols="60" rows="10"><?= $value_banner != "" ? $value_banner : ""; ?></textarea>
         </div>
+        <button class="test_button">teste</button>
         <p style="text-align: center;">Esse bloco de código será inserido nos banners</p>
+        <br>
+
+        <ul class="ul_teste">
+            <li><span><strong>shortcode 1: </strong> [adcode name="banner1"]</span></li>
+            <li><span><strong>shortcode 2: </strong> [adcode name="banner2"]</span></li>
+            <li><span><strong>shortcode 3: </strong> [adcode name="banner3"]</span></li>
+        </ul>
+        <script src="<?= get_template_directory_uri(); ?>/admin/ajaxpost.js"></script>
     <?php
 }
 add_action('add_meta_boxes', 'meta_box_post_banner');

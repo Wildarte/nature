@@ -346,7 +346,7 @@
             <section id="whatsapp">
                 <p>Receba nossas recomendações de saúde direto no celular.</p>
                 <button class="btn btn-whatsapp">
-                    <img src="./assets/img/icons/whatsapp.svg">
+                    <img src="<?= get_template_directory_uri(); ?>/assets/img/icons/whatsapp.svg">
                     Whatsapp da Doutor Nature
                 </button>
             </section>

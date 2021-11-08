@@ -1350,7 +1350,7 @@ ul.post-categories li a{
 
 #latest-posts .tab h4 {
   display: block;
-  padding: 0.3125rem 1.35rem;
+  padding: 0.3125rem 0.6rem;
   border-right: 0.0625rem solid rgba(171, 171, 171, 0.6);
   color: #3c425899;
   font-size: 1.125rem;
@@ -1458,10 +1458,7 @@ ul.post-categories li a{
   transition: all .15s ease-in-out;
 }
 
-#latest-posts .latest-posts-item .text:hover .title,
-#latest-posts .latest-posts-item .text:hover .post-summary,
-#latest-posts .latest-posts-item .text:hover .author .name,
-#latest-posts .latest-posts-item .text:hover .author time {
+#latest-posts .latest-posts-item .text:hover .title {
   color: var(--orange);
 }
 
@@ -1509,12 +1506,12 @@ ul.post-categories li a{
   flex-basis: 50%;
 
 }
-#latest-posts .see-more a, #latest-posts .see-less a{
+#latest-posts .see-more, #latest-posts .see-less{
   color: var(--dark-grey);
 
 }
 
-#latest-posts .see-more a:hover, #latest-posts .see-less a:hover {
+#latest-posts .see-more:hover, #latest-posts .see-less:hover {
   text-decoration: underline;
   color: var(--orange);
 }
@@ -1668,19 +1665,25 @@ ul.post-categories li a{
   line-height: 27px;
 }
 
+@media(max-width: 280px){
+  #latest-posts .tab h4 {
+    padding: 0.12rem!important;
+  }
+}
+
 @media (min-width: 375px) {
   #latest-posts .latest-posts-item .image {
     width: 100%;
     max-width: 120px;
   }
   #latest-posts .tab h4 {
-    padding: 0.5rem 1.65rem;
+    /*padding: 0.5rem 1.65rem;*/
   }
 }
 
 @media (min-width: 425px) {
   #latest-posts .tab h4 {
-    padding: 0.5rem 1.70rem;
+    /*padding: 0.5rem 1.70rem;*/
   }
 }
 
@@ -1975,10 +1978,13 @@ header {
           transform-origin: right;
 }
 
-.news-carousel .active:hover .item-head img {
+.news-carousel .active:hover .item-head img{
   opacity: .9;
   -webkit-transform: scale(1.05);
           transform: scale(1.05);
+}
+.news-carousel .active:hover .item-body h3.title {
+  color: var(--orange);
 }
 
 .news-carousel .active:hover .navigation {

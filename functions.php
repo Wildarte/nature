@@ -12,6 +12,25 @@
     add_action('wp_enqueue_scripts', 'nature_scripts');
 
 
+    function blog_scripts() {
+        // Register the script
+        wp_register_script( 'custom-script', get_stylesheet_directory_uri(). '/assets/js/custom.js', array('jquery'), false, true );
+     
+        // Localize the script with new data
+        $script_data_array = array(
+            'ajaxurl' => admin_url( 'admin-ajax.php' ),
+            'security' => wp_create_nonce( 'load_more_posts' ),
+        );
+        wp_localize_script( 'custom-script', 'blog', $script_data_array );
+     
+        // Enqueued script with localized data.
+        wp_enqueue_script( 'custom-script' );
+    }
+    add_action( 'wp_enqueue_scripts', 'blog_scripts' );
+
+    
+    
+    //add scripts that load more posts =================================================================
     function nature_styles(){
         wp_register_style('owl-carousel-style', get_template_directory_uri() . '/lib/owl-carousel/owl.carousel.min.css', [], false, false);
         wp_register_style('owl-theme-style', get_template_directory_uri() . '/lib/owl-carousel/owl.theme.default.min.css', [], false, false);
@@ -22,6 +41,8 @@
         wp_enqueue_style(['owl-carousel-style','owl-theme-style']);
     }
     add_action('wp_enqueue_scripts', 'nature_styles');
+    //add scripts that load more posts =================================================================
+
 
     // Funções para Limpar o Header
     remove_action('wp_head', 'rsd_link');
@@ -133,5 +154,96 @@
     //MY FUNCTIONS ======================================================
 
 
+
+    //this code care about the load post with ajax ===============================================
+    add_action('wp_ajax_load_posts_by_ajax', 'load_posts_by_ajax_callback');
+    add_action('wp_ajax_nopriv_load_posts_by_ajax', 'load_posts_by_ajax_callback');
+
+    function load_posts_by_ajax_callback() {
+        check_ajax_referer('load_more_posts', 'security');
+        $paged = $_POST['page'];
+        $args = array(
+            'post_type' => 'post',
+            'post_status' => 'publish',
+            'paged' => $paged,
+        );
+        $blog_posts = new WP_Query( $args );
+        ?>
+     
+        <?php if ( $blog_posts->have_posts() ) : ?>
+            <?php while ( $blog_posts->have_posts() ) : $blog_posts->the_post(); ?>
+                <div class="latest-posts-item" data-categoria="<?= get_the_category()[0]->slug; ?>">
+                    <?php 
+                        $thumb = get_the_post_thumbnail_url(null, 'medium');
+                        $thumb == "" ? $thumb = get_template_directory_uri().'/assets/img/thumb-default.jpg' : "";
+                    ?>
+                    <img class="image" src="<?= $thumb; ?>">
+
+                    <div class="text">
+                        <?= the_category() ?>
+                        <h4 class="title"><?= get_the_title(); ?></h4>
+                        <p class="post-summary"><?= get_the_excerpt(); ?></p>
+                        <div class="author">
+                            <?php $mail_user = strval(get_the_author_meta('user_email', false)); ?>
+                            <img src="<?= get_avatar_url($mail_user, '32', '', '', null) ?>">
+                            <p class="name"><?= get_the_author(); ?></p>
+                            <time> <?php the_time("d/m/Y");  ?> às <?= the_time("H:m"); ?> </time>
+                            
+                        </div>
+
+                        <a class="link" href="<?php the_permalink(); ?>"></a>
+                    </div>
+                </div>
+            <?php endwhile; ?>
+            <?php
+        endif;
+     
+        wp_die();
+    }
+    //this code care about the load post with ajax ===============================================
     
+
+    function ale($atts, $msg){
+        extract(
+            shortcode_atts([
+                'type' => 'alert-message',
+                'alert_type' => 'alert-message-warning'
+            ], $atts)
+        );
+        return "<script>alert('teste de shortcode ".$msg."');</script>";
+    }
+    add_shortcode('comp', 'ale');
+
+    function say_hello($atts){
+        $a = shortcode_atts([
+            'code' => "dasdasdasd"
+        ], $atts);
+        return 'hello '.$a['name'].'!';
+    }
+    add_shortcode('hello', 'say_hello');
+
+    function banner_code($atts){
+
+        $content = shortcode_atts([
+                    'content' => 'vazio'
+                    ], $atts);
+        
+
+        $code = '<div class="space-banner-post">';
+        $code .= get_post_meta(get_the_ID(), 'meta_indica_categoria', true);
+        $code .= '<h1>TESTE</h1>';
+        $code .= '<div>';
+
+        return $code;
+
+    }
+    add_shortcode('adcode', 'banner_code');
+
+
+
+    //my teste
+    function add_op(){
+        $val_post = get_post_meta(get_the_ID(), 'new_data_teste_post');
+        add_post_meta (get_the_ID(), 'new_data_teste_post', 'valor do post meta');
+    }
 ?>

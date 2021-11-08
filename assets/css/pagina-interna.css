@@ -1727,7 +1727,7 @@ div.author img {
   }
   body.with-sidebar {
     display: -ms-grid;
-    display: grid;
+    /*display: grid;*/
     -ms-grid-columns: 68% 32%;
         grid-template-columns: 68% 32%;
     -ms-grid-rows: auto 1fr;
@@ -1788,7 +1788,7 @@ div.author img {
   }
   body.with-sidebar h1,
   body.with-sidebar h2.main-title {
-    width: 100vw;
+    /*width: 100vw;*/
   }
   #latest-posts .tab {
     display: none;
@@ -1854,7 +1854,7 @@ div.author img {
 @media (min-width: 1168px) {
   body.with-sidebar h1,
   body.with-sidebar h2.main-title {
-    width: var(--max-content-width);
+    /*width: var(--max-content-width);*/
   }
 }
 

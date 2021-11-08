@@ -1,18 +1,14 @@
-<?php get_header(); $cat = get_category(get_query_var('cat'))->name; ?>
+<?php get_header(); ?>
 
         <aside>
             <?php include 'inc/asideCategory.php'; ?>
 
-            <section id="products">
-                <div class="all-suplements">
-                    <img src="./assets/img/products/vital-4k-sidebar.png">
-                    <h4>A família Doutor Nature está crescendo...</h4>
-                    <p>Conheça a <b class="orange">Nature Vitaminas</b>! <br>
-                        Todos os suplementos nutricionais que você confia agora estão de casa nova!</p>
-                    <button class="btn btn-blue">Saiba Mais</button>
-                    <a href="#" class="link"></a>
-                </div>
-            </section>
+            <?php 
+                $show_ad_sidebar = get_option('show_onoff_ads_sidebar');
+                if($show_ad_sidebar != "on"):
+                    include 'inc/adsidebar.php';
+                endif;
+            ?>
         </aside>
 
         <h1><?= $cat; ?></h1>
@@ -148,25 +144,19 @@
         </main>
 
         <section id="cards">
-            <div class="card">
-                <div class="card-image">
-                    <img src="./assets/img/icons/padlock.svg">
-                </div>
-                <div class="card-text">
-                    <h4 class="title">Um segredo super simples para fortalecer a imunidade.</h4>
-                    <p>Este segredo foi descoberto por um renomado cientista brasileiro. E agora ele está compartilhando um vídeo com o passo a passo de como fazer em casa.</p>
-                </div>
-                <button class="btn">Assista agora</button>
-                <a href="#" class="link"></a>
-            </div>
+            <?php 
+                $show_ad_footer = get_option('show_onoff_ads_footer');
+                if($show_ad_footer != "on"):
+                    include 'inc/adfooter.php';
+                endif;
+            ?>
 
-            <div class="all-suplements">
-                <h4>A família Doutor Nature está crescendo...</h4>
-                <p>Conheça a <b class="orange">Nature Vitaminas</b>! Todos os suplementos nutricionais que você confia agora estão de casa nova!</p>
-                <button class="btn btn-blue">Saiba mais</button>
-                <img src="./assets/img/products/vital-4k.png">
-                <a href="#" class="link"></a>
-            </div>
+            <?php 
+                $show_ad_sidebar = get_option('show_onoff_ads_sidebar');
+                if($show_ad_sidebar != "on"):
+                    include 'inc/allsuplements.php';
+                endif;
+            ?>
         </section>
 
 

@@ -18,16 +18,12 @@
                 </div>
             </section>
 
-            <section id="products">
-                <div class="all-suplements">
-                    <img src="<?= get_template_directory_uri(); ?>/assets/img/products/vital-4k-sidebar.png">
-                    <h4>A família Doutor Nature está crescendo...</h4>
-                    <p>Conheça a <b class="orange">Nature Vitaminas</b>! <br>
-                        Todos os suplementos nutricionais que você confia agora estão de casa nova!</p>
-                    <button class="btn btn-blue">Saiba Mais</button>
-                    <a href="#" class="link"></a>
-                </div>
-            </section>
+            <?php 
+                $show_ad_sidebar = get_option('show_onoff_ads_sidebar');
+                if($show_ad_sidebar != "on"):
+                    include 'inc/adsidebar.php';
+                endif;
+            ?>
 
         </aside>
 
@@ -98,11 +94,11 @@
                     
                 </div>
                 
-
-                <div class="navigation-posts">
-                    <button href="#" class="see-less"><?php previous_posts_link('- Voltar ');?></button>
-                    <button href="#" class="see-more"><?php next_posts_link('Veja mais +'); ?></button>
-                </div>
+                    <!--  
+                    <button href="#" class="see-less"></button>
+                    <button href="#" class="see-more"></button>
+                    -->
+                    <button href="#" class="loadmore see-more">Ver mais +</button>
 
             </section>
 
@@ -173,8 +169,11 @@
                 
 
                 <div class="navigation-posts">
-                    <button href="#" class="see-less"><?php previous_posts_link('- Voltar ');?></button>
-                    <button href="#" class="see-more"><?php next_posts_link('Veja mais +'); ?></button>
+                    <!--  
+                    <button href="#" class="see-less"></button>
+                    <button href="#" class="see-more"></button>
+                    -->
+                    <button href="#" class="loadmore see-more">Ver mais</button>
                 </div>
 
             </section>
@@ -183,25 +182,19 @@
         </main>
 
         <section id="cards">
-            <div class="card">
-                <div class="card-image">
-                    <img src="<?= get_template_directory_uri(); ?>/assets/img/icons/padlock.svg">
-                </div>
-                <div class="card-text">
-                    <h4 class="title">Um segredo super simples para fortalecer a imunidade.</h4>
-                    <p>Este segredo foi descoberto por um renomado cientista brasileiro. E agora ele está compartilhando um vídeo com o passo a passo de como fazer em casa.</p>
-                </div>
-                <button class="btn">Assista agora</button>
-                <a href="#" class="link"></a>
-            </div>
+            <?php 
+                $show_ad_footer = get_option('show_onoff_ads_footer');
+                if($show_ad_footer != "on"):
+                    include 'inc/adfooter.php';
+                endif;
+            ?>
 
-            <div class="all-suplements">
-                <h4>A família Doutor Nature está crescendo...</h4>
-                <p>Conheça a <b class="orange">Nature Vitaminas</b>! Todos os suplementos nutricionais que você confia agora estão de casa nova!</p>
-                <button class="btn btn-blue">Saiba mais</button>
-                <img src="<?= get_template_directory_uri(); ?>/assets/img/products/vital-4k.png">
-                <a href="#" class="link"></a>
-            </div>
+            <?php 
+                $show_ad_sidebar = get_option('show_onoff_ads_sidebar');
+                if($show_ad_sidebar != "on"):
+                    include 'inc/allsuplements.php';
+                endif;
+            ?>
         </section>
 
 

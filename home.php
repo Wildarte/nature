@@ -137,7 +137,7 @@
 
                     ?>
 
-                    <?php if($result_post_slide->have_posts() && $slide_post_count >= 1): ?>
+                    <?php if($result_post_slide->have_posts() || $slide_post_count >= 1): ?>
                         
                         <?php
                         if($option_pina_slide_post == "yes"): 
@@ -345,21 +345,31 @@
                     // array( 'posts_per_page' => 5, 'meta_key' => 'wpb_post_views_count', 'orderby' => 'meta_value_num', 'order' => 'DESC', 'post__not_in' => [49] ) 
 
 
-                    if($popularpost->have_posts() && $option_sidebar_post_count >= 1):
+                    if($popularpost->have_posts() || $option_sidebar_post_count >= 1):
                 ?>
             <section id="most-read">
                 <h2>Artigos mais lidos</h2>
 
                 <div class="most-read-news">
-                    <?php if($option_pina_sidebar == "yes"): ?>
+                    <?php if($option_pina_sidebar == "yes"):
+                        $args_pinado_post_sidebar = [
+                            'post_type' => 'post',
+                            'p' => $post_id_page->ID
+                        ];
+                        $result_pinado_post_sidebar = new WP_Query($args_pinado_post_sidebar);
+
+                        if($result_pinado_post_sidebar->have_posts()): while($result_pinado_post_sidebar->have_posts()):
+                            $result_pinado_post_sidebar->the_post();
+                    ?>
                         <div class="most-read-item">
                             <div class="item-number"></div>
                             <div class="item-body">
-                                <h4 class="title"><?= $post_id_page->post_title; ?></h4>
-                                <div class="author">Por <?= $post_id_page->post_author; ?> - <?= $post_id_page->post_date;  ?></div>
+                                <h4 class="title"><?php the_title(); ?></h4>
+                                <div class="author">Por <?= get_the_author(); ?> - <?php the_time('j \d\e F \d\e Y');  ?></div>
                                 <a href="<?php the_permalink(); ?>" class="item-link"></a>
                             </div>
                         </div>
+                    <?php endwhile; endif; wp_reset_query(); wp_reset_postdata(); ?>
                     <?php endif; ?>
                     <?php
                         if($option_sidebar_post_count > 1 || $option_pina_sidebar == 'no'):
@@ -383,16 +393,13 @@
 
             <?php include 'inc/asideCategory.php'; ?>
 
-            <section id="products">
-                <div class="all-suplements">
-                    <img src="<?= get_template_directory_uri(); ?>/assets/img/products/vital-4k-sidebar.png">
-                    <h4>A família Doutor Nature está crescendo...</h4>
-                    <p>Conheça a <b class="orange">Nature Vitaminas</b>! <br>
-                        Todos os suplementos nutricionais que você confia agora estão de casa nova!</p>
-                    <button class="btn btn-blue">Saiba Mais</button>
-                    <a href="#" class="link"></a>
-                </div>
-            </section>
+            
+            <?php 
+                $show_ad_sidebar = get_option('show_onoff_ads_sidebar');
+                if($show_ad_sidebar != "on"):
+                    include 'inc/adsidebar.php';
+                endif;
+            ?>
         </aside>
 
         <main>
@@ -442,34 +449,33 @@
 
                 </div>
                 
-                 <div class="navigation-posts">
-                    <button href="#" class="see-less"><?php previous_posts_link('- Voltar ');?></button>
+                 
+                   <!-- <button href="#" class="see-less"><?php previous_posts_link('- Voltar ');?></button 
                     <button href="#" class="see-more"><?php next_posts_link('Veja mais +'); ?></button>
-                 </div>
+                     -->
+                   
+                     <button href="#" class="loadmore see-more">Ver mais +</button>
+               
+                 
                 
             </section>
         </main>
 
         <section id="cards">
-            <div class="card">
-                <div class="card-image">
-                    <img src="<?= get_template_directory_uri(); ?>/assets/img/icons/padlock.svg">
-                </div>
-                <div class="card-text">
-                    <h4 class="title">Um segredo super simples para fortalecer a imunidade.</h4>
-                    <p>Este segredo foi descoberto por um renomado cientista brasileiro. E agora ele está compartilhando um vídeo com o passo a passo de como fazer em casa.</p>
-                </div>
-                <button class="btn">Assista agora</button>
-                <a href="#" class="link"></a>
-            </div>
+            
+            <?php 
+                $show_ad_footer = get_option('show_onoff_ads_footer');
+                if($show_ad_footer != "on"):
+                    include 'inc/adfooter.php';
+                endif;
+            ?>
 
-            <div class="all-suplements">
-                <h4>A família Doutor Nature está crescendo...</h4>
-                <p>Conheça a <b class="orange">Nature Vitaminas</b>! Todos os suplementos nutricionais que você confia agora estão de casa nova!</p>
-                <button class="btn btn-blue">Saiba mais</button>
-                <img src="<?= get_template_directory_uri(); ?>/assets/img/products/vital-4k.png">
-                <a href="#" class="link"></a>
-            </div>
+            <?php 
+                $show_ad_sidebar = get_option('show_onoff_ads_sidebar');
+                if($show_ad_sidebar != "on"):
+                    include 'inc/allsuplements.php';
+                endif;
+            ?>
         </section>
        
 

@@ -33,6 +33,15 @@ function add_new_menu_items(){
         "" //Optional. The URL of the menu item icon
     );
 
+    add_submenu_page(
+        "theme-options",
+        "Rodapé",
+        "Rodapé",
+        "manage_options",
+        "options_rodape",
+        "callback_options_rodape"
+    );
+
 }
 
 function callback_links_popup(){
@@ -92,10 +101,32 @@ function callback_options_ads(){
             <?php
             
                 //add_settings_section callback is displayed here. For every new section we need to call settings_fields.
-                settings_fields("posts_section");
+                settings_fields("ads_section");
                 
                 // all the add_settings_field callbacks is displayed here
                 do_settings_sections("options_ads");
+            
+                // Add the submit button to serialize the options
+                submit_button();
+                
+            ?>         
+        </form>
+    </div>
+    <?php
+}
+function callback_options_rodape(){
+    ?>
+    <div>
+        <?php settings_errors(); ?>
+        <h1>Configuração dos anúncios</h1>
+        <form method="post" action="options.php">
+            <?php
+            
+                //add_settings_section callback is displayed here. For every new section we need to call settings_fields.
+                settings_fields("rodape_section");
+                
+                // all the add_settings_field callbacks is displayed here
+                do_settings_sections("options_rodape");
             
                 // Add the submit button to serialize the options
                 submit_button();
@@ -245,14 +276,14 @@ if ( isset( $_POST['submit_image_selector'] ) && isset( $_POST['popup_icon_attac
         update_option( 'media_selector_attachment_id', absint( $_POST['popup_icon_attachment_id'] ) );
     endif;
     wp_enqueue_media();
-    ?><form method='post'>
+    ?>
         <div class='image-preview-wrapper'>
-            <img id='image-preview' src='<?php echo wp_get_attachment_url( get_option( 'media_selector_attachment_id' ) ); ?>' width='200'>
+            <img  style="max-width: 200px" id='image-preview' src='<?php echo wp_get_attachment_url( get_option( 'media_selector_attachment_id' ) ); ?>' width='200'>
         </div>
         <input id="upload_image_button" type="button" class="button" value="<?php _e( 'Atualizar imagem' ); ?>" />
         <input type='hidden' name='popup_icon_attachment_id' id='popup_icon_attachment_id' value='<?php echo get_option( 'popup_icon_attachment_id' ); ?>'>
         <input type="submit" name="submit_image_selector" value="Salvar" class="button-primary">
-    </form>
+    
 <?php
 
 
@@ -350,66 +381,6 @@ function display_onoff_popup(){
 }
 
 
-/*
-function display_options()
-{
-
-    //config setting API formulário de contato
-    add_settings_section("header_section", "", "display_header_options_content", "theme-options");
-    
-    add_settings_field("link_acesse_conta", "Link de 'Acess sua conta'", "display_link_conta", "theme-options", "header_section");
-    add_settings_field("link_visite_site", "Link de 'Visite nosso site'", "display_link_visite_site", "theme-options", "header_section");
-
-
-
-    //section posts
-    //add_settings_section("posts_section", "", "display_posts_options_content", "options_list_posts");
-    //add_settings_section("posts_section_sidebar","", "display_posts_options_content_sidebar", "options_list_posts");
-    //config listagem posts sliders
-    //add_settings_field("show_slide_post", "Forma de listagem dos slider post", "display_slide_post", "options_list_posts", //"posts_section");
-    //add_settings_field("show_slide_post_category", "", "display_slide_post_category", "options_list_posts", "posts_section");
-    //add_settings_field("show_slide_post_keyword", "", "display_slide_post_keyword", "options_list_posts", "posts_section");
-    //add_settings_field("show_pina_slide_post", "Fixar primeiro post do slide", "display_pina_slide_post", "options_list_posts", //"posts_section");
-    //add_settings_field("show_lista_posts_slide", "", "display_lista_posts_slide", "options_list_posts", "posts_section");//add_settings_field("show_slide_post_count", "Contagem de Posts", "display_slide_post_count", "options_list_posts", "posts_section");
-    //config listagem posts sliders
-
-    //config listagem posts sidedar
-    //add_settings_field("show_sidebar_post", "Forma de listagem dos posts laterais (Artigos mais lidos)", "display_sidebar_post", //"options_list_posts", "posts_section_sidebar");
-    //add_settings_field("show_sidebar_post_category", "", "display_sidebar_post_category", "options_list_posts", //"posts_section_sidebar");
-    //add_settings_field("show_sidebar_post_keyword", "", "display_sidebar_post_keyword", "options_list_posts", //"posts_section_sidebar");
-    //add_settings_field("show_pina_sidebar_post", "Fixar primeiro Post no sidebar", "display_pina_sidebar_post", //"options_list_posts", "posts_section_sidebar");
-    //add_settings_field("show_lista_posts_sidebar", "", "display_lista_posts_sidebar", "options_list_posts", //"posts_section_sidebar");
-    //add_settings_field("show_sidebar_post_count", "Contagem de Posts", "display_sidebar_post_count", "options_list_posts", //"posts_section_sidebar");
-    //config listagem posts sidedar
-    //section posts
-
-
-   
-    register_setting("header_section", "link_acesse_conta");
-    register_setting("header_section", "link_visite_site");
-    
-    //register fields post sliders
-    //register_setting("posts_section", "show_slide_post");
-    //register_setting("posts_section", "show_slide_post_count");
-    //register_setting("posts_section", "show_slide_post_category");
-    //register_setting("posts_section", "show_slide_post_keyword");
-    //register_setting("posts_section", "show_pina_slide_post");
-    //register_setting("posts_section", "show_lista_posts_slide");
-    //register fields post sliders
-
-    //register fields sidebar post
-    //register_setting("posts_section_sidebar", "show_sidebar_post");
-    //register_setting("posts_section_sidebar", "show_sidebar_post_count");
-    //register_setting("posts_section_sidebar", "show_sidebar_post_category");
-    //register_setting("posts_section_sidebar", "show_sidebar_post_keyword");
-    //register_setting("posts_section_sidebar", "show_pina_sidebar_post");
-    //register_setting("posts_section_sidebar", "show_lista_posts_sidebar");
-    //register fields sidebar post
-
-}
-add_action("admin_init", "display_options");
-*/
-
 
 //fields para a section de config posts slide ======================================================================
 add_action("admin_init", "display_fields_posts_slide");
@@ -469,9 +440,318 @@ function display_posts_options_content_sidebar(){
 }
 //fields para a section de config posts slide ======================================================================
 
+//fields para o ads sidebar ===================================================
+function display_fields_ads_sidebar(){
+    add_settings_section("section_ads_sidebar", "", "display_option_ads_sidebar", "options_ads");
+
+    add_settings_field("show_img_ads_sidebar", "Imagem Ads", "display_img_ads_sidebar", "options_ads", "section_ads_sidebar");
+    add_settings_field("show_title_ads_sidebar", "Title Ads", "display_title_ads_sidebar", "options_ads", "section_ads_sidebar");
+    add_settings_field("show_text_ads_sidebar", "Texto Ads", "display_text_ads_sidebar", "options_ads", "section_ads_sidebar");
+    add_settings_field("show_link_ads_sidebar", "Link Ads", "display_link_ads_sidebar", "options_ads", "section_ads_sidebar");
+    add_settings_field("show_cta_ads_sidebar", "CTA Ads", "display_cta_ads_sidebar", "options_ads", "section_ads_sidebar");
+    add_settings_field("show_onoff_ads_sidebar", "ON/OFF Ads", "display_onoff_ads_sidebar", "options_ads", "section_ads_sidebar");
+
+    register_setting("ads_section", "show_img_ads_sidebar");
+    register_setting("ads_section", "show_title_ads_sidebar");
+    register_setting("ads_section", "show_text_ads_sidebar");
+    register_setting("ads_section", "show_link_ads_sidebar");
+    register_setting("ads_section", "show_cta_ads_sidebar");
+    register_setting("ads_section", "show_onoff_ads_sidebar");
+}
+add_action("admin_init", "display_fields_ads_sidebar");
+
+function display_option_ads_sidebar(){
+    ?>
+        <h2>Anúncio Sidebar</h2>
+    <?php
+}
+function display_img_ads_sidebar(){
+    ?>
+    
+    <?php //$id_image = get_option('show_img_ads_sidebar'); ?>
+        <!-- 
+        <img style="max-width: 100px" src="<?php //wp_get_attachment_image_url( $id_image, 'normal' ); ?>" alt="" srcset="">
+         -->
+    <?php
+    if ( isset( $_POST['submit_image_selector'] ) && isset( $_POST['show_img_ads_sidebar'] ) ) :
+        update_option( 'media_selector_attachment_id', absint( $_POST['show_img_ads_sidebar'] ) );
+    endif;
+    wp_enqueue_media();
+    ?>
+    
+        <div class='image-preview-wrapper'>
+            <img style="max-width: 200px" id='image-preview' src='<?php echo wp_get_attachment_url( get_option( 'show_img_ads_sidebar' ) ); ?>' width='200'>
+        </div>
+         
+        <input style="display: block" id="upload_image_button2" type="button" class="button" value="<?php _e( 'Atualizar imagem' ); ?>" />
+        <input type='hidden' name='show_img_ads_sidebar' id='show_img_ads_sidebar' value='<?php echo get_option( 'show_img_ads_sidebar' ); ?>'>
+        <!-- 
+        <input type="submit" name="submit_image_selector" value="Salvar" class="button-primary">
+     -->
+    
+<?php
 
 
+$my_saved_attachment_post_id = get_option( 'media_selector_attachment_id', 0 );
+    ?><script type='text/javascript'>
+        jQuery( document ).ready( function( $ ) {
+            // Uploading files
+            var file_frame;
+            var wp_media_post_id = wp.media.model.settings.post.id; // Store the old id
+            var set_to_post_id = <?php echo $my_saved_attachment_post_id; ?>; // Set this
+            jQuery('#upload_image_button2').on('click', function( event ){
+                event.preventDefault();
+                // If the media frame already exists, reopen it.
+                
+                // Create the media frame.
+                file_frame = wp.media.frames.file_frame = wp.media({
+                    title: 'Selecione a imagem',
+                    button: {
+                        text: 'Usar imagem',
+                    },
+                    multiple: false // Set to true to allow multiple files to be selected
+                });
+                // When an image is selected, run a callback.
+                file_frame.on( 'select', function() {
+                    // We set multiple to false so only get one image from the uploader
+                    attachment = file_frame.state().get('selection').first().toJSON();
+                    // Do something with attachment.id and/or attachment.url here
+                    $( '#image-preview' ).attr( 'src', attachment.url ).css( 'width', 'auto' );
+                    $( '#show_img_ads_sidebar' ).val( attachment.id );
+                    // Restore the main post ID
+                    wp.media.model.settings.post.id = wp_media_post_id;
+                });
+                    // Finally, open the modal
+                    file_frame.open();
+            });
+            // Restore the main ID when the add media button is pressed
+            jQuery( 'a.add_media' ).on( 'click', function() {
+                wp.media.model.settings.post.id = wp_media_post_id;
+            });
+        });
+    </script>
+    
+    <?php
+}
+function display_title_ads_sidebar(){
+    $val_title_ads_sidebar = get_option('show_title_ads_sidebar');
+    ?>
+        <input type="text" name="show_title_ads_sidebar" id="show_title_ads_sidebar" value="<?= $val_title_ads_sidebar != "" ? $val_title_ads_sidebar : ""; ?>" style="width: 400px;">
+    <?php
+}
+function display_text_ads_sidebar(){
+    ?>
+        <textarea name="show_text_ads_sidebar" id="show_text_ads_sidebar">
+            <?= get_option('show_text_ads_sidebar'); ?>
+        </textarea>
+        
+       
 
+    <?php
+}
+function display_link_ads_sidebar(){
+    $val_link_ads_sidebar = get_option('show_link_ads_sidebar');
+    ?>
+        <input type="url" name="show_link_ads_sidebar" id="show_link_ads_sidebar" value="<?= $val_link_ads_sidebar != "" ? $val_link_ads_sidebar : ""; ?>">
+    <?php
+}
+function display_cta_ads_sidebar(){
+    ?>
+        <input type="text" name="show_cta_ads_sidebar" id="show_cta_ads_sidebar" value="<?= get_option('show_cta_ads_sidebar'); ?>">
+    <?php
+}
+function display_onoff_ads_sidebar(){
+    ?>
+        <style>.switch{position:relative;display:inline-block;width:50px;height:24px}.switch input{opacity:0;width:0;height:0}.slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:green;-webkit-transition:.4s;transition:.4s}.slider:before{position:absolute;content:"";height:16px;width:16px;left:4px;bottom:4px;background-color:#fff;-webkit-transition:.4s;transition:.4s}input:checked+.slider{background-color:#999}input:focus+.slider{box-shadow:0 0 1px #2196f3}input:checked+.slider:before{-webkit-transform:translateX(26px);-ms-transform:translateX(26px);transform:translateX(26px)}.slider.round{border-radius:34px}.slider.round:before{border-radius:50%}</style>
+        <label class="switch">
+            <input type="checkbox" name="show_onoff_ads_sidebar" id="show_onoff_ads_sidebar" <?= get_option('show_onoff_ads_sidebar') == "on" ? "checked" : "" ?>>
+            <span class="slider round"></span>
+        </label>
+    <?php
+}
+//fields para o ads sidebar ===================================================
+
+
+function display_fields_ads_footer(){
+    add_settings_section("section_ads_footer", "", "display_option_ads_footer", "options_ads");
+
+    add_settings_field("show_img_ads_footer", "Imagem Ads", "display_img_ads_footer", "options_ads", "section_ads_footer");
+    add_settings_field("show_title_ads_footer", "Title Ads", "display_title_ads_footer", "options_ads", "section_ads_footer");
+    add_settings_field("show_text_ads_footer", "Texto Ads", "display_text_ads_footer", "options_ads", "section_ads_footer");
+    add_settings_field("show_link_ads_footer", "Link Ads", "display_link_ads_footer", "options_ads", "section_ads_footer");
+    add_settings_field("show_cta_ads_footer", "CTA Ads", "display_cta_ads_footer", "options_ads", "section_ads_footer");
+    add_settings_field("show_onoff_ads_footer", "ON/OFF Ads", "display_onoff_ads_footer", "options_ads", "section_ads_footer");
+
+    register_setting("ads_section", "show_img_ads_footer");
+    register_setting("ads_section", "show_title_ads_footer");
+    register_setting("ads_section", "show_text_ads_footer");
+    register_setting("ads_section", "show_link_ads_footer");
+    register_setting("ads_section", "show_cta_ads_footer");
+    register_setting("ads_section", "show_onoff_ads_footer");
+}
+add_action("admin_init", "display_fields_ads_footer");
+
+function display_option_ads_footer(){
+    ?>
+        <hr>
+        <h2>Anúncio Footer</h2>
+    <?php
+}
+function display_img_ads_footer(){
+    ?>
+        <?php //$id_image_footer = get_option('show_img_ads_footer'); ?>
+        <!-- 
+        <img style="max-width: 100px" src="<?php //wp_get_attachment_image_url( $id_image_footer, 'normal' ); ?>" alt="" srcset=""> -->
+    <?php
+    if ( isset( $_POST['submit_image_selector_2'] ) && isset( $_POST['show_img_ads_footer'] ) ) :
+        update_option( 'media_selector_attachment_id', absint( $_POST['show_img_ads_footer'] ) );
+    endif;
+    wp_enqueue_media();
+    ?><form method='post'>
+        
+        <div class='image-preview-wrapper'>
+            <img style="max-width: 100px" id='image-preview2' src='<?php echo wp_get_attachment_url( get_option( 'show_img_ads_footer' ) ); ?>' width='200'>
+        </div>
+        
+        <input id="upload_image_button3" type="button" class="button" value="<?php _e( 'Atualizar imagem' ); ?>" />
+        <input type='hidden' name='show_img_ads_footer' id='show_img_ads_footer' value='<?php echo get_option( 'show_img_ads_footer' ); ?>'>
+        <!-- 
+        <input type="submit" name="submit_image_selector_2" value="Salvar" class="button-primary">
+         -->
+    </form>
+    
+<?php
+
+
+$my_saved_attachment_post_id = get_option( 'media_selector_attachment_id', 0 );
+    ?><script type='text/javascript'>
+        jQuery( document ).ready( function( $ ) {
+            // Uploading files
+            var file_frame;
+            var wp_media_post_id = wp.media.model.settings.post.id; // Store the old id
+            var set_to_post_id = <?php echo $my_saved_attachment_post_id; ?>; // Set this
+            jQuery('#upload_image_button3').on('click', function( event ){
+                event.preventDefault();
+                // If the media frame already exists, reopen it.
+                
+                // Create the media frame.
+                file_frame = wp.media.frames.file_frame = wp.media({
+                    title: 'Selecione a imagem',
+                    button: {
+                        text: 'Usar imagem',
+                    },
+                    multiple: false // Set to true to allow multiple files to be selected
+                });
+                // When an image is selected, run a callback.
+                file_frame.on( 'select', function() {
+                    // We set multiple to false so only get one image from the uploader
+                    attachment = file_frame.state().get('selection').first().toJSON();
+                    // Do something with attachment.id and/or attachment.url here
+                    $( '#image-preview2' ).attr( 'src', attachment.url ).css( 'width', 'auto' );
+                    $( '#show_img_ads_footer' ).val( attachment.id );
+                    // Restore the main post ID
+                    wp.media.model.settings.post.id = wp_media_post_id;
+                });
+                    // Finally, open the modal
+                    file_frame.open();
+            });
+            // Restore the main ID when the add media button is pressed
+            jQuery( 'a.add_media' ).on( 'click', function() {
+                wp.media.model.settings.post.id = wp_media_post_id;
+            });
+        });
+    </script>
+    
+    <?php
+}
+function display_title_ads_footer(){
+    ?>
+        <input type="text" name="show_title_ads_footer" id="show_title_ads_footer" value="<?= get_option('show_title_ads_footer'); ?>">
+    <?php
+}
+function display_text_ads_footer(){
+    ?>
+        <textarea name="show_text_ads_footer" id="show_text_ads_footer">
+            <?= get_option('show_text_ads_footer'); ?>
+        </textarea>
+        <script src="<?= get_template_directory_uri(); ?>/assets/js/jquery-3.5.1.min.js"></script>
+        <link href="<?= get_template_directory_uri(); ?>/assets/css/summernote-lite.min.css" rel="stylesheet">
+        <script src="<?= get_template_directory_uri(); ?>/assets/js/summernote-lite.min.js"></script>
+        <script>
+        $('#show_text_ads_sidebar').summernote({
+            placeholder: 'Digite o conteúdo do Anúncio',
+            tabsize: 2,
+            height: 120,
+            width: 450,
+            toolbar: [
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['view', ['codeview', 'help']]
+            ]
+        });
+        $('#show_text_ads_footer').summernote({
+            placeholder: 'Digite o conteúdo do Anúncio',
+            tabsize: 2,
+            height: 120,
+            width: 450,
+            toolbar: [
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['view', ['codeview', 'help']]
+            ]
+        });
+        </script>
+    <?php
+}
+function display_link_ads_footer(){
+    ?>
+        <input type="url" name="show_link_ads_footer" id="show_link_ads_footer" value="<?= get_option('show_link_ads_footer'); ?>">
+    <?php
+}
+function display_cta_ads_footer(){
+    ?>
+        <input type="text" name="show_cta_ads_footer" id="show_cta_ads_footer" value="<?= get_option('show_cta_ads_footer'); ?>">
+    <?php
+}
+function display_onoff_ads_footer(){
+    ?>
+        <style>.switch{position:relative;display:inline-block;width:50px;height:24px}.switch input{opacity:0;width:0;height:0}.slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:green;-webkit-transition:.4s;transition:.4s}.slider:before{position:absolute;content:"";height:16px;width:16px;left:4px;bottom:4px;background-color:#fff;-webkit-transition:.4s;transition:.4s}input:checked+.slider{background-color:#999}input:focus+.slider{box-shadow:0 0 1px #2196f3}input:checked+.slider:before{-webkit-transform:translateX(26px);-ms-transform:translateX(26px);transform:translateX(26px)}.slider.round{border-radius:34px}.slider.round:before{border-radius:50%}</style>
+        <label class="switch">
+            <input type="checkbox" name="show_onoff_ads_footer" id="show_onoff_ads_footer" <?= get_option('show_onoff_ads_footer') == "on" ? "checked" : "" ?>>
+            <span class="slider round"></span>
+        </label>
+    <?php
+}
+
+function display_fields_rodape(){
+    add_settings_section("section_rodape", "", "display_option_rodape_social", "options_rodape");
+
+    add_settings_field("show_rodape_instagram", "Instagram", "display_rodape_instagram", "options_rodape", "section_rodape");
+    add_settings_field("show_rodape_facebook", "facebook", "display_rodape_facebook", "options_rodape", "section_rodape");
+    
+
+    register_setting("ads_section", "show_rodape_instagram");
+    register_setting("ads_section", "show_rodape_facebook");
+}
+add_action("admin_init", "display_fields_rodape");
+
+function display_option_rodape_social(){
+    ?>
+        <h2>Redes sociais</h2>
+    <?php
+}
+function display_rodape_instagram(){
+    ?>
+        <input type="url" name="show_rodape_instagram" id="show_rodape_instagram" value="<?= get_option('show_rodape_instagram'); ?>">
+    <?php
+}
+function display_rodape_facebook(){
+    ?>
+        <input type="url" name="show_rodape_facebook" id="show_rodape_facebook" value="<?= get_option('show_rodape_facebook'); ?>">
+    <?php
+}
 
 //display links
 function display_link_conta(){
