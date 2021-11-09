@@ -448,15 +448,8 @@
                     <?php endwhile; endif; ?>
 
                 </div>
-                
-                 
-                   <!-- <button href="#" class="see-less"><?php previous_posts_link('- Voltar ');?></button 
-                    <button href="#" class="see-more"><?php next_posts_link('Veja mais +'); ?></button>
-                     -->
                    
-                     <button href="#" class="loadmore see-more">Ver mais +</button>
-               
-                 
+                <button href="#" onclick="more_post('category', 'viva-sem-dor')" class="loadmore see-more">Ver mais +</button>
                 
             </section>
         </main>

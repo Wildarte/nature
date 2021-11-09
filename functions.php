@@ -12,6 +12,8 @@
     add_action('wp_enqueue_scripts', 'nature_scripts');
 
 
+
+    //config ajax
     function blog_scripts() {
         // Register the script
         wp_register_script( 'custom-script', get_stylesheet_directory_uri(). '/assets/js/custom.js', array('jquery'), false, true );
@@ -21,14 +23,15 @@
             'ajaxurl' => admin_url( 'admin-ajax.php' ),
             'security' => wp_create_nonce( 'load_more_posts' ),
         );
+
         wp_localize_script( 'custom-script', 'blog', $script_data_array );
      
         // Enqueued script with localized data.
-        wp_enqueue_script( 'custom-script' );
+        wp_enqueue_script( 'custom-script');
     }
     add_action( 'wp_enqueue_scripts', 'blog_scripts' );
 
-    
+
     
     //add scripts that load more posts =================================================================
     function nature_styles(){
@@ -162,11 +165,42 @@
     function load_posts_by_ajax_callback() {
         check_ajax_referer('load_more_posts', 'security');
         $paged = $_POST['page'];
-        $args = array(
-            'post_type' => 'post',
-            'post_status' => 'publish',
-            'paged' => $paged,
-        );
+        $type = $_POST['type'];
+        $category = $_POST['category'];
+        $search = $_POST['search'];
+
+        switch($type):
+            case "lastPost":
+                $args = array(
+                    'post_type' => 'post',
+                    'post_status' => 'publish',
+                    'paged' => $paged
+                );
+            break;
+            case "category":
+                $args = array(
+                    'post_type' => 'post',
+                    'post_status' => 'publish',
+                    'category_name' => $category,
+                    'paged' => $paged
+                );
+            break;
+            case "search":
+                $args = array(
+                    'post_type' => 'post',
+                    'post_status' => 'publish',
+                    's' => $search,
+                    'paged' => $paged
+                );
+            break;
+            default:
+                $args = array(
+                    'post_type' => 'post',
+                    'post_status' => 'publish',
+                    'paged' => $paged
+                );
+        endswitch;
+        
         $blog_posts = new WP_Query( $args );
         ?>
      
@@ -202,6 +236,57 @@
     }
     //this code care about the load post with ajax ===============================================
     
+
+
+
+    //this code care about the load post with ajax by category ========================================
+    add_action('wp_ajax_load_posts_by_ajax_category', 'load_posts_by_ajax_callback_by_category');
+    add_action('wp_ajax_nopriv_load_posts_by_ajax_category', 'load_posts_by_ajax_callback_by_category');
+
+    function load_posts_by_ajax_callback_by_category() {
+        check_ajax_referer('load_more_posts_category', 'security');
+        $paged = $_POST['page'];
+        $category = $_POST['category'];
+        $args_cat = [
+            'post_type' => 'post',
+            'post_status' => 'publish',
+            'paged' => $paged,
+            'category_name' => '$category'
+        ];
+        $blog_posts = new WP_Query( $args_cat);
+        ?>
+     
+        <?php if ( $blog_posts->have_posts() ) : ?>
+            <?php while ( $blog_posts->have_posts() ) : $blog_posts->the_post(); ?>
+                <div class="latest-posts-item" data-categoria="<?= get_the_category()[0]->slug; ?>">
+                    <?php 
+                        $thumb = get_the_post_thumbnail_url(null, 'medium');
+                        $thumb == "" ? $thumb = get_template_directory_uri().'/assets/img/thumb-default.jpg' : "";
+                    ?>
+                    <img class="image" src="<?= $thumb; ?>">
+
+                    <div class="text">
+                        <?= the_category() ?>
+                        <h4 class="title"><?= get_the_title(); ?></h4>
+                        <p class="post-summary"><?= get_the_excerpt(); ?></p>
+                        <div class="author">
+                            <?php $mail_user = strval(get_the_author_meta('user_email', false)); ?>
+                            <img src="<?= get_avatar_url($mail_user, '32', '', '', null) ?>">
+                            <p class="name"><?= get_the_author(); ?></p>
+                            <time> <?php the_time("d/m/Y");  ?> às <?= the_time("H:m"); ?> </time>
+                            
+                        </div>
+
+                        <a class="link" href="<?php the_permalink(); ?>"></a>
+                    </div>
+                </div>
+            <?php endwhile; ?>
+            <?php
+        endif;
+     
+        wp_die();
+    }
+
 
     function ale($atts, $msg){
         extract(
@@ -239,11 +324,5 @@
     }
     add_shortcode('adcode', 'banner_code');
 
-
-
-    //my teste
-    function add_op(){
-        $val_post = get_post_meta(get_the_ID(), 'new_data_teste_post');
-        add_post_meta (get_the_ID(), 'new_data_teste_post', 'valor do post meta');
-    }
+  
 ?>

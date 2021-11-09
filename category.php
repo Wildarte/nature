@@ -1,4 +1,4 @@
-<?php get_header(); ?>
+<?php get_header(); $cat = get_category(get_query_var('cat'))->name; $cat_slug = get_category(get_query_var('cat'))->slug ?>
 
         <aside>
             <?php include 'inc/asideCategory.php'; ?>
@@ -64,82 +64,10 @@
 
                     <?php endwhile; endif; ?>
 
-                    <!-- 
-                    <div class="latest-posts-item" data-categoria="viva-sem-dores">
-                        <img class="image" src="./assets/img/news/2.png">
-
-                        <div class="text">
-                            <p class="category-tag">Viva sem dores</p>
-                            <h4 class="title">Descoberta sobre os ossos revela elo perdido no equilíbrio dos minerais</h4>
-                            <p class="post-summary">Se chegar ao ponto em que você não consegue mais “se virar” como conseguia… Seu médico pode começar a falar sobre a ideia de uma cirurgia reconstrutora de articulações.</p>
-                            <div class="author">
-                                <img src="./assets/img/doctors/rafael-avatar.png">
-                                <p class="name">Dr. Rafael Freitas</p>
-                                <time>Há 2 horas</time>
-                            </div>
-
-                            <a class="link" href="#"></a>
-                        </div>
-                    </div>
-
-                    <div class="latest-posts-item" data-categoria="carta-ao-homem">
-                        <img class="image" src="./assets/img/news/3.png">
-
-                        <div class="text">
-                            <p class="category-tag">Carta ao Homem</p>
-                            <h4 class="title">Segredo da “molécula da dor ”desliga o sofrimento crônico</h4>
-                            <p class="post-summary">Se chegar ao ponto em que você não consegue mais “se virar” como conseguia… Seu médico pode começar a falar sobre a ideia de uma cirurgia reconstrutora de articulações.</p>
-                            <div class="author">
-                                <img src="./assets/img/doctors/rafael-avatar.png">
-                                <p class="name">Dr. Rafael Freitas</p>
-                                <time>Há 2 horas</time>
-                            </div>
-
-                            <a class="link" href="#"></a>
-                        </div>
-                    </div>
-
-                    <div class="latest-posts-item" data-categoria="saude-natural">
-                        <img class="image" src="./assets/img/news/1.png">
-
-                        <div class="text">
-                            <p class="category-tag">Diário da Saúde Natural</p>
-                            <h4 class="title">Descoberta sobre os ossos revela elo perdido no equilíbrio dos minerais</h4>
-                            <p class="post-summary">Se chegar ao ponto em que você não consegue mais “se virar” como conseguia… Seu médico pode começar a falar sobre a ideia de uma cirurgia reconstrutora de articulações.</p>
-                            <div class="author">
-                                <img src="./assets/img/doctors/rafael-avatar.png">
-                                <p class="name">Dr. Rafael Freitas</p>
-                                <time>Há 2 horas</time>
-                            </div>
-
-                            <a class="link" href="#"></a>
-                        </div>
-                    </div>
-
-                    <div class="latest-posts-item" data-categoria="viva-sem-dores">
-                        <img class="image" src="./assets/img/news/2.png">
-
-                        <div class="text">
-                            <p class="category-tag">Viva sem dores</p>
-                            <h4 class="title">Suas articulações estão doloridas… e secas? resolva com isso</h4>
-                            <p class="post-summary">Se chegar ao ponto em que você não consegue mais “se virar” como conseguia… Seu médico pode começar a falar sobre a ideia de uma cirurgia reconstrutora de articulações.</p>
-                            <div class="author">
-                                <img src="./assets/img/doctors/rafael-avatar.png">
-                                <p class="name">Dr. Rafael Freitas</p>
-                                <time>Há 2 horas</time>
-                            </div>
-
-                            <a class="link" href="#"></a>
-                        </div>
-                    </div>
-                     -->
-
                 </div>
 
-                <div class="navigation-posts">
-                    <button href="#" class="see-less"><?php previous_posts_link('- Voltar ');?></button>
-                    <button href="#" class="see-more"><?php next_posts_link('Veja mais +'); ?></button>
-                 </div>
+                <button href="#" onclick='more_post("category","<?= $cat_slug; ?>")' class=" see-more loadmore_category">Ver mais +</button>
+
             </section>
         </main>
 

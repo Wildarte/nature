@@ -137,18 +137,16 @@
 
                     //$custom_indica armazena o valor de SIM ou NAO se o usuario optou por escolher se quer configurar a indicação dos posts
                     $custom_indica = get_post_meta(get_the_ID(), 'indica_post_myself', true);
-                    echo "Indica: ".$custom_indica;
-                    var_dump($custom_indica);
+                
                     //armazena a(s) categorias do post
                     $category_post = get_the_category();
-                    
-                    var_dump($category_post[0]->slug);//apenas para debugar
+                  
 
                     //se a variavel que armazena a escolha do usuário sobre a indicação de posts estiver vazia ou com o valor "no", entao os posts de indicação serão listados por categoria
                     if(empty($custom_indica) || $custom_indica == "no"):
-                        echo "<p>Contagem de categorias: ".count($category_post)."</p>";
+                       
                         if(count($category_post) >= 1):
-                            echo "caiu no if";
+                            
                             switch(count($category_post)):
                                 
                                 case 1:
@@ -162,7 +160,7 @@
                                     ];
 
                                     if(!verifa_posts($args_query))://caso nao retorne nenhum post a query recebe novos argumentos
-                                        echo "caiu no if";
+                                        
                                         $args_query = [
                                             'post_type' => 'post',
                                             'post__not_in' => [get_the_ID()],//especifica o post que não é para ser recuperado, e usamos o get_the_ID para pegar o post pelo ID
@@ -170,7 +168,7 @@
                                             'posts_per_page' => 3
                                         ];
                                     else:
-                                        echo "nao caiu no if";
+                                       
                                     endif;
                                 break;
                                 case 2:
@@ -233,7 +231,7 @@
                     elseif($custom_indica == "yes"):
                         
                         $opcao_listagem = get_post_meta(get_the_ID(), 'meta_indica_select', true);
-                        echo "<p>".$opcao_listagem."</p>";
+                        
                         switch($opcao_listagem):
 
                             case "lastPost":
@@ -345,10 +343,10 @@
 
             <section id="whatsapp">
                 <p>Receba nossas recomendações de saúde direto no celular.</p>
-                <button class="btn btn-whatsapp">
+                <a href="<?= get_option('show_rodape_whatsapp'); ?>" class="btn btn-whatsapp">
                     <img src="<?= get_template_directory_uri(); ?>/assets/img/icons/whatsapp.svg">
                     Whatsapp da Doutor Nature
-                </button>
+                </a>
             </section>
         </main>
 

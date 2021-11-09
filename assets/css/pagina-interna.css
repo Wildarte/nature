@@ -687,13 +687,14 @@ footer .links {
   padding: 2.5rem 1.25rem;
   border-bottom: 0.0625rem solid #70707066;
 }
-
-footer .links .pages li {
+/* remove .pages add .menu:nth-child(1) */
+footer .links .menu:nth-child(1) li {
   margin-bottom: 2.3rem;
   font-size: 1.25rem;
 }
 
-footer .links .help li {
+/* remove .help add .menu:nth-child(2) */
+footer .links .menu:nth-child(2) li {
   font-weight: 400;
   margin-bottom: 2.65rem;
   font-size: 1rem;
@@ -776,10 +777,12 @@ footer > div {
 }
 
 @media (min-width: 992px) {
-  footer .links .pages li a {
+  /* remove .pages add .menu:nth-child(1) */
+  footer .links .menu:nth-child(1) li a {
     font-weight: 400;
   }
-  footer .links .help li a {
+  /* remove .help add .menu:nth-child(2)*/
+  footer .links .menu:nth-child(2) li a {
     color: #3c4258a7;
   }
 }
@@ -818,7 +821,8 @@ footer > div {
   footer .links {
     border: none;
   }
-  footer .links .pages {
+   /* remove .pages add .menu:nth-child(1) */
+   footer .links .menu:nth-child(1) {
     padding-right: 90px;
   }
   footer .text {

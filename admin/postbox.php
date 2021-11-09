@@ -10,8 +10,8 @@ function meta_box_post_indica() {
     wp_nonce_field( 'my_meta_box_nonce', 'meta_box_nonce' );
     $value_indica_post_myself = get_post_meta(get_the_ID(), 'indica_post_myself', true);//retorna se o usuário selecionar indicar o post por ele mesmo
     $value_meta_indica_select = get_post_meta(get_the_ID(), 'meta_indica_select', true);
-    echo $value_indica_post_myself;
-    echo $value_meta_indica_select;
+    //echo $value_indica_post_myself;
+    //echo $value_meta_indica_select;
     ?>
         <p>
             <label for="">Indicar pela categoria atual <strong>(PADRÃO)</strong> </label><br> ou
@@ -185,6 +185,7 @@ function meta_box_banner_save( $post_id ){
 }
 add_action('save_post', 'meta_box_banner_save');
 
+/*
 function meta_box_banner() {
     wp_nonce_field( 'my_meta_box_nonce', 'meta_box_nonce' );
     $value_banner = get_post_meta(get_the_ID(), 'meta_textarea_banner', true);
@@ -193,18 +194,13 @@ function meta_box_banner() {
             <label for="" style="font-size: 1.3em; margin-right: 10px">Bloco de código</label>
             <textarea style="background-color: #343434; color: #22ee11" id="" name="meta_textarea_banner" placeholder="..." cols="60" rows="10"><?= $value_banner != "" ? $value_banner : ""; ?></textarea>
         </div>
-        <button class="test_button">teste</button>
         <p style="text-align: center;">Esse bloco de código será inserido nos banners</p>
         <br>
 
-        <ul class="ul_teste">
-            <li><span><strong>shortcode 1: </strong> [adcode name="banner1"]</span></li>
-            <li><span><strong>shortcode 2: </strong> [adcode name="banner2"]</span></li>
-            <li><span><strong>shortcode 3: </strong> [adcode name="banner3"]</span></li>
-        </ul>
         <script src="<?= get_template_directory_uri(); ?>/admin/ajaxpost.js"></script>
     <?php
 }
 add_action('add_meta_boxes', 'meta_box_post_banner');
+*/
 
 ?>

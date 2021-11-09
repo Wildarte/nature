@@ -8,35 +8,21 @@
 
                     <div class="social-links">
                         <?php
-                            $social_instagram = get_option('');
+                            $social_instagram = get_option('show_rodape_instagram');
+                            $social_facebook = get_option('show_rodape_facebook');
                         ?>
-                        <a href="#">
+                        <?php if($social_instagram != ""): ?>
+                        <a href="<?= $social_instagram; ?>">
                             <img src="<?= get_template_directory_uri(); ?>/assets/img/icons/instagram.svg">
                         </a>
+                        <?php endif; ?>
 
-                        <a href="#">
+                        <?php if($social_facebook != ""): ?>
+                        <a href="<?= $social_facebook; ?>">
                             <img src="<?= get_template_directory_uri(); ?>/assets/img/icons/facebook.svg">
                         </a>
+                        <?php endif; ?>
 
-                        <a href="#">
-                            <img src="<?= get_template_directory_uri(); ?>/assets/img/icons/pinterest.svg">
-                        </a>
-
-                        <a href="#">
-                            <img src="<?= get_template_directory_uri(); ?>/assets/img/icons/youtube.svg">
-                        </a>
-
-                        <a href="#">
-                            <img src="<?= get_template_directory_uri(); ?>/assets/img/icons/linkedin.svg">
-                        </a>
-
-                        <a href="#">
-                            <img src="<?= get_template_directory_uri(); ?>/assets/img/icons/twitter.svg">
-                        </a>
-
-                        <a href="#">
-                            <img src="<?= get_template_directory_uri(); ?>/assets/img/icons/tiktok.svg">
-                        </a>
                     </div>
 
                     <ul class="account">
@@ -68,20 +54,31 @@
 
 
                 <div class="other-links">
+                    <?php
+                        $rodape_link_title1 = get_option('show_rodape_title1');
+                        $rodape_link1 = get_option('show_rodape_link1');
+                        $rodape_img1 = get_option('show_rodape_img1');
+                        $rodape_link_title2 = get_option('show_rodape_title2');
+                        $rodape_link2 = get_option('show_rodape_link2');
+                        $rodape_img2 = get_option('show_rodape_img2');
+                    ?>
                     <ul>
+                        <?php if($rodape_link1 != ""): ?>
                         <li>
-                            <a href="#">
-                                Ajudamos
-                                <img src="<?= get_template_directory_uri(); ?>/assets/img/logos/medico-sem-fronteiras.png">
+                            <a href="<?= $rodape_link1; ?>">
+                                <?= $rodape_link_title1; ?>
+                                <img src="<?= wp_get_attachment_image_url( $rodape_img1, 'normal' ); ?>" class="fire">
                             </a>
                         </li>
-
+                        <?php endif; ?>
+                        <?php if($rodape_link2 != ""): ?>
                         <li>
                             <a href="#">
-                                Fazemos o certo
-                                <img src="<?= get_template_directory_uri(); ?>/assets/img/logos/reclame-aqui.png">
-                            </a>
+                            <?= $rodape_link_title2; ?>
+                            <img src="<?= wp_get_attachment_image_url( $rodape_img2, 'normal' ); ?>" class="fire">
+                            </a>    
                         </li>
+                        <?php endif; ?>
                     </ul>
                 </div>
             </div>

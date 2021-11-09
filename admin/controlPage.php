@@ -622,7 +622,6 @@ function display_img_ads_footer(){
     
 <?php
 
-
 $my_saved_attachment_post_id = get_option( 'media_selector_attachment_id', 0 );
     ?><script type='text/javascript'>
         jQuery( document ).ready( function( $ ) {
@@ -725,17 +724,19 @@ function display_onoff_ads_footer(){
     <?php
 }
 
-function display_fields_rodape(){
+function display_fields_rodape_social(){
     add_settings_section("section_rodape", "", "display_option_rodape_social", "options_rodape");
 
     add_settings_field("show_rodape_instagram", "Instagram", "display_rodape_instagram", "options_rodape", "section_rodape");
     add_settings_field("show_rodape_facebook", "facebook", "display_rodape_facebook", "options_rodape", "section_rodape");
+    add_settings_field("show_rodape_whatsapp", "whatsapp", "display_rodape_whatsapp", "options_rodape", "section_rodape");
     
 
-    register_setting("ads_section", "show_rodape_instagram");
-    register_setting("ads_section", "show_rodape_facebook");
+    register_setting("rodape_section", "show_rodape_instagram");
+    register_setting("rodape_section", "show_rodape_facebook");
+    register_setting("rodape_section", "show_rodape_whatsapp");
 }
-add_action("admin_init", "display_fields_rodape");
+add_action("admin_init", "display_fields_rodape_social");
 
 function display_option_rodape_social(){
     ?>
@@ -744,14 +745,196 @@ function display_option_rodape_social(){
 }
 function display_rodape_instagram(){
     ?>
-        <input type="url" name="show_rodape_instagram" id="show_rodape_instagram" value="<?= get_option('show_rodape_instagram'); ?>">
+        <input style="width: 300px" type="url" name="show_rodape_instagram" id="show_rodape_instagram" value="<?= get_option('show_rodape_instagram'); ?>">
     <?php
 }
 function display_rodape_facebook(){
     ?>
-        <input type="url" name="show_rodape_facebook" id="show_rodape_facebook" value="<?= get_option('show_rodape_facebook'); ?>">
+        <input style="width: 300px" type="url" name="show_rodape_facebook" id="show_rodape_facebook" value="<?= get_option('show_rodape_facebook'); ?>">
     <?php
 }
+function display_rodape_whatsapp(){
+    ?>
+        <input style="width: 500px" type="url" name="show_rodape_whatsapp" id="show_rodape_whatsapp" value="<?= get_option('show_rodape_whatsapp'); ?>">
+    <?php
+}
+function display_fields_rodape_links(){
+    add_settings_section("section_rodape_links", "", "display_option_rodape_links", "options_rodape");
+
+    add_settings_field("show_rodape_title1", "Título link 1", "display_rodape_title1", "options_rodape", "section_rodape_links");
+    add_settings_field("show_rodape_link1", "Link 1", "display_rodape_link1", "options_rodape", "section_rodape_links");
+    add_settings_field("show_rodape_img1", "Imagem link 1", "display_rodape_img1", "options_rodape", "section_rodape_links");
+
+    add_settings_field("show_rodape_title2", "Título link 2", "display_rodape_title2", "options_rodape", "section_rodape_links");
+    add_settings_field("show_rodape_link2", "Link 2", "display_rodape_link2", "options_rodape", "section_rodape_links");
+    add_settings_field("show_rodape_img2", "Imagem link 2", "display_rodape_img2", "options_rodape", "section_rodape_links");
+    
+
+    register_setting("rodape_section", "show_rodape_title1");
+    register_setting("rodape_section", "show_rodape_link1");
+    register_setting("rodape_section", "show_rodape_img1");
+
+    register_setting("rodape_section", "show_rodape_title2");
+    register_setting("rodape_section", "show_rodape_link2");
+    register_setting("rodape_section", "show_rodape_img2");
+
+}
+add_action("admin_init", "display_fields_rodape_links");
+function display_option_rodape_links(){
+    ?>
+    <hr>
+        <h2>Outros links</h2>
+    <?php
+}
+function display_rodape_title1(){
+    ?>
+        <input type="text" name="show_rodape_title1" id="show_rodape_title1" value="<?= !empty(get_option('show_rodape_title1')) ? get_option('show_rodape_title1') : "Ajudamos" ?>">
+    <?php
+}
+function display_rodape_link1(){
+    ?>
+        <input style="width: 500px" type="url" name="show_rodape_link1" id="show_rodape_link1" value="<?= get_option('show_rodape_link1'); ?>"><br>
+        caso o campo esteja vazio, o link não será exibido
+    <?php
+}
+function display_rodape_img1(){
+    ?>
+    <?php
+    if ( isset( $_POST['submit_image_selector_2'] ) && isset( $_POST['show_rodape_img1'] ) ) :
+        update_option( 'media_selector_attachment_id', absint( $_POST['show_rodape_img1'] ) );
+    endif;
+    wp_enqueue_media();
+    ?>
+        
+        <div class='image-preview-wrapper'>
+            <img style="max-width: 100px" id='image-preview' src='<?php echo wp_get_attachment_url( get_option( 'show_rodape_img1' ) ); ?>' width='200'>
+        </div>
+        
+        <input id="upload_image_button" type="button" class="button" value="<?php _e( 'Atualizar imagem' ); ?>" />
+        <input type='hidden' name='show_rodape_img1' id='show_rodape_img1' value='<?php echo get_option( 'show_rodape_img1' ); ?>'>
+        <!-- 
+        <input type="submit" name="submit_image_selector_2" value="Salvar" class="button-primary">
+         -->
+   
+    
+<?php
+
+$my_saved_attachment_post_id = get_option( 'media_selector_attachment_id', 0 );
+    ?><script type='text/javascript'>
+        jQuery( document ).ready( function( $ ) {
+            // Uploading files
+            var file_frame;
+            var wp_media_post_id = wp.media.model.settings.post.id; // Store the old id
+            var set_to_post_id = <?php echo $my_saved_attachment_post_id; ?>; // Set this
+            jQuery('#upload_image_button').on('click', function( event ){
+                event.preventDefault();
+                // If the media frame already exists, reopen it.
+                
+                // Create the media frame.
+                file_frame = wp.media.frames.file_frame = wp.media({
+                    title: 'Selecione a imagem',
+                    button: {
+                        text: 'Usar imagem',
+                    },
+                    multiple: false // Set to true to allow multiple files to be selected
+                });
+                // When an image is selected, run a callback.
+                file_frame.on( 'select', function() {
+                    // We set multiple to false so only get one image from the uploader
+                    attachment = file_frame.state().get('selection').first().toJSON();
+                    // Do something with attachment.id and/or attachment.url here
+                    $( '#image-preview' ).attr( 'src', attachment.url ).css( 'width', 'auto' );
+                    $( '#show_rodape_img1' ).val( attachment.id );
+                    // Restore the main post ID
+                    wp.media.model.settings.post.id = wp_media_post_id;
+                });
+                    // Finally, open the modal
+                    file_frame.open();
+            });
+            // Restore the main ID when the add media button is pressed
+            jQuery( 'a.add_media' ).on( 'click', function() {
+                wp.media.model.settings.post.id = wp_media_post_id;
+            });
+        });
+    </script>
+    <?php
+}
+
+function display_rodape_title2(){
+    ?>
+    <hr>
+        <input type="text" name="show_rodape_title2" id="show_rodape_title2" value="<?= !empty(get_option('show_rodape_title2')) ? get_option('show_rodape_title2') : "Fazemos o certo" ?>">
+    <?php
+}
+function display_rodape_link2(){
+    ?>
+        <input style="width: 500px" type="url" name="show_rodape_link2" id="show_rodape_link2" value="<?= get_option('show_rodape_link2'); ?>"><br>
+        caso o campo esteja vazio, o link não será exibido
+    <?php
+}
+function display_rodape_img2(){
+    ?>
+    <?php
+    if ( isset( $_POST['submit_image_selector_2'] ) && isset( $_POST['show_rodape_img2'] ) ) :
+        update_option( 'media_selector_attachment2_id', absint( $_POST['show_rodape_img2'] ) );
+    endif;
+    wp_enqueue_media();
+    ?><form method='post'>
+        
+        <div class='image-preview-wrapper'>
+            <img style="max-width: 100px" id='image-preview2' src='<?php echo wp_get_attachment_url( get_option( 'show_rodape_img2' ) ); ?>' width='200'>
+        </div>
+        
+        <input id="upload_image_button2" type="button" class="button" value="<?php _e( 'Atualizar imagem' ); ?>" />
+        <input type='hidden' name='show_rodape_img2' id='show_rodape_img2' value='<?php echo get_option( 'show_rodape_img2' ); ?>'>
+        <!-- 
+        <input type="submit" name="submit_image_selector_2" value="Salvar" class="button-primary">
+         -->
+    </form>
+    
+<?php
+
+$my_saved_attachment_post_id = get_option( 'media_selector_attachment2_id', 0 );
+    ?><script type='text/javascript'>
+        jQuery( document ).ready( function( $ ) {
+            // Uploading files
+            var file_frame;
+            var wp_media_post_id = wp.media.model.settings.post.id; // Store the old id
+            var set_to_post_id = <?php echo $my_saved_attachment_post_id; ?>; // Set this
+            jQuery('#upload_image_button2').on('click', function( event ){
+                event.preventDefault();
+                // If the media frame already exists, reopen it.
+                
+                // Create the media frame.
+                file_frame = wp.media.frames.file_frame = wp.media({
+                    title: 'Selecione a imagem',
+                    button: {
+                        text: 'Usar imagem',
+                    },
+                    multiple: false // Set to true to allow multiple files to be selected
+                });
+                // When an image is selected, run a callback.
+                file_frame.on( 'select', function() {
+                    // We set multiple to false so only get one image from the uploader
+                    attachment = file_frame.state().get('selection').first().toJSON();
+                    // Do something with attachment.id and/or attachment.url here
+                    $( '#image-preview2' ).attr( 'src', attachment.url ).css( 'width', 'auto' );
+                    $( '#show_rodape_img2' ).val( attachment.id );
+                    // Restore the main post ID
+                    wp.media.model.settings.post.id = wp_media_post_id;
+                });
+                    // Finally, open the modal
+                    file_frame.open();
+            });
+            // Restore the main ID when the add media button is pressed
+            jQuery( 'a.add_media' ).on( 'click', function() {
+                wp.media.model.settings.post.id = wp_media_post_id;
+            });
+        });
+    </script>
+    <?php
+}
+
 
 //display links
 function display_link_conta(){

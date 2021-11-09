@@ -98,7 +98,7 @@
                     <button href="#" class="see-less"></button>
                     <button href="#" class="see-more"></button>
                     -->
-                    <button href="#" class="loadmore see-more">Ver mais +</button>
+                    <button href="#" class="loadmore see-more" onclick="more_post('search', '<?= $s; ?>')">Ver mais +</button>
 
             </section>
 
@@ -167,14 +167,8 @@
                     
                 </div>
                 
-
-                <div class="navigation-posts">
-                    <!--  
-                    <button href="#" class="see-less"></button>
-                    <button href="#" class="see-more"></button>
-                    -->
-                    <button href="#" class="loadmore see-more">Ver mais</button>
-                </div>
+                <button href="#" class="loadmore see-more" onclick="more_post('lastPost')">Ver mais +</button>
+                
 
             </section>
 
