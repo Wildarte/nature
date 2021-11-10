@@ -11,7 +11,7 @@
                         'hide_empty' => false
                     ]);
                     foreach($terms as $term){
-                        echo "<a class='category' href='". get_home_url() ."/category/". $term->slug. "'>".$term->name."<img src='".get_template_directory_uri()."/assets/img/icons/next.svg'></a>";        
+                        echo "<a class='category' href='".get_category_link($term->term_id). "'>".$term->name."<img src='".get_template_directory_uri()."/assets/img/icons/next.svg'></a>";        
                     }         
                 ?>
 
