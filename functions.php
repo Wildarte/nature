@@ -68,9 +68,17 @@
 
     //add custom length to excerpt
     function my_excerpt_length($length){
-        return 29;
-        }
-        add_filter('excerpt_length', 'my_excerpt_length');
+        return 22;
+    }
+    add_filter('excerpt_length', 'my_excerpt_length');
+    
+    //function for custom excerpt read more
+    function wpdocs_excerpt_more( $more ) {
+        return '...';
+    }
+    add_filter( 'excerpt_more', 'wpdocs_excerpt_more' );
+
+
 
     // Registrar o Menu
     
@@ -208,10 +216,10 @@
             <?php while ( $blog_posts->have_posts() ) : $blog_posts->the_post(); ?>
                 <div class="latest-posts-item" data-categoria="<?= get_the_category()[0]->slug; ?>">
                     <?php 
-                        $thumb = get_the_post_thumbnail_url(null, 'medium');
+                        $thumb = get_the_post_thumbnail_url(null, 'thumbnail');
                         $thumb == "" ? $thumb = get_template_directory_uri().'/assets/img/thumb-default.jpg' : "";
                     ?>
-                    <img class="image" src="<?= $thumb; ?>">
+                    <div class="image" style="background-size: cover; background-position: center; background-image: url('<?= $thumb; ?>')"></div>
 
                     <div class="text">
                         <?= the_category() ?>
@@ -230,7 +238,7 @@
                 </div>
             <?php endwhile; ?>
             <?php
-        endif;
+        endif;  wp_reset_query(); wp_reset_postdata();
      
         wp_die();
     }

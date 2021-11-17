@@ -440,6 +440,68 @@ function display_posts_options_content_sidebar(){
 }
 //fields para a section de config posts slide ======================================================================
 
+
+//fields para a button load psots ======================================================================
+add_action("admin_init", "display_fields_button_loadpost");
+function display_fields_button_loadpost(){
+    add_settings_section("button_loadpost_section","", "display_button_loadpost", "options_list_posts");
+
+    add_settings_field("show_text_button_loadpost", "Texto de botão que carrega mais posts", "display_text_button_loadpost", "options_list_posts", "button_loadpost_section");
+    add_settings_field("show_button_loadpost_notpost", "Quando não houver mais posts para carregar", "display_button_loadpost_notpost", "options_list_posts", "button_loadpost_section");
+    add_settings_field("show_button_loadpost_msg", "", "display_button_loadpost_msg", "options_list_posts", "button_loadpost_section");
+
+    register_setting("posts_section", "show_text_button_loadpost");
+    register_setting("posts_section", "show_button_loadpost_notpost");
+    register_setting("posts_section", "show_button_loadpost_msg");
+}
+function display_button_loadpost(){
+    ?>
+        <hr>
+        <h2>Configuração do botão de carregar mais posts</h2>
+    <?php
+}
+function display_text_button_loadpost(){
+    ?>
+        <input type="text" name="show_text_button_loadpost" id="show_text_button_loadpost" value="<?= get_option('show_text_button_loadpost'); ?>">
+    <?php
+}
+function display_button_loadpost_notpost(){
+    $option_btn_notpost = get_option('show_button_loadpost_notpost');
+    ?>
+        <select name="show_button_loadpost_notpost" id="show_button_loadpost_notpost">
+            <option value="hide_buttonpost" <?= $option_btn_notpost == "hide_buttonpost" ? "selected" : ""; ?>>Ocultar botão</option>
+            <option value="show_msg"<?= $option_btn_notpost == "show_msg" ? "selected" : ""; ?>>Mostrar mensagem</option>
+        </select>
+        
+    <?php
+}
+function display_button_loadpost_msg(){
+    $option_btn_notpost2 = get_option('show_button_loadpost_notpost');
+    ?>
+        <div id="div_button_loadpost_msg" style="display: <?= $option_btn_notpost2 == "show_msg" ? "block" : "none" ?>">
+        <input type="text" name="show_button_loadpost_msg" id="show_button_loadpost_msg" value="<?= get_option('show_button_loadpost_msg'); ?>"> Mensagem exibida quando não houver mais posts para serem carregados
+        </div>
+        <script>
+            document.getElementById("show_button_loadpost_notpost").addEventListener("change", function(){
+                var val_type = document.getElementById("show_button_loadpost_notpost").value;
+
+                switch(val_type){
+                    case "show_msg":
+                        document.getElementById("div_button_loadpost_msg").style.display = "block";
+                    break;
+                    case "hide_buttonpost":
+                        document.getElementById("div_button_loadpost_msg").style.display = "none";
+                    break;
+                    default:
+                        document.getElementById("div_button_loadpost_msg").style.display = "none";
+                }
+            })
+        </script>
+    <?php
+}
+//fields para a button load psots ======================================================================
+
+
 //fields para o ads sidebar ===================================================
 function display_fields_ads_sidebar(){
     add_settings_section("section_ads_sidebar", "", "display_option_ads_sidebar", "options_ads");

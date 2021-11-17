@@ -94,10 +94,6 @@
                     
                 </div>
                 
-                    <!--  
-                    <button href="#" class="see-less"></button>
-                    <button href="#" class="see-more"></button>
-                    -->
                     <button href="#" class="loadmore see-more" onclick="more_post('search', '<?= $s; ?>')">Ver mais +</button>
 
             </section>

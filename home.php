@@ -385,7 +385,7 @@
                         </div>
                     </div>
 
-                    <?php endwhile; endif; ?> 
+                    <?php endwhile; wp_reset_query(); wp_reset_postdata();  endif; ?> 
 
                 </div>
             </section>
@@ -424,10 +424,10 @@
 
                     <div class="latest-posts-item" data-categoria="<?= get_the_category()[0]->slug; ?>">
                         <?php 
-                            $thumb = get_the_post_thumbnail_url(null, 'medium');
+                            $thumb = get_the_post_thumbnail_url(null, 'thumbnail');
                             $thumb == "" ? $thumb = get_template_directory_uri().'/assets/img/thumb-default.jpg' : "";
                         ?>
-                        <img class="image" src="<?= $thumb; ?>">
+                        <div class="image" style="background-position: center; background-size: cover; background-image: url('<?= $thumb; ?>')"></div>
 
                         <div class="text">
                             <?= the_category() ?>
@@ -448,9 +448,24 @@
                     <?php endwhile; endif; ?>
 
                 </div>
-                   
-                <button href="#" onclick="more_post('category', 'viva-sem-dor')" class="loadmore see-more">Ver mais +</button>
+
+                <?php
+                    $btn_morepost = get_option('show_button_loadpost_notpost');
+                    $msg_button = get_option('show_button_loadpost_msg');
+
+                    if($btn_morepost == "hide_buttonpost"): 
+                ?>
+                <button onclick="more_post('lastPost')" class="loadmore see-more"><span id="text-button-load"><?= get_option('show_text_button_loadpost'); ?></span> <span style="display: none;" class="c-loader"></span> </button>
                 
+                <?php else: ?>
+
+                <button onclick="more_post2('lastPost', '', '<?= $msg_button; ?>')" class="loadmore see-more"><span id="text-button-load"><?= get_option('show_text_button_loadpost'); ?></span> <span style="display: none;" class="c-loader"></span> </button>
+
+                <?php endif; ?>
+                
+                <?php previous_posts_link('<- Voltar '); echo " | ";?>
+                <?php next_posts_link(' Mais ->'); ?>
+
             </section>
         </main>
 
