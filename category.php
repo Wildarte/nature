@@ -50,7 +50,7 @@
                         <div class="text">
                             <?php the_category(); ?>
                             <h4 class="title"><?php the_title(); ?></h4>
-                            <p class="post-summary"><?= get_the_excerpt(); ?></p>
+                            <p class="post-summary"><?= get_first_paragraph(); ?></p>
                             <div class="author">
                                 <?php $mail_user = strval(get_the_author_meta('user_email', false)); ?>
                                 <img src="<?= get_avatar_url($mail_user, '32', '', '', null) ?>">
@@ -65,8 +65,20 @@
                     <?php endwhile; endif; ?>
 
                 </div>
+                
+                <?php
+                    $btn_morepost = get_option('show_button_loadpost_notpost');
+                    $msg_button = get_option('show_button_loadpost_msg');
 
-                <button href="#" onclick='more_post("category","<?= $cat_slug; ?>")' class=" see-more loadmore_category">Ver mais +</button>
+                    if($btn_morepost == "hide_buttonpost"): 
+                ?>
+                <button onclick='more_post("category","<?= $cat_slug; ?>")' class="loadmore see-more"><span id="text-button-load"><?= get_option('show_text_button_loadpost'); ?></span> <span style="display: none;" class="c-loader"></span> </button>
+                
+                <?php else: ?>
+
+                <button onclick='more_post2("category","<?= $cat_slug; ?>", "<?= $msg_button; ?>")' class="loadmore see-more"><span id="text-button-load"><?= get_option('show_text_button_loadpost'); ?></span> <span style="display: none;" class="c-loader"></span> </button>
+
+                <?php endif; ?>
 
             </section>
         </main>

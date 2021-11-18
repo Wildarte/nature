@@ -219,7 +219,7 @@
                         $thumb = get_the_post_thumbnail_url(null, 'thumbnail');
                         $thumb == "" ? $thumb = get_template_directory_uri().'/assets/img/thumb-default.jpg' : "";
                     ?>
-                    <div class="image" style="background-size: cover; background-position: center; background-image: url('<?= $thumb; ?>')"></div>
+                    <div class="image" style="background-position: center; background-size: cover; background-image: url('<?= $thumb; ?>')"></div>
 
                     <div class="text">
                         <?= the_category(); ?>
@@ -243,40 +243,6 @@
         wp_die();
     }
     //this code care about the load post with ajax ===============================================
-
-  
-
-
-    //testar essa funcao
-    function wp_first_paragraph_excerpt( $id=null ) {
-        // Set $id to the current post by default
-        if( !$id ) {
-            global $post;
-            $id = get_the_id();
-        }
-    
-        // Get the post content
-        $content = get_post_field( 'post_content', $id );
-        $content = apply_filters( 'the_content', strip_shortcodes( $content ) );
-    
-        // Remove all tags, except paragraphs
-        $excerpt = strip_tags( $content, '<p></p>' );
-    
-        // Remove empty paragraph tags
-        $excerpt = force_balance_tags( $excerpt );
-        $excerpt = preg_replace( '#<p>\s*+(<br\s*/*>)?\s*</p>#i', '', $excerpt );
-        $excerpt = preg_replace( '~\s?<p>(\s|&nbsp;)+</p>\s?~', '', $excerpt );
-    
-        // Get the first paragraph
-        $excerpt = substr( $excerpt, 0, strpos( $excerpt, '</p>' ) + 4 );
-    
-        // Remove remaining paragraph tags
-        $excerpt = strip_tags( $excerpt );
-    
-        return $excerpt;
-    }
-
-
 
 
     //other test function

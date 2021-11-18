@@ -60,6 +60,8 @@ function more_post2(type, val = "", msg_btn = ""){
             page++;
         } else {
             $('.loadmore').text(msg_btn);
+            $('.loadmore').removeClass("see-more");
+            $('.loadmore').addClass("latest-posts-notpost");
         }
         $('#text-button-load').show();
         $('.c-loader').hide();
@@ -78,6 +80,8 @@ function more_post2(type, val = "", msg_btn = ""){
     $.post(blog.ajaxurl, data2, function(response) {
         if($.trim(response) == '') {
             $('.loadmore').text(msg_btn);
+            $('.loadmore').removeClass("see-more");
+            $('.loadmore').addClass("latest-posts-notpost");
         }
     });
     

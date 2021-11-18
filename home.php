@@ -465,9 +465,6 @@
 
                 <?php endif; ?>
                 
-                <?php previous_posts_link('<- Voltar '); echo " | ";?>
-                <?php next_posts_link(' Mais ->'); ?>
-
             </section>
         </main>
 

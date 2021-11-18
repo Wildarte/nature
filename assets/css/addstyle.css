@@ -1,0 +1,64 @@
+.space-banner-post{
+    max-width: 810px;
+    height: 320px;
+    background-color: #ccc;
+    border-radius: 16px;
+    overflow: hidden;
+}
+.c-loader {
+    display: none;
+    animation: is-rotating 1s infinite;
+    border: 6px solid #e5e5e5;
+    border-radius: 50%;
+    border-top-color: #3B4157;
+    height: 32px;
+    width: 32px;
+}
+#latest-posts .latest-posts-item{
+    display: flex;
+}
+
+.latest-posts-notpost{
+    display: flex;
+    color: #3B4157;
+    margin: 100px auto 50px;
+    border: none;
+    background-color: transparent;
+    font-size: 1.75rem;
+    font-weight: 700;
+    cursor: pointer;
+    -webkit-transition: all .15s ease-in-out;
+    transition: all .15s ease-in-out;
+}
+.latest-posts-notpost:hover{
+    cursor: unset;
+}
+
+@keyframes is-rotating {
+    to {
+        transform: rotate(1turn);
+    }
+}
+@media(max-width: 768px){
+    #latest-posts .latest-posts-item .image{
+        flex-basis: 30%;
+        height: 120px;
+    }
+    #latest-posts .latest-posts-item .text{
+        flex-basis: 65%!important;
+    }
+}
+@media(min-width: 768px){
+    #latest-posts .latest-posts-item .image{
+        height: 160px;
+    }
+}
+@media(max-width: 380px){
+    #latest-posts .latest-posts-item .image{
+        flex-basis: 30%;
+        height: 72px;
+    }
+    #latest-posts .latest-posts-item .text{
+        flex-basis: 65%;
+    }
+}

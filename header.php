@@ -16,38 +16,9 @@
         ?>
         <link rel="stylesheet" href="<?= get_stylesheet_directory_uri(); ?>/assets/css/reseter.css">
         <link rel="stylesheet" href="<?= $page_type_r; ?>">
+        <link rel="stylesheet" href="<?= get_stylesheet_directory_uri(); ?>/assets/css/addstyle.css">
         <style>
-            .space-banner-post{
-                max-width: 810px;
-                height: 320px;
-                background-color: #ccc;
-                border-radius: 16px;
-                overflow: hidden;
-            }
-            .c-loader {
-                display: none;
-                animation: is-rotating 1s infinite;
-                border: 6px solid #e5e5e5;
-                border-radius: 50%;
-                border-top-color: #3B4157;
-                height: 32px;
-                width: 32px;
-            }
-            @keyframes is-rotating {
-                to {
-                    transform: rotate(1turn);
-                }
-            }
-            @media(max-width: 768px){
-                #latest-posts .latest-posts-item .image{
-                    height: 120px;
-                }
-            }
-            @media(min-width: 768px){
-                #latest-posts .latest-posts-item .image{
-                    min-width: 220px
-                }
-            }
+            
         </style>
         <!-- wp header -->
         <?php wp_head(); ?>
