@@ -432,7 +432,7 @@
                         <div class="text">
                             <?= the_category() ?>
                             <h4 class="title"><?= get_the_title(); ?></h4>
-                            <p class="post-summary"><?= get_the_excerpt(); ?></p>
+                            <p class="post-summary"><?= get_first_paragraph(); ?></p>
                             <div class="author">
                                 <?php $mail_user = strval(get_the_author_meta('user_email', false)); ?>
                                 <img src="<?= get_avatar_url($mail_user, '32', '', '', null) ?>">
@@ -444,7 +444,9 @@
                             <a class="link" href="<?php the_permalink(); ?>"></a>
                         </div>
                     </div>
-
+                    <script>
+                        document.querySelectorAll(".latest-posts-item .text .post-summary").style.display = "none";
+                    </script>
                     <?php endwhile; endif; ?>
 
                 </div>

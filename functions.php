@@ -222,9 +222,9 @@
                     <div class="image" style="background-size: cover; background-position: center; background-image: url('<?= $thumb; ?>')"></div>
 
                     <div class="text">
-                        <?= the_category() ?>
+                        <?= the_category(); ?>
                         <h4 class="title"><?= get_the_title(); ?></h4>
-                        <p class="post-summary"><?= get_the_excerpt(); ?></p>
+                        <p class="post-summary"><?= get_first_paragraph(); ?></p>
                         <div class="author">
                             <?php $mail_user = strval(get_the_author_meta('user_email', false)); ?>
                             <img src="<?= get_avatar_url($mail_user, '32', '', '', null) ?>">
@@ -245,4 +245,51 @@
     //this code care about the load post with ajax ===============================================
 
   
+
+
+    //testar essa funcao
+    function wp_first_paragraph_excerpt( $id=null ) {
+        // Set $id to the current post by default
+        if( !$id ) {
+            global $post;
+            $id = get_the_id();
+        }
+    
+        // Get the post content
+        $content = get_post_field( 'post_content', $id );
+        $content = apply_filters( 'the_content', strip_shortcodes( $content ) );
+    
+        // Remove all tags, except paragraphs
+        $excerpt = strip_tags( $content, '<p></p>' );
+    
+        // Remove empty paragraph tags
+        $excerpt = force_balance_tags( $excerpt );
+        $excerpt = preg_replace( '#<p>\s*+(<br\s*/*>)?\s*</p>#i', '', $excerpt );
+        $excerpt = preg_replace( '~\s?<p>(\s|&nbsp;)+</p>\s?~', '', $excerpt );
+    
+        // Get the first paragraph
+        $excerpt = substr( $excerpt, 0, strpos( $excerpt, '</p>' ) + 4 );
+    
+        // Remove remaining paragraph tags
+        $excerpt = strip_tags( $excerpt );
+    
+        return $excerpt;
+    }
+
+
+
+
+    //other test function
+    function get_first_paragraph(){
+        global $post;
+        $str = wpautop( get_the_content() );
+        $str = substr( $str, 0, strpos( $str, ' ' ) + 170 );
+        $str = strip_tags($str, '<a><strong><em><img>');
+        $words =  explode(" ", $str);
+        $text_return = "";
+        for($i = 0; $i < count($words) - 1; $i++):
+            $text_return .= $words[$i]. " ";
+        endfor;
+        return $text_return . ' ...';
+    }
 ?>
