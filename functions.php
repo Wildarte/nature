@@ -245,7 +245,7 @@
     //this code care about the load post with ajax ===============================================
 
 
-    //other test function
+    //function for limit characters of the posts
     function get_first_paragraph(){
         global $post;
         $str = wpautop( get_the_content() );
@@ -258,4 +258,6 @@
         endfor;
         return $text_return . ' ...';
     }
+
+
 ?>

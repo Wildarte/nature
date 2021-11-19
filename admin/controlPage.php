@@ -168,7 +168,7 @@ function display_fields_popup(){
     add_settings_field("popup_color", "Cor da Popup", "display_popup_color", "theme-options", "popup_section");
     add_settings_field("popup_cookie", "Controle de exibição", "display_cookie_popup", "theme-options", "popup_section");
     add_settings_field("setup_popup_cookie", "", "display_setup_cookie_popup", "theme-options", "popup_section");
-    add_settings_field("popup_show", "Oculpar Popup em", "display_show_popup", "theme-options", "popup_section");
+    add_settings_field("popup_show", "Ocultar Popup em", "display_show_popup", "theme-options", "popup_section");
     add_settings_field("onoff_popup", "ON/OFF Popup", "display_onoff_popup", "theme-options", "popup_section");
 
     register_setting("links_popup_section", "popup_link");
@@ -1164,7 +1164,7 @@ function display_lista_posts_slide(){
 }
 function display_slide_post_count(){
     ?>
-        <input type="number" style="width: 64px" name="show_slide_post_count" id="show_slide_post_count" value="<?= get_option('show_slide_post_count') != "" ? get_option('show_slide_post_count') : "4"; ?>"> Padrão é 4
+        <input type="number" style="width: 64px" name="show_slide_post_count" id="show_slide_post_count" value="<?= get_option('show_slide_post_count') != "" ? get_option('show_slide_post_count') : "4"; ?>">
         <?php echo "<p><strong>Método de listagem atual: </strong>";
             $slide_post = get_option('show_slide_post');
 
@@ -1354,7 +1354,7 @@ function display_lista_posts_sidebar(){
 }
 function display_sidebar_post_count(){
     ?>
-        <input type="number" style="width: 64px" name="show_sidebar_post_count" id="show_sidebar_post_count" value="<?= get_option('show_sidebar_post_count') != "" ? get_option('show_sidebar_post_count') : "5"; ?>"> Padrão é 5
+        <input type="number" style="width: 64px" name="show_sidebar_post_count" id="show_sidebar_post_count" value="<?= get_option('show_sidebar_post_count') != "" ? get_option('show_sidebar_post_count') : "5"; ?>">
         <?php echo "<p><strong>Método de listagem atual: </strong>";
             $slide_post = get_option('show_sidebar_post');
 

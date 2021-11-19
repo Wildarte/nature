@@ -2096,7 +2096,7 @@ header {
     padding-bottom: 60px;
   }
   .news-carousel .news-item .item-head .banner {
-    max-height: 220px;
+    /*max-height: 220px;*/
     -o-object-fit: cover;
        object-fit: cover;
   }

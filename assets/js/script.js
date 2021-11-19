@@ -95,3 +95,5 @@ $('.search-form input').on('input', function() {
     if($(this).val().length > 0) $('.search-form').addClass('not-empty')
     else $('.search-form').removeClass('not-empty')
 });
+
+$('body.topbar-open').removeClass('topbar-open');

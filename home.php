@@ -15,9 +15,14 @@
             </style>
             <h2 class="main-title">Conteúdo</h2>
             <div class="news-carousel">
-              
+            <style>
+                        .owl-stage{
+                            display: flex;
+                            align-items: flex-start;
+                        }
+                    </style>
                 <div class="carousel-wrapper">
-
+                    
                     <?php
                         
                         $slide_post = get_option('show_slide_post');
@@ -155,14 +160,14 @@
                                             $thumb = get_the_post_thumbnail_url(null, 'larger');
                                             $thumb == "" ? $thumb = get_template_directory_uri().'/assets/img/thumb-default.jpg' : "";
                                         ?>
-                                        <img class="banner" src="<?= $thumb; ?>">
+                                        <div class="banner" style="background-image: url('<?= $thumb; ?>')"></div>
                                         <div class="navigation"></div>
                                     </div>
 
                                     <div class="item-body">
                                         <?= the_category() ?>
                                         <h3 class="title"><?= get_the_title(); ?></h3>
-                                        <p class="post-summary"><?= get_the_excerpt(); ?></p>
+                                        <p class="post-summary"><?= get_first_paragraph(); ?></p>
 
                                         <div class="author">
                                         <?php $mail_user = strval(get_the_author_meta('user_email', false)); ?>
@@ -189,14 +194,14 @@
                                 $thumb = get_the_post_thumbnail_url(null, 'larger');
                                 $thumb == "" ? $thumb = get_template_directory_uri().'/assets/img/thumb-default.jpg' : "";
                             ?>
-                            <img class="banner" src="<?= $thumb; ?>">
+                            <div class="banner" style="background-image: url('<?= $thumb; ?>')"></div>
                             <div class="navigation"></div>
                         </div>
 
                         <div class="item-body">
                             <?= the_category() ?>
                             <h3 class="title"><?= get_the_title(); ?></h3>
-                            <p class="post-summary"><?= get_the_excerpt(); ?></p>
+                            <p class="post-summary"><?= get_first_paragraph(); ?></p>
 
                             <div class="author">
                             <?php $mail_user = strval(get_the_author_meta('user_email', false)); ?>
