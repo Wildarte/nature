@@ -29,9 +29,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
 })
 
-$('#latest-posts .tab h4').on('click', function() {
-    filterPosts(this)
-})
+//$('#latest-posts .tab h4').on('click', function() {
+//    var at = $(this).attr('data-categoria');
+//    console.log("valor categoria: "+at);
+//    filterPosts(this, "more_post_mobile('category', '"+at+"')");
+//})
+
 $('.strip .close').on('click', function() {
     $('.strip').slideUp(50);
 
@@ -71,7 +74,7 @@ function refreshCarousel(carousel, options) {
     $(carousel).owlCarousel(options);
 }
 
-function filterPosts(el) {
+function filterPosts(el, cat = '') {
     const categoria = $(el).attr('data-categoria');
     $('#latest-posts .tab h4').removeClass('active');
     $(el).addClass('active');
@@ -86,6 +89,8 @@ function filterPosts(el) {
         $(`[data-categoria=${categoria}]`).last().addClass('last-item');
         $(`[data-categoria=${categoria}]`).removeClass('hidden');
     }, 150); // duração do transition no css
+
+    $('.loadmore').attr('onclick', cat);
 }
 
 
@@ -97,3 +102,9 @@ $('.search-form input').on('input', function() {
 });
 
 $('body.topbar-open').removeClass('topbar-open');
+
+
+
+
+
+

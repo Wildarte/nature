@@ -412,13 +412,18 @@
                 <h2>Últimas postagens</h2>
                 <div class="tab">
                     <?php
+
                         $terms = get_terms([
                             'taxonomy' => 'category',
                             'hide_empty' => false
                         ]);
                         foreach($terms as $term){
-                            echo "<h4 data-categoria='".$term->slug."'>".$term->name."</h4>";        
-                        }         
+                            
+                            echo "<h4 data-categoria='".$term->slug."' class='' id='".$term->term_id."'>".$term->name."</h4>";
+                            
+                        }
+                       
+                        
                     ?>
                 </div>
 
@@ -450,7 +455,7 @@
                         </div>
                     </div>
                     <script>
-                        document.querySelectorAll(".latest-posts-item .text .post-summary").style.display = "none";
+                        //document.querySelectorAll(".latest-posts-item .text .post-summary").style.display = "none";
                     </script>
                     <?php endwhile; endif; ?>
 

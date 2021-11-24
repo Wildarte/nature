@@ -46,20 +46,8 @@
                 <p>Foram encontrados <b class="results-count"><?= $count_posts; ?></b> posts para sua pesquisa.</p>
             </section>
 
-            <section id="latest-posts">
-                <div class="tab">
-
-                    <?php
-                        $terms = get_terms([
-                            'taxonomy' => 'category',
-                            'hide_empty' => false
-                        ]);
-                        foreach($terms as $term){
-                            echo "<h4 data-categoria='".$term->slug."'>".$term->name."</h4>";        
-                        }         
-                    ?>
-                    
-                </div>
+            <section id="latest-posts" style="background-color: transparent; padding-top: 8px">
+                
 
                 <div class="content">
 
@@ -67,7 +55,7 @@
 
                     <div class="latest-posts-item" data-categoria="<?= get_the_category()[0]->slug; ?>">
                         <?php 
-                            $thumb = get_the_post_thumbnail_url(null, 'medium');
+                            $thumb = get_the_post_thumbnail_url(null, 'thumbnail');
                             $thumb == "" ? $thumb = get_template_directory_uri().'/assets/img/thumb-default.jpg' : "";
                         ?>
                         <img class="image" src="<?= $thumb; ?>">
@@ -127,20 +115,8 @@
                 <p>Mas talvez você goste desse conteúdo:</p>
             </section>
 
-            <section id="latest-posts">
-                <div class="tab">
-
-                    <?php
-                        $terms = get_terms([
-                            'taxonomy' => 'category',
-                            'hide_empty' => false
-                        ]);
-                        foreach($terms as $term){
-                            echo "<h4 data-categoria='".$term->slug."'>".$term->name."</h4>";        
-                        }         
-                    ?>
-                    
-                </div>
+            <section id="latest-posts" >
+                
 
                 <div class="content">
                         
@@ -148,7 +124,7 @@
 
                     <div class="latest-posts-item" data-categoria="<?= get_the_category()[0]->slug; ?>">
                         <?php 
-                            $thumb = get_the_post_thumbnail_url(null, 'medium');
+                            $thumb = get_the_post_thumbnail_url(null, 'thumbnail');
                             $thumb == "" ? $thumb = get_template_directory_uri().'/assets/img/thumb-default.jpg' : "";
                         ?>
                         <img class="image" src="<?= $thumb; ?>">

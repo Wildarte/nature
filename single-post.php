@@ -33,58 +33,7 @@
                    
                 </div>
             </article>
-            
-            <script>
-
-                //get all p element in article-body class
-                var count_paragraph = document.querySelectorAll(".article-body p");
-
-                //contagem de palavras em toodo artigo
-                var all_text = "";
-                for(var n = 0; n < count_paragraph.length; n++){
-                    all_text += count_paragraph[n].innerHTML;
-                }
-                //contagem de palavras em toodo artigo
-
-                //get the count of words in article
-                var count_words_all_text = all_text.split(" ").length;
-
-                //get the article-body class
-                var content_article = document.querySelector(".article-body");
-
-                //create the new element that will add to article
-                var new_element = document.createElement("div");
-                new_element.classList.add("space-banner-post");
-                var code_banner = '<?= get_post_meta(get_the_ID(), 'meta_textarea_banner', true); ?>';
-                
-                
-
-                //se existir mais de 3 parágrafos no artigo e mais de 150 palavras, será exibido um banner dentro do texto do artigo
-                if(count_paragraph.length > 3 && count_words_all_text > 150){
-
-                    //get count of words in paragraph
-                    var avg_words = count_paragraph[0].innerHTML.split(" ").length;
-                    if(avg_words > 50){
-                        content_article.insertBefore(new_element, count_paragraph[1]);
-                    }else{
-                        content_article.insertBefore(new_element, count_paragraph[2]);
-                    }
-
-                }
-
-                var banners = document.querySelectorAll(".space-banner-post");
-
-                banners.forEach(function(banner){
-                    banner.innerHTML = code_banner;
-                })
-
-                //caso o campo banner esteja vazio nao mostra as divs de banner
-                <?php if(get_post_meta(get_the_ID(), 'meta_textarea_banner', true) == ""): ?>
-                    document.querySelector(".space-banner-post").style.display = "none";
-                <?php endif; ?>
-                
-            </script>
-
+    
             <section id="related-posts">
                 
                 <?php

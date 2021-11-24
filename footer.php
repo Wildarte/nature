@@ -118,11 +118,13 @@
                         setCookie('cnature', 'content', setup_cookie_days);
                     });
 
+
                 </script>
                 <?php
                 
                 endif;
             ?>
+            
             
         <!-- wp footer -->
         <?php wp_footer(); ?>
@@ -139,7 +141,172 @@ else:
     <?php
 endif;
 ?>
+<script>
+ 
+<?php
+    $terms = get_terms([
+        'taxonomy' => 'category',
+        'hide_empty' => false
+    ]);    
+?>
+<?php foreach($terms as $term): ?>
+    var show_btn<?= $term->term_id; ?> = true;
+<?php endforeach; ?>  
+if( $(window).width() < 980){
+    console.log("menor");
+    if(document.querySelector("#latest-posts .content")){
+        document.querySelector("#latest-posts .content").innerHTML = "";
+    }
+    <?php
+        
+        $option_select_mobile_category = get_option('show_select_mobile_category');
+        
+        foreach($terms as $term):
+            if($term->term_id == $option_select_mobile_category):
+    ?>
+    more_post_mobile<?= $term->term_id; ?>('category', '<?= $term->slug; ?>');
+    filterPosts('#latest-posts .tab h4[data-categoria="<?= $term->slug; ?>"]', 'more_post_mobile<?= $term->term_id; ?>("category", "<?= $term->slug; ?>")');
+    pageMobile<?= $term->term_id; ?>++;
+    <?php endif; endforeach; ?>
+}else{
+    console.log("maior");
+}
 
+
+<?php $btn_morepost2 = get_option('show_button_loadpost_notpost') ?>
+var msg_button2 = "<?= get_option('show_button_loadpost_msg'); ?>";
+
+
+<?php  foreach($terms as $term): ?>
+
+var pageMobile<?= $term->term_id ?> = 1;
+function more_post_mobile<?= $term->term_id; ?>(type, val = "", catPage){
+
+    $('#text-button-load').hide();
+    $('.c-loader').show();
+
+    console.log("valor da variável pageMobile<?= $term->term_id; ?>: "+pageMobile<?= $term->term_id; ?>);
+    var data = {
+        'action': 'load_posts_by_ajax',
+        'page': pageMobile<?= $term->term_id; ?>,
+        'security': blog.security,
+        'type' : type,
+        'category' : val,
+        'search' : val
+    };
+    console.log("valor da variável depois do var pageMobile<?= $term->term_id; ?>: "+pageMobile<?= $term->term_id; ?>);
+    
+
+    $.post(blog.ajaxurl, data, function(response) {
+        if($.trim(response) != '') {
+            $('#latest-posts .content').append(response);
+            pageMobile<?= $term->term_id; ?>++;
+        } else {
+            if(!show_btn<?= $term->term_id; ?>){
+                <?php if($btn_morepost2 == "hide_buttonpost"): ?>
+                    $('.loadmore').hide();
+                <?php else: ?>
+                    $('.loadmore').text(msg_button2);
+                    $('.loadmore').removeClass("see-more");
+                    $('.loadmore').addClass("latest-posts-notpost");
+                <?php endif; ?>
+            }
+            show_btn<?= $term->term_id; ?> = false;
+        }
+        $('#text-button-load').show();
+        $('.c-loader').hide();
+    });
+
+
+    pageMobile<?= $term->term_id; ?>2 = pageMobile<?= $term->term_id; ?>+1
+    var data2 = {
+        'action': 'load_posts_by_ajax',
+        'page': pageMobile<?= $term->term_id; ?>2,
+        'security': blog.security,
+        'type' : type,
+        'category' : val,
+        'search' : val
+    }
+    $.post(blog.ajaxurl, data2, function(response) {
+        if($.trim(response) == '') {
+            show_btn<?= $term->term_id; ?> = false;
+            if(!show_btn<?= $term->term_id; ?>){
+                <?php if($btn_morepost2 == "hide_buttonpost"): ?>
+                    $('.loadmore').hide();
+                <?php else: ?>
+                    $('.loadmore').text(msg_button2);
+                    $('.loadmore').removeClass("see-more");
+                    $('.loadmore').addClass("latest-posts-notpost");
+                <?php endif; ?>
+            }
+        }
+    });
+    
+}
+                                    
+<?php endforeach; ?>
+
+<?php foreach($terms as $term):
+/*
+$('#latest-posts .tab h4').on('click', function() {
+    var at = $(this).attr('data-categoria');
+    var id_cat = $(this).attr('id');
+    var func_btn = "";
+    console.log("valor categoria: "+at);
+    if(eval("show_btn"+id_cat)){
+        var func_btn = "more_post_mobile"+id_cat+"('category', '"+at+"')";
+        $('.loadmore').show();
+    }else{
+        $('.loadmore').hide();
+    }
+    if(eval("pageMobile"+id_cat) == 1){
+        var at = $(this).attr('data-categoria');
+        console.log("valor categoria: "+at);
+        
+        //eval("more_post_mobile"+id_cat+"('category', '"+at+"')");
+        
+    }
+    filterPosts(this, func_btn);
+    console.log("valor da show_btn"+id_cat+": "+ eval("show_btn"+id_cat));
+    console.log("categoria: "+at);
+});
+*/    
+    
+?>
+
+
+$('#latest-posts .tab h4[data-categoria="<?= $term->slug; ?>"]').on('click', function() {
+    //var at = $(this).attr('data-categoria');
+    var id_cat = $(this).attr('id');
+    var func_btn = "";
+    console.log("valor categoria: <?= $term->slug ?>");
+    if(show_btn<?= $term->term_id;//verificar se a variavel que permite exibir o botão é verdadeira ?>){
+        
+        $('.loadmore').show();
+        $('.loadmore').removeClass("latest-posts-notpost");
+        $('.loadmore').addClass("see-more");
+        var func_btn = "more_post_mobile<?= $term->term_id; ?>('category', '<?= $term->slug; ?>')";
+        document.querySelector(".loadmore").innerHTML = '<span id="text-button-load" style=""><?= get_option('show_text_button_loadpost'); ?></span><span style="display: none;" class="c-loader"></span>';
+        
+    }else{
+        $('.loadmore').text(msg_button2);
+        $('.loadmore').removeClass("see-more");
+        $('.loadmore').addClass("latest-posts-notpost");
+    }
+    if(pageMobile<?= $term->term_id; ?> == 1){
+        //var at = $(this).attr('data-categoria');
+        $('#text-button-load').hide();
+        $('.c-loader').show();
+        more_post_mobile<?= $term->term_id; ?>('category', '<?= $term->slug; ?>');
+        
+    }
+    filterPosts(this, func_btn);
+    console.log("valor da show_btn<?= $term->term_id; ?>: "+ show_btn<?= $term->term_id; ?>);
+    console.log("categoria: <?= $term->slug ?>");
+});
+<?php endforeach; ?>
+                        
+            </script>
     </body>
 
 </html>

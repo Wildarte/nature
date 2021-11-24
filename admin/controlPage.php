@@ -441,7 +441,7 @@ function display_posts_options_content_sidebar(){
 //fields para a section de config posts slide ======================================================================
 
 
-//fields para a button load psots ======================================================================
+//fields para a button load posts ======================================================================
 add_action("admin_init", "display_fields_button_loadpost");
 function display_fields_button_loadpost(){
     add_settings_section("button_loadpost_section","", "display_button_loadpost", "options_list_posts");
@@ -499,7 +499,44 @@ function display_button_loadpost_msg(){
         </script>
     <?php
 }
-//fields para a button load psots ======================================================================
+//fields para a button load posts ======================================================================
+
+
+//fields para exibir categorias no mobile =========================================================
+add_action("admin_init", "display_fields_mobile_category");
+function display_fields_mobile_category(){
+    add_settings_section("mobile_category_section","", "display_mobile_category", "options_list_posts");
+
+    add_settings_field("show_select_mobile_category", "Selecione a categoria", "display_select_mobile_category", "options_list_posts", "mobile_category_section");
+
+    register_setting("posts_section", "show_select_mobile_category");
+}
+function display_mobile_category(){
+    ?>
+        <hr>
+        <h2>Configuração das categorias no mobile</h2>
+    <?php
+}
+function display_select_mobile_category(){
+    $option_select_category_mobile = get_option('show_select_mobile_category');
+    
+    ?>
+        <select name="show_select_mobile_category" id="show_select_mobile_category" >
+            
+            <?php
+                $terms = get_terms([
+                    'taxonomy' => 'category',
+                    'hide_empty' => false,
+                    //'exclude' => $term_id
+                ]);
+                foreach($terms as $term){ ?>
+                    <option value='<?= $term->term_id; ?>' <?= $option_select_category_mobile == $term->term_id ? "selected" : ""; ?>><?= $term->name; ?> </option>      
+                <?php }  
+            ?>
+        </select> 
+    <?php
+}
+//fields para exibir categorias no mobile =========================================================
 
 
 //fields para o ads sidebar ===================================================

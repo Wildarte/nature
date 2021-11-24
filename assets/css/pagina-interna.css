@@ -2187,7 +2187,8 @@ img.desktop {
     padding: 0;
   }
   #whatsapp {
-    display: none;
+    display: flex;
+    margin: 120px 20px 40px;
   }
   .related-posts-container {
     display: -webkit-box;
