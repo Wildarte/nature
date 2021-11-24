@@ -164,7 +164,7 @@ function display_fields_popup(){
     add_settings_field("popup_aviso_link", "Texto do link da Popup", "display_link_aviso_popup", "theme-options", "popup_section");
     add_settings_field("popup_aviso_label", "Texto do Label da Popup", "display_popup_aviso_label", "theme-options", "popup_section");
     add_settings_field("popup_aviso_label_color", "Cor do label", "display_popup_aviso_label_color", "theme-options", "popup_section");
-    add_settings_field("popup_icon_attachment_id", "ícone da Popup", "display_icon_popup", "theme-options", "popup_section");
+    add_settings_field("popup_icon_img", "ícone da Popup", "display_icon_popup", "theme-options", "popup_section");
     add_settings_field("popup_color", "Cor da Popup", "display_popup_color", "theme-options", "popup_section");
     add_settings_field("popup_cookie", "Controle de exibição", "display_cookie_popup", "theme-options", "popup_section");
     add_settings_field("setup_popup_cookie", "", "display_setup_cookie_popup", "theme-options", "popup_section");
@@ -175,7 +175,7 @@ function display_fields_popup(){
     register_setting("links_popup_section", "popup_aviso_link");
     register_setting("links_popup_section", "popup_aviso_label");
     register_setting("links_popup_section", "popup_aviso_label_color");
-    register_setting("links_popup_section", "popup_icon_attachment_id");
+    register_setting("links_popup_section", "popup_icon_img");
     register_setting("links_popup_section", "popup_color");
     register_setting("links_popup_section", "popup_cookie");
     register_setting("links_popup_section", "setup_popup_cookie");
@@ -267,21 +267,22 @@ function display_popup_color(){
 function display_icon_popup(){
     ?>
         
-        <?php $id_image = get_option('popup_icon_attachment_id'); ?>
+        <?php $id_image = get_option('popup_icon_img'); ?>
+        <!--
         <img src="<?= wp_get_attachment_image_url( $id_image, 'thumbnail' ); ?>" alt="" srcset="">
-         
+        -->
         
         <?php
-if ( isset( $_POST['submit_image_selector'] ) && isset( $_POST['popup_icon_attachment_id'] ) ) :
-        update_option( 'media_selector_attachment_id', absint( $_POST['popup_icon_attachment_id'] ) );
+if ( isset( $_POST['submit_image_selector'] ) && isset( $_POST['popup_icon_img'] ) ) :
+        update_option( 'popup_icon_img', absint( $_POST['popup_icon_img'] ) );
     endif;
     wp_enqueue_media();
     ?>
         <div class='image-preview-wrapper'>
-            <img  style="max-width: 200px" id='image-preview' src='<?php echo wp_get_attachment_url( get_option( 'media_selector_attachment_id' ) ); ?>' width='200'>
+            <img  style="max-width: 24px" id='image-preview' src='<?php echo wp_get_attachment_url( get_option( 'popup_icon_img' ) ); ?>' width='200'>
         </div>
         <input id="upload_image_button" type="button" class="button" value="<?php _e( 'Atualizar imagem' ); ?>" />
-        <input type='hidden' name='popup_icon_attachment_id' id='popup_icon_attachment_id' value='<?php echo get_option( 'popup_icon_attachment_id' ); ?>'>
+        <input type='hidden' name='popup_icon_img' id='popup_icon_img' value='<?php echo get_option( 'popup_icon_img' ); ?>'>
         <input type="submit" name="submit_image_selector" value="Salvar" class="button-primary">
     
 <?php
@@ -312,7 +313,7 @@ $my_saved_attachment_post_id = get_option( 'media_selector_attachment_id', 0 );
                     attachment = file_frame.state().get('selection').first().toJSON();
                     // Do something with attachment.id and/or attachment.url here
                     $( '#image-preview' ).attr( 'src', attachment.url ).css( 'width', 'auto' );
-                    $( '#popup_icon_attachment_id' ).val( attachment.id );
+                    $( '#popup_icon_img' ).val( attachment.id );
                     // Restore the main post ID
                     wp.media.model.settings.post.id = wp_media_post_id;
                 });
@@ -548,6 +549,9 @@ function display_fields_ads_sidebar(){
     add_settings_field("show_text_ads_sidebar", "Texto Ads", "display_text_ads_sidebar", "options_ads", "section_ads_sidebar");
     add_settings_field("show_link_ads_sidebar", "Link Ads", "display_link_ads_sidebar", "options_ads", "section_ads_sidebar");
     add_settings_field("show_cta_ads_sidebar", "CTA Ads", "display_cta_ads_sidebar", "options_ads", "section_ads_sidebar");
+    add_settings_field("show_color_txt_cta_ads_sidebar", "Cor do texto do botão Ads", "display_color_txt_cta_ads_sidebar", "options_ads", "section_ads_sidebar");
+    add_settings_field("show_color_cta_ads_sidebar", "Cor de fundo do botão CTA", "display_color_cta_ads_sidebar", "options_ads", "section_ads_sidebar");
+    add_settings_field("show_color_ads_sidebar", "Cor de fundo do Banner", "display_color_ads_sidebar", "options_ads", "section_ads_sidebar");
     add_settings_field("show_onoff_ads_sidebar", "ON/OFF Ads", "display_onoff_ads_sidebar", "options_ads", "section_ads_sidebar");
 
     register_setting("ads_section", "show_img_ads_sidebar");
@@ -555,6 +559,9 @@ function display_fields_ads_sidebar(){
     register_setting("ads_section", "show_text_ads_sidebar");
     register_setting("ads_section", "show_link_ads_sidebar");
     register_setting("ads_section", "show_cta_ads_sidebar");
+    register_setting("ads_section", "show_color_txt_cta_ads_sidebar");
+    register_setting("ads_section", "show_color_cta_ads_sidebar");
+    register_setting("ads_section", "show_color_ads_sidebar");
     register_setting("ads_section", "show_onoff_ads_sidebar");
 }
 add_action("admin_init", "display_fields_ads_sidebar");
@@ -573,7 +580,7 @@ function display_img_ads_sidebar(){
          -->
     <?php
     if ( isset( $_POST['submit_image_selector'] ) && isset( $_POST['show_img_ads_sidebar'] ) ) :
-        update_option( 'media_selector_attachment_id', absint( $_POST['show_img_ads_sidebar'] ) );
+        update_option( 'show_img_ads_sidebar', absint( $_POST['show_img_ads_sidebar'] ) );
     endif;
     wp_enqueue_media();
     ?>
@@ -659,6 +666,93 @@ function display_cta_ads_sidebar(){
         <input type="text" name="show_cta_ads_sidebar" id="show_cta_ads_sidebar" value="<?= get_option('show_cta_ads_sidebar'); ?>">
     <?php
 }
+function display_color_txt_cta_ads_sidebar(){
+    $option_color_sidebar = get_option('show_color_txt_cta_ads_sidebar');
+    ?>
+        <style>
+            .btn_reset_color_txt_ads_sidebar{
+                display: inline;
+                border: none;
+                height: 27px;
+                width: 27px;
+                padding: 2px;
+                border: 1px solid #333;
+                border-radius: 50%;
+                color: #000;
+                font-size: 1.4em;
+                font-weight: 600;
+            }
+            .btn_reset_color_txt_ads_sidebar:hover{
+                cursor: pointer;
+            }
+        </style>
+        <input type="color" name="show_color_txt_cta_ads_sidebar" id="show_color_txt_cta_ads_sidebar" value="<?= $option_color_sidebar != "" ? $option_color_sidebar : "#ffffff"; ?>">
+        <span class="btn_reset_color_txt_ads_sidebar">&#8635;</span>
+        <script>
+            document.querySelector(".btn_reset_color_txt_ads_sidebar").addEventListener("click", function(){
+                document.getElementById("show_color_txt_cta_ads_sidebar").value = "#ffffff";
+            });
+        </script>
+    <?php
+}
+function display_color_cta_ads_sidebar(){
+    $option_color_sidebar = get_option('show_color_cta_ads_sidebar');
+    ?>
+        <style>
+            .btn_reset_color_cta_ads_sidebar{
+                display: inline;
+                border: none;
+                height: 27px;
+                width: 27px;
+                padding: 2px;
+                border: 1px solid #333;
+                border-radius: 50%;
+                color: #000;
+                font-size: 1.4em;
+                font-weight: 600;
+            }
+            .btn_reset_color_cta_ads_sidebar:hover{
+                cursor: pointer;
+            }
+        </style>
+        <input type="color" name="show_color_cta_ads_sidebar" id="show_color_cta_ads_sidebar" value="<?= $option_color_sidebar != "" ? $option_color_sidebar : "#5B90B9"; ?>">
+        <span class="btn_reset_color_cta_ads_sidebar">&#8635;</span>
+        <script>
+            document.querySelector(".btn_reset_color_cta_ads_sidebar").addEventListener("click", function(){
+                document.getElementById("show_color_cta_ads_sidebar").value = "#5B90B9";
+            });
+        </script>
+    <?php
+}
+function display_color_ads_sidebar(){
+    $option_color_sidebar = get_option('show_color_ads_sidebar');
+    ?>
+        <style>
+            .btn_reset_color_ads_sidebar{
+                display: inline;
+                border: none;
+                height: 27px;
+                width: 27px;
+                padding: 2px;
+                border: 1px solid #333;
+                border-radius: 50%;
+                color: #000;
+                font-size: 1.4em;
+                font-weight: 600;
+            }
+            .btn_reset_color_ads_sidebar:hover{
+                cursor: pointer;
+            }
+        </style>
+        <input type="color" name="show_color_ads_sidebar" id="show_color_ads_sidebar" value="<?= $option_color_sidebar != "" ? $option_color_sidebar : "#ffffff"; ?>">
+        <span class="btn_reset_color_ads_sidebar">&#8635;</span>
+        <script>
+            document.querySelector(".btn_reset_color_ads_sidebar").addEventListener("click", function(){
+                document.getElementById("show_color_ads_sidebar").value = "#ffffff";
+            });
+        </script>
+    <?php
+}
 function display_onoff_ads_sidebar(){
     ?>
         <style>.switch{position:relative;display:inline-block;width:50px;height:24px}.switch input{opacity:0;width:0;height:0}.slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:green;-webkit-transition:.4s;transition:.4s}.slider:before{position:absolute;content:"";height:16px;width:16px;left:4px;bottom:4px;background-color:#fff;-webkit-transition:.4s;transition:.4s}input:checked+.slider{background-color:#999}input:focus+.slider{box-shadow:0 0 1px #2196f3}input:checked+.slider:before{-webkit-transform:translateX(26px);-ms-transform:translateX(26px);transform:translateX(26px)}.slider.round{border-radius:34px}.slider.round:before{border-radius:50%}</style>
@@ -679,6 +773,9 @@ function display_fields_ads_footer(){
     add_settings_field("show_text_ads_footer", "Texto Ads", "display_text_ads_footer", "options_ads", "section_ads_footer");
     add_settings_field("show_link_ads_footer", "Link Ads", "display_link_ads_footer", "options_ads", "section_ads_footer");
     add_settings_field("show_cta_ads_footer", "CTA Ads", "display_cta_ads_footer", "options_ads", "section_ads_footer");
+    add_settings_field("show_color_txt_cta_ads_footer", "Cor do texto do botão Ads", "display_color_txt_cta_ads_footer", "options_ads", "section_ads_footer");
+    add_settings_field("show_color_cta_ads_footer", "Cor de fundo do botão CTA", "display_color_cta_ads_footer", "options_ads", "section_ads_footer");
+    add_settings_field("show_color_ads_footer", "Cor de fundo do Banner", "display_color_ads_footer", "options_ads", "section_ads_footer");
     add_settings_field("show_onoff_ads_footer", "ON/OFF Ads", "display_onoff_ads_footer", "options_ads", "section_ads_footer");
 
     register_setting("ads_section", "show_img_ads_footer");
@@ -686,6 +783,9 @@ function display_fields_ads_footer(){
     register_setting("ads_section", "show_text_ads_footer");
     register_setting("ads_section", "show_link_ads_footer");
     register_setting("ads_section", "show_cta_ads_footer");
+    register_setting("ads_section", "show_color_txt_cta_ads_footer");
+    register_setting("ads_section", "show_color_cta_ads_footer");
+    register_setting("ads_section", "show_color_ads_footer");
     register_setting("ads_section", "show_onoff_ads_footer");
 }
 add_action("admin_init", "display_fields_ads_footer");
@@ -765,6 +865,93 @@ $my_saved_attachment_post_id = get_option( 'media_selector_attachment_id', 0 );
 function display_title_ads_footer(){
     ?>
         <input type="text" name="show_title_ads_footer" id="show_title_ads_footer" value="<?= get_option('show_title_ads_footer'); ?>">
+    <?php
+}
+function display_color_txt_cta_ads_footer(){
+    $option_color_footer = get_option('show_color_txt_cta_ads_footer');
+    ?>
+        <style>
+            .btn_reset_color_txt_ads_footer{
+                display: inline;
+                border: none;
+                height: 27px;
+                width: 27px;
+                padding: 2px;
+                border: 1px solid #333;
+                border-radius: 50%;
+                color: #000;
+                font-size: 1.4em;
+                font-weight: 600;
+            }
+            .btn_reset_color_txt_ads_footer:hover{
+                cursor: pointer;
+            }
+        </style>
+        <input type="color" name="show_color_txt_cta_ads_footer" id="show_color_txt_cta_ads_footer" value="<?= $option_color_footer != "" ? $option_color_footer : "#3B4157"; ?>">
+        <span class="btn_reset_color_txt_ads_footer">&#8635;</span>
+        <script>
+            document.querySelector(".btn_reset_color_txt_ads_footer").addEventListener("click", function(){
+                document.getElementById("show_color_txt_cta_ads_footer").value = "#3B4157";
+            });
+        </script>
+    <?php
+}
+function display_color_cta_ads_footer(){
+    $option_color_footer = get_option('show_color_cta_ads_footer');
+    ?>
+        <style>
+            .btn_reset_color_cta_ads_footer{
+                display: inline;
+                border: none;
+                height: 27px;
+                width: 27px;
+                padding: 2px;
+                border: 1px solid #333;
+                border-radius: 50%;
+                color: #000;
+                font-size: 1.4em;
+                font-weight: 600;
+            }
+            .btn_reset_color_cta_ads_footer:hover{
+                cursor: pointer;
+            }
+        </style>
+        <input type="color" name="show_color_cta_ads_footer" id="show_color_cta_ads_footer" value="<?= $option_color_footer != "" ? $option_color_footer : "#ffffff"; ?>">
+        <span class="btn_reset_color_cta_ads_footer">&#8635;</span>
+        <script>
+            document.querySelector(".btn_reset_color_cta_ads_footer").addEventListener("click", function(){
+                document.getElementById("show_color_cta_ads_footer").value = "#ffffff";
+            });
+        </script>
+    <?php
+}
+function display_color_ads_footer(){
+    $option_color_footer = get_option('show_color_ads_footer');
+    ?>
+        <style>
+            .btn_reset_color_ads_footer{
+                display: inline;
+                border: none;
+                height: 27px;
+                width: 27px;
+                padding: 2px;
+                border: 1px solid #333;
+                border-radius: 50%;
+                color: #000;
+                font-size: 1.4em;
+                font-weight: 600;
+            }
+            .btn_reset_color_ads_footer:hover{
+                cursor: pointer;
+            }
+        </style>
+        <input type="color" name="show_color_ads_footer" id="show_color_ads_footer" value="<?= $option_color_footer != "" ? $option_color_footer : "#3B4157"; ?>">
+        <span class="btn_reset_color_ads_footer">&#8635;</span>
+        <script>
+            document.querySelector(".btn_reset_color_ads_footer").addEventListener("click", function(){
+                document.getElementById("show_color_ads_footer").value = "#3B4157";
+            });
+        </script>
     <?php
 }
 function display_text_ads_footer(){

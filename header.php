@@ -77,8 +77,8 @@
                 </p>
                 <span class="label" <?= $color_label != " " ? "style='background-color: ".$color_label."'" : ""; ?>><?= get_option('popup_aviso_label'); ?></span>
                 <a href="<?= get_option('popup_link'); ?>" class="link">
-                    <?php $id_image = get_option('popup_icon_attachment_id'); ?>
-                    <img src="<?= wp_get_attachment_image_url( $id_image, 'thumbnail' ); ?>" class="fire">
+                    <?php $id_image = get_option('popup_icon_img'); ?>
+                    <img src="<?= wp_get_attachment_image_url( $id_image, 'normal' ); ?>" class="fire">
                     <?= get_option('popup_aviso_link'); ?>
                     <img src="<?= get_template_directory_uri(); ?>/assets/img/icons/arrow-right.svg">
                 </a>
