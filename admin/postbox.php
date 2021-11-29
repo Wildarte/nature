@@ -159,8 +159,8 @@ add_action( 'save_post', 'meta_box_post_save' );
 
 
 //add meta box for banner code =================================================================
-function meta_box_post_banner() {
-    add_meta_box( 'my-meta-box-banner', 'Banner', 'meta_box_banner', 'post', 'normal', 'high' ); 
+function meta_box_resumo_post() {
+    add_meta_box( 'my-meta-box-banner', 'Resumo do Post', 'meta_box_banner', 'post', 'normal', 'high' ); 
 }
 
 function meta_box_banner_save( $post_id ){
@@ -179,28 +179,28 @@ function meta_box_banner_save( $post_id ){
     
     if(isset($_POST['indica_post_myself'])) update_post_meta($post_id, 'indica_post_myself', $_POST['indica_post_myself']);
 
-    if( isset( $_POST['meta_textarea_banner'] ) )
-    update_post_meta( $post_id, 'meta_textarea_banner', $_POST['meta_textarea_banner'] );
+    if( isset( $_POST['meta_resumo_post'] ) )
+    update_post_meta( $post_id, 'meta_resumo_post', $_POST['meta_resumo_post'] );
         
 }
 add_action('save_post', 'meta_box_banner_save');
 
-/*
+
 function meta_box_banner() {
     wp_nonce_field( 'my_meta_box_nonce', 'meta_box_nonce' );
-    $value_banner = get_post_meta(get_the_ID(), 'meta_textarea_banner', true);
+    $value_resumo = get_post_meta(get_the_ID(), 'meta_resumo_post', true);
     ?>
         <div style="display: flex">
-            <label for="" style="font-size: 1.3em; margin-right: 10px">Bloco de código</label>
-            <textarea style="background-color: #343434; color: #22ee11" id="" name="meta_textarea_banner" placeholder="..." cols="60" rows="10"><?= $value_banner != "" ? $value_banner : ""; ?></textarea>
+            <label for="" style="font-size: 1.3em; margin-right: 10px">Resumo da publicação</label>
+            <textarea id="" name="meta_resumo_post" placeholder="..." cols="30" rows="5" maxlength="150"><?= $value_resumo != "" ? $value_resumo : ""; ?></textarea>
         </div>
-        <p style="text-align: center;">Esse bloco de código será inserido nos banners</p>
+        <p style="text-align: center;">Escreva um resumo da publicação, procure chamar a atenção e incentivar o usuário a clicar no Post (máximo de 150 caractéres) </p>
         <br>
 
         <script src="<?= get_template_directory_uri(); ?>/admin/ajaxpost.js"></script>
     <?php
 }
-add_action('add_meta_boxes', 'meta_box_post_banner');
-*/
+add_action('add_meta_boxes', 'meta_box_resumo_post');
+
 
 ?>

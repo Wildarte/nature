@@ -422,7 +422,8 @@ function display_fields_posts_sidebar(){
     add_settings_field("show_sidebar_post", "Forma de listagem dos posts laterais (Artigos mais lidos)", "display_sidebar_post", "options_list_posts", "posts_section");
     add_settings_field("show_sidebar_post_category", "", "display_sidebar_post_category", "options_list_posts", "posts_section");
     add_settings_field("show_sidebar_post_keyword", "", "display_sidebar_post_keyword", "options_list_posts", "posts_section");
-    add_settings_field("show_pina_sidebar_post", "Fixar primeiro Post no sidebar", "display_pina_sidebar_post", "options_list_posts", "posts_section");
+
+    add_settings_field("show_pina_sidebar_post", "", "display_pina_sidebar_post", "options_list_posts", "posts_section");
     add_settings_field("show_lista_posts_sidebar", "", "display_lista_posts_sidebar", "options_list_posts", "posts_section");
     add_settings_field("show_sidebar_post_count", "Contagem de Posts", "display_sidebar_post_count", "options_list_posts", "posts_section");
 
@@ -430,6 +431,8 @@ function display_fields_posts_sidebar(){
     register_setting("posts_section", "show_sidebar_post_count");
     register_setting("posts_section", "show_sidebar_post_category");
     register_setting("posts_section", "show_sidebar_post_keyword");
+    register_setting("posts_section", "show_sidebar_post_select_multiple");
+    register_setting("posts_section", "show_sidebar_teste");
     register_setting("posts_section", "show_pina_sidebar_post");
     register_setting("posts_section", "show_lista_posts_sidebar");
 }
@@ -534,7 +537,8 @@ function display_select_mobile_category(){
                     <option value='<?= $term->term_id; ?>' <?= $option_select_category_mobile == $term->term_id ? "selected" : ""; ?>><?= $term->name; ?> </option>      
                 <?php }  
             ?>
-        </select> 
+        </select>
+        <p>A categoria aqui selecionada é carregada com prioridade quando o usuário acessa o blog por um dispositivo mobile.</p>
     <?php
 }
 //fields para exibir categorias no mobile =========================================================
@@ -1357,7 +1361,7 @@ function display_lista_posts_slide(){
     $val_list_post2 = get_option("show_lista_posts_slide");
     ?>
         
-        Todos os Posts <select class="select-search-input" name="show_lista_posts_slide" id="show_lista_posts_slide" <?= $val_select2 == "yes" ? "enable" : "disabled" ?>>
+        Selecione o post a fixar <select class="select-search-input" name="show_lista_posts_slide" id="show_lista_posts_slide">
             <?php
                 $args_post_slide = [
                     'post_type' => 'post',
@@ -1371,18 +1375,19 @@ function display_lista_posts_slide(){
         </select>
         
         <script>
-            document.getElementById("show_pina_slide_post").addEventListener("change", function(){
-                var val_select = document.getElementById("show_pina_slide_post");
-                var list_posts = document.getElementById("show_lista_posts_slide");
-                if(val_select.value == "yes"){
-                    list_posts.removeAttribute('disabled', '');
-                    list_posts.setAttribute('enable','');
-                }else{
-                    list_posts.removeAttribute('enable', '');
-                    list_posts.setAttribute('disabled', '');
-                    
-                }
-            });
+            //document.getElementById("show_pina_slide_post").addEventListener("change", function(){
+            //    alert('clicou')
+            //    var val_select = document.getElementById("show_pina_slide_post");
+            //    var list_posts = document.getElementById("show_lista_posts_slide");
+            //    if(val_select.value == "yes"){
+            //        list_posts.removeAttribute('disabled', '');
+            //        list_posts.setAttribute('enabled','');
+            //    }else{
+            //        list_posts.removeAttribute('enabled', '');
+            //        list_posts.setAttribute('disabled', '');
+            //        
+            //    }
+            //});
         </script>
     <?php
 }
@@ -1462,12 +1467,21 @@ function display_sidebar_post(){
                             <option value="keyword">Palavra-chave</option>
                         <?php
                     break;
+                    case "pinados":
+                        ?>
+                            <option value="lastPost">Últimos posts</option>
+                            <option value="category">Categoria</option>
+                            <option value="keyword">Palavra-chave</option>
+                            <option value="moreread">Mais lidos</option>
+                        <?php
+                    break;
                     default:
                         ?>
                         <option value="lastPost">Últimos posts</option>
                         <option value="category">Categoria</option>
                         <option value="keyword">Palavra-chave</option>
                         <option value="moreread">Mais lidos</option>
+                        <option value="pinados">Fixar de forma livre</option>
                         <?php
                 endswitch;
             ?>
@@ -1504,6 +1518,10 @@ function display_sidebar_post_keyword(){
     $option_keyword = get_option('show_sidebar_post_keyword');
     ?>
         <input type="text" name="show_sidebar_post_keyword" id="show_sidebar_post_keyword" style="display: <?= $option_sidebar_post3 == "keyword" ? "display" : "none" ?>" placeholder="keyword..." value="<?= $option_keyword; ?>" placeholder="keyword...">
+
+        <script src="<?= get_template_directory_uri() ?>/assets/js/jquery-3.5.1.min.js"></script>
+        <script src="<?= get_template_directory_uri(); ?>/assets/js/slimselect.min.js"></script>
+        <link href="<?= get_template_directory_uri(); ?>/assets/css/slimselect.min.css" rel="stylesheet" />
         <script>
             document.getElementById("show_sidebar_post").addEventListener("change", function(){
                 var val_type = document.getElementById("show_sidebar_post").value;
@@ -1512,73 +1530,283 @@ function display_sidebar_post_keyword(){
                     case "category":
                         document.getElementById("show_sidebar_post_category").style.display = "inline-block";
                         document.getElementById("show_sidebar_post_keyword").style.display = "none";
+                        document.getElementById("mySelect").style.display = "none";
+                        document.getElementById("show_pina_sidebar_post").removeAttribute('disabled');
+                        document.getElementById("show_sidebar_post_count").removeAttribute('disabled');
+
                     break;
                     case "keyword":
                         document.getElementById("show_sidebar_post_keyword").style.display = "inline-block";
                         document.getElementById("show_sidebar_post_category").style.display = "none";
+                        document.getElementById("mySelect").style.display = "none";
+                        document.getElementById("show_pina_sidebar_post").removeAttribute('disabled');
+                        document.getElementById("show_sidebar_post_count").removeAttribute('disabled');
+                    break;
+                    case "pinados":
+                        document.getElementById("mySelect").style.display = "block";
+                        document.getElementById("show_sidebar_post_keyword").style.display = "none";
+                        document.getElementById("show_sidebar_post_category").style.display = "none";
+                        document.getElementById("show_pina_sidebar_post").value = "no";
+                        document.getElementById("show_pina_sidebar_post").setAttribute('disabled', 'disabled');
+                        document.getElementById("show_sidebar_post_count").setAttribute('disabled', 'disabled');
                     break;
                     default:
                         document.getElementById("show_sidebar_post_keyword").style.display = "none";
                         document.getElementById("show_sidebar_post_category").style.display = "none";
+                        document.getElementById("mySelect").style.display = "none";
+                        document.getElementById("show_pina_sidebar_post").removeAttribute('disabled');
+                        document.getElementById("show_sidebar_post_count").removeAttribute('disabled');
                 }
             })
         </script>
         
     <?php
 }
+/*
+function display_sidebar_post_select_multiple(){
+    $option_sidebar_post4 = get_option('show_sidebar_post');
+    $posts_multiple = get_option('show_sidebar_post_select_multiple');
+    //echo "contagem de posts multiples: ".count($posts_multiple)."<br>";
+    if($posts_multiple > 1){
+        $count_posts_multiple = count($posts_multiple);
+    }
+    ?>
+ 
+        <div class="mySelect" id="mySelect" style="border: 1px solid #999; padding: 10px; border-radius: 5px; display: <?= $option_sidebar_post4 == "pinados" ? "block" : "none" ?>">
+            <p><strong>Fixar Posts de forma livre</strong></p>
+            <select id="show_sidebar_post_select_multiple" name="show_sidebar_post_select_multiple[]" data-max="10" multiple="multiple" style="">
+                
+            <?php
+                $args_post_select_multiple = [
+                    'post_type' => 'post',
+                    'order' => 'DESC',
+                    'posts_per_page' => -1
+                ];
+                $result_post_slide = new WP_query($args_post_select_multiple);
+                $n = 0;
+            if($result_post_slide->have_posts()):
+                
+                while($result_post_slide->have_posts()): $result_post_slide->the_post(); ?>
+                
+                    <option value="<?= get_the_ID(); ?>" <?php if(get_the_ID() == $posts_multiple[$n]){ echo "selected"; $n++; } ?> ><?= the_title(); ?></option>
+                    
+
+            <?php endwhile; endif; wp_reset_query(); wp_reset_postdata(); ?>
+               
+                
+
+            </select>
+            <h4>Posts Fixados</h4>
+            <?php
+                $posts = get_option('show_lista_posts_sidebar');
+                $args_last_post = [
+                    'post__in' => $posts,
+                    //'post_name__in' => $posts,
+                    'post_type' => 'post',
+                    'posts_per_page' => 10
+                ];
+
+                $popularpost = new WP_Query($args_last_post);
+
+                if( $popularpost->have_posts()):
+                            
+                    while( $popularpost->have_posts() ):
+                        $popularpost->the_post();
+                        
+                        echo "Post: ". get_the_title() ."<br>";
+                    endwhile;
+                    
+                else:
+                    echo "nada";
+                endif;
+
+            ?>
+        </div>
+        <!-- 
+        <select class="slim-select" name="show_sidebar_post_select_multiple[]" multiple="multiple" disabled>
+        <?php
+                $args_post_select_multiple = [
+                    'post_type' => 'post',
+                    'order' => 'DESC',
+                    'posts_per_page' => -1
+                ];
+                $result_post_slide = new WP_query($args_post_select_multiple);
+            if($result_post_slide->have_posts()): while($result_post_slide->have_posts()): $result_post_slide->the_post(); ?>
+                <option value="<?= the_title(); ?>" ><?= the_title(); ?></option>
+            <?php endwhile; endif; wp_reset_query(); wp_reset_postdata(); ?>
+        </select>
+         -->
+        
+            
+           
+    <?php
+}
+*/
+
 function display_pina_sidebar_post(){
     $val_pina_sidebar = get_option("show_pina_sidebar_post");
+    $val_select_mult = get_option("show_sidebar_post");
     ?>
-    
-        <select name="show_pina_sidebar_post" id="show_pina_sidebar_post">
-            <option value="no" <?= $val_pina_sidebar == "no" ? "selected" : "" ?>>NÃO</option>
-            <option value="yes" <?= $val_pina_sidebar == "yes" ? "selected" : "" ?>>SIM</option>
-        </select>
+        
+            <strong>Fixar Post(s) no sidebar	</strong>
+            <select name="show_pina_sidebar_post" id="show_pina_sidebar_post" <?= $val_select_mult == "pinados" ? "disabled" : "" ?>>
+                <option value="no" <?php if(($val_pina_sidebar == "no") || ($val_select_mult == "pinados")): echo "selected"; else: echo ""; endif; ?>>NÃO</option>
+                <option value="yes" <?php if($val_pina_sidebar == "yes" && $val_select_mult != "pinados"): echo "selected"; else: echo ""; endif; ?>>SIM</option>
+            </select>
+
+        
     <?php
 }
 function display_lista_posts_sidebar(){
     $val_pina_sidebar2 = get_option("show_pina_sidebar_post");
     $val_list_post_sidebar = get_option("show_lista_posts_sidebar");
     ?>
-        
-        Todos os Posts <select class="select-search-input" name="show_lista_posts_sidebar" id="show_lista_posts_sidebar" <?= $val_pina_sidebar2 == "yes" ? "enable" : "disabled" ?>>
+    <style>
+        .icon-load {
+            display: none;
+            width: 24px;
+            margin-bottom: 10px
+        }
+    </style>
+        <div id="selects">
             <?php
-                $args_post_slide = [
-                    'post_type' => 'post',
-                    'order' => 'DESC',
-                    'posts_per_page' => -1
-                ];
-                $result_post_slide = new WP_query($args_post_slide);
-            if($result_post_slide->have_posts()): while($result_post_slide->have_posts()): $result_post_slide->the_post(); ?>
-                <option value="<?= the_title(); ?>" <?= $val_list_post_sidebar == get_the_title() ? "selected" : "" ?>><?= the_title(); ?></option>
-            <?php endwhile; endif; wp_reset_query(); wp_reset_postdata(); ?>
-        </select>
+                $posts_selected = get_option('show_lista_posts_sidebar');
+                $count_selected_posts = count($posts_selected);
+
+                for($i = 0; $i < $count_selected_posts; $i++):
+                    $args_pinado_post_sidebar = [
+                        //'post__in' => get_option('show_lista_posts_sidebar'),
+                        'post_type' => 'post',
+                        'p' => $posts_selected[$i]
+                    ];
+                    $result_pinado_post_sidebar = new WP_Query($args_pinado_post_sidebar);
+
+                    if($result_pinado_post_sidebar->have_posts()):
+                        
+            ?>
+            <div class="add_post">
+                Selecione o post a fixar <select class="select-search-input<?= $i+1; ?>" name="show_lista_posts_sidebar[]" id="show_lista_posts_sidebar">
+                <?php
+                    $args_post_slide = [
+                        'post_type' => 'post',
+                        'order' => 'DESC',
+                        'posts_per_page' => -1
+                    ];
+                    $result_post_slide = new WP_query($args_post_slide);
+                if($result_post_slide->have_posts()): while($result_post_slide->have_posts()): $result_post_slide->the_post(); ?>
+                    <option value="<?= get_the_ID(); ?>" <?= $posts_selected[$i] == get_the_ID() ? "selected" : "" ?>><?= the_title(); ?></option>
+                <?php endwhile; endif; wp_reset_query(); wp_reset_postdata(); ?>
+            </select>
+            </div>
+            <script>
+                var select<?= $i+1; ?> = new SlimSelect({
+                    select: '.select-search-input<?= $i+1; ?>'
+                });   
+            </script>
+            <?php endif; wp_reset_query(); wp_reset_postdata(); endfor; ?>
+            
+        
+        </div>
+        <div style="margin: 10px 0">
+        <img src="<?= get_template_directory_uri(); ?>/assets/img/icons/loading.gif" style="" class="icon-load">
+            <button id="add_fix_post">Adicionar</button><button id="remove_fix_post">Remover</button>
+            
+        </div>
+        <span style="color: red" id="warning-msg"></span>
         <script src="<?= get_template_directory_uri(); ?>/assets/js/jquery-3.5.1.min.js"></script>
-        <link href="<?= get_template_directory_uri(); ?>/assets/css/select2.min.css" rel="stylesheet" />
-        <script src="<?= get_template_directory_uri(); ?>/assets/js/select2.min.js"></script>
+        <link href="<?= get_template_directory_uri(); ?>/assets/css/slimselect.min.css" rel="stylesheet" />
+        <script src="<?= get_template_directory_uri(); ?>/assets/js/slimselect.min.js"></script>
+
         <script>
-            document.getElementById("show_pina_sidebar_post").addEventListener("change", function(){
-                var val_select = document.getElementById("show_pina_sidebar_post");
-                var list_posts = document.getElementById("show_lista_posts_sidebar");
-                if(val_select.value == "yes"){
-                    list_posts.removeAttribute('disabled', '');
-                    list_posts.setAttribute('enable','');
-                }else{
-                    list_posts.removeAttribute('enable', '');
-                    list_posts.setAttribute('disabled', '');
-                    
-                }
+            //document.getElementById("show_pina_sidebar_post").addEventListener("change", function(){
+            //    var val_select = document.getElementById("show_pina_sidebar_post");
+            //    var list_posts = document.getElementById("show_lista_posts_sidebar");
+            //    if(val_select.value == "yes"){
+            //        list_posts.removeAttribute('disabled', '');
+            //        list_posts.setAttribute('enable','');
+            //    }else{
+            //        list_posts.removeAttribute('enable', '');
+            //        list_posts.setAttribute('disabled', '');
+            //        
+            //    }
+            //});
+
+            var selects = document.querySelector(".select-search-input");
+
+            console.log(selects);
+            var select = new SlimSelect({
+                select: '.select-search-input'
             });
             
+            
             $(document).ready(function() {
-                $('.select-search-input').select2();
+                
+
+                var contagem_total_posts = <?= $count_selected_posts; ?>;
+                $('#add_fix_post').click(function(e){
+
+                    e.preventDefault();
+
+                    
+
+                    var total_posts = document.getElementById('show_sidebar_post_count').value;
+                    if(contagem_total_posts < total_posts){
+                        $('.icon-load').css("display", "block");
+                        contagem_total_posts++;
+
+                        data = {post_add : contagem_total_posts};
+                        
+                        var total_add_posts = document.querySelectorAll("#show_lista_posts_sidebar");
+    
+                        $('#warning-msg').hide();
+
+                        $.post("<?= get_template_directory_uri(); ?>/admin/getPostSelect.php",data,function(response){
+                            if($.trim(response) != '') {
+                                $('#selects').append(response);
+                                console.log("added add post btn");
+                                $('.icon-load').css("display", "none");
+                            }else{
+                                console.log("no add");
+                                $('.icon-load').css("display", "none");
+                            }
+                        });
+                        console.log("escolha do user: "+total_posts);
+                        console.log("add: "+contagem_total_posts);
+                        
+                        
+                    }else{
+                        $('#warning-msg').show();
+                        $('#warning-msg').text("aumente a contagem de posts");
+                        
+                    }
+                    
+                    
+                });
+
+
+                $('#remove_fix_post').click(function(e){
+                    e.preventDefault();
+                    if(contagem_total_posts > 1){
+                        var all = document.querySelectorAll(".add_post");
+                        all[all.length -1].remove();
+                        contagem_total_posts--;
+                        console.log(contagem_total_posts);
+                    }
+                    
+                });
             });
+            
+            
+            
+
+           
         </script>
     <?php
 }
 function display_sidebar_post_count(){
+    $val_list_post_sidebar2 = get_option("show_sidebar_post");
     ?>
-        <input type="number" style="width: 64px" name="show_sidebar_post_count" id="show_sidebar_post_count" value="<?= get_option('show_sidebar_post_count') != "" ? get_option('show_sidebar_post_count') : "5"; ?>">
+        <input type="number" style="width: 64px" name="show_sidebar_post_count" id="show_sidebar_post_count" value="<?= get_option('show_sidebar_post_count') != "" ? get_option('show_sidebar_post_count') : "5"; ?>" <?= $val_list_post_sidebar2 == "pinados" ? "disabled" : ""; ?>>
         <?php echo "<p><strong>Método de listagem atual: </strong>";
             $slide_post = get_option('show_sidebar_post');
 
@@ -1601,6 +1829,9 @@ function display_sidebar_post_count(){
                 break;
                 case "moreread":
                     echo "<span style='color: orange'>Mais lidos</span>";
+                break;
+                case "pinados":
+                    echo "<span style='color: orange'>Fixado de forma livre</span>";
                 break;
                 default:
                     echo "<span style='color: orange'>Mais lidos</span>";

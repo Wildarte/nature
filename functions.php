@@ -31,7 +31,6 @@
     }
     add_action( 'wp_enqueue_scripts', 'blog_scripts' );
 
-
     
     //add scripts that load more posts =================================================================
     function nature_styles(){
@@ -115,6 +114,25 @@
 
 
     //MY FUNCTIONS ======================================================
+
+
+    //  FUNCAO DE TESTE TALVEZ EU A EXCLUA
+    //funcao que atribui um valor para ranking de posts 
+    function wpb_set_count_post($postID, $val){
+        $count_key_post = 'wpb_count_post';
+        $contagem = get_post_meta($postID, $count_key_post, true);
+        if($contagem == ''){
+            delete_post_meta(155, $count_key_post);
+            add_post_meta(155, $count_key_post, '1');
+            echo "caiu no if"."<br>";
+            echo "valor da variavel contagem: ".$contagem;
+        }else{
+            update_post_meta($postID, $count_key_post, $val);
+            echo "nao caiu no if"."<br>";
+        }
+    }
+    
+
 
     //funcao para verificar se existem posts
     function verifa_posts($args){
@@ -224,7 +242,17 @@
                     <div class="text">
                         <?= the_category(); ?>
                         <h4 class="title"><?= get_the_title(); ?></h4>
-                        <p class="post-summary"><?= get_first_paragraph(); ?></p>
+                        <p class="post-summary">
+                        <?php
+                            $resumo = get_post_meta(get_the_ID(), 'meta_resumo_post', true);
+
+                            if($resumo != ""){
+                                echo $resumo." ...";
+                            }else{
+                                echo get_first_paragraph();
+                            }
+                        ?>
+                        </p>
                         <div class="author">
                             <?php $mail_user = strval(get_the_author_meta('user_email', false)); ?>
                             <img src="<?= get_avatar_url($mail_user, '32', '', '', null) ?>">

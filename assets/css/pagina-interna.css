@@ -1957,7 +1957,7 @@ article .article-body img {
 
 .related-posts-container .post .image img {
   width: 5rem;
-  height: 5rem;
+  height: 100%;
   border-radius: 1.25rem;
   -o-object-fit: cover;
      object-fit: cover;
@@ -2014,8 +2014,12 @@ article .article-body img {
 
 .related-posts-container .post:hover .image img {
   opacity: .9;
-  -webkit-transform: scale(1.05);
-          transform: scale(1.05);
+  -webkit-transform: scale(.99);
+          transform: scale(.999);
+}
+.related-posts-container .post:hover .image img{
+  height: 9.5rem;
+  transition: all .2s;
 }
 
 .related-posts-container .owl-nav {
@@ -2204,13 +2208,16 @@ img.desktop {
   }
   .related-posts-container .post .image {
     overflow: hidden;
+    height: 10.10rem;
+    transition: all .2s;
   }
   .related-posts-container .post .image img {
     width: 100%;
+    height: 100%;
     border-radius: 0.3125rem 0.3125rem 0 0;
   }
   .related-posts-container .post .text {
-    padding: 3.125rem 0.75rem;
+    padding: 2.125rem 0.75rem;
     margin: 0;
   }
   .related-posts-container .post .text .title {
@@ -2222,5 +2229,15 @@ img.desktop {
     -webkit-box-pack: center;
         -ms-flex-pack: center;
             justify-content: center;
+  }
+}
+@media(max-width: 425px){
+  .related-posts-container .post .image img {
+    width: 5rem;
+    height: 5rem;
+  }
+  .related-posts-container .post:hover .image{
+    height: 5rem;
+    transition: all .2s;
   }
 }

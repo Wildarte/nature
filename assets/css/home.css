@@ -1978,10 +1978,11 @@ header {
           transform-origin: right;
 }
 
-.news-carousel .active:hover .item-head img{
+.news-carousel .active:hover .item-head .banner{
   opacity: .9;
   -webkit-transform: scale(1.05);
           transform: scale(1.05);
+  transition: all .2s;
 }
 .news-carousel .active:hover .item-body h3.title {
   color: var(--orange);
@@ -2099,6 +2100,7 @@ header {
     /*max-height: 220px;*/
     -o-object-fit: cover;
        object-fit: cover;
+    transition: all .2s;
   }
   .news-carousel .news-item .item-body {
     padding: 1.375rem 1.75rem;

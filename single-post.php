@@ -205,7 +205,7 @@
                     <div class="post">
                         <div class="image">
                             <?php 
-                                $thumb_post_rel = get_the_post_thumbnail_url(null, 'medium');
+                                $thumb_post_rel = get_the_post_thumbnail_url(null, 'thumbnail');
                                 $thumb_post_rel == "" ? $thumb_post_rel = get_template_directory_uri().'/assets/img/thumb-default.jpg' : "";
                             ?>
                             <img src="<?= $thumb_post_rel ?>">

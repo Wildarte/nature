@@ -13,6 +13,7 @@
                          display: block;
                         }
             </style>
+            
             <h2 class="main-title">Conteúdo</h2>
             <div class="news-carousel">
             <style>
@@ -167,7 +168,17 @@
                                     <div class="item-body">
                                         <?= the_category() ?>
                                         <h3 class="title"><?= get_the_title(); ?></h3>
-                                        <p class="post-summary"><?= get_first_paragraph(); ?></p>
+                                        <p class="post-summary">
+                                        <?php
+                                            $resumo = get_post_meta(get_the_ID(), 'meta_resumo_post', true);
+
+                                            if($resumo != ""){
+                                                echo $resumo." ...";
+                                            }else{
+                                                echo get_first_paragraph();
+                                            }
+                                        ?>
+                                        </p>
 
                                         <div class="author">
                                         <?php $mail_user = strval(get_the_author_meta('user_email', false)); ?>
@@ -201,7 +212,17 @@
                         <div class="item-body">
                             <?= the_category() ?>
                             <h3 class="title"><?= get_the_title(); ?></h3>
-                            <p class="post-summary"><?= get_first_paragraph(); ?></p>
+                            <p class="post-summary">
+                                <?php
+                                    $resumo = get_post_meta(get_the_ID(), 'meta_resumo_post', true);
+
+                                    if($resumo != ""){
+                                        echo $resumo." ...";
+                                    }else{
+                                        echo get_first_paragraph();
+                                    }
+                                ?>
+                            </p>
 
                             <div class="author">
                             <?php $mail_user = strval(get_the_author_meta('user_email', false)); ?>
@@ -238,6 +259,9 @@
                     $post_pinado_sidebar = get_option('show_lista_posts_sidebar');
                     $post_id_page = get_page_by_title($post_pinado_sidebar);
 
+                    $posts_selected = get_option('show_lista_posts_sidebar');//pega os posts que o usuário fixou
+                    $count_selected_posts = count($posts_selected);//conta quantos posts o usuário fixou no sidebar
+
                     if($option_pina_sidebar == 'yes'){
                         $post_id_page = get_page_by_title($post_pinado_sidebar, OBJECT, 'post');
                     }
@@ -255,8 +279,8 @@
                                 $args_last_post = [
                                     'post_type' => 'post',
                                     'order' => 'DESC',
-                                    'posts_per_page' => $new_val_count_posts_sidebar-1,
-                                    'post__not_in' => [$post_id_page->ID]
+                                    'posts_per_page' => $new_val_count_posts_sidebar-$count_selected_posts,
+                                    'post__not_in' => $posts_selected
                                 ];
                             }else{
                                 $args_last_post = [
@@ -273,8 +297,8 @@
                                     'post_type' => 'post',
                                     'category_name' => $sidebar_post_cat,
                                     'order' => 'DESC',
-                                    'posts_per_page' => $new_val_count_posts_sidebar-1,
-                                    'post__not_in' => [$post_id_page->ID]
+                                    'posts_per_page' => $new_val_count_posts_sidebar-$count_selected_posts,
+                                    'post__not_in' => $posts_selected
                                 ];
                             }else{
                                 
@@ -292,8 +316,8 @@
                                 $args_last_post = [
                                     'post_type' => 'post',
                                     's' => $search_keyword_sidebar,
-                                    'posts_per_page' => $new_val_count_posts_sidebar-1,
-                                    'post__not_in' => [$post_id_page->ID]
+                                    'posts_per_page' => $new_val_count_posts_sidebar-$count_selected_posts,
+                                    'post__not_in' => $posts_selected
                                 ];
                             }else{
                                 $args_last_post = [
@@ -310,8 +334,8 @@
                                     'order' => 'DESC',
                                     'meta_key' => 'wpb_post_views_count',
                                     'orderby' => 'meta_value_num',
-                                    'posts_per_page' => $new_val_count_posts_sidebar-1,
-                                    'post__not_in' => [$post_id_page->ID]
+                                    'posts_per_page' => $new_val_count_posts_sidebar-$count_selected_posts,
+                                    'post__not_in' => $posts_selected
                                 ];
                             }else{
                                 $args_last_post = [
@@ -323,6 +347,15 @@
                                 ];
                             }
                         break;
+                        case "pinados":
+                            $posts = get_option('show_sidebar_post_select_multiple');
+
+                            $args_last_post = [
+                                'post__in' => $posts,
+                                'post_type' => 'post',
+                                'posts_per_page' => 10
+                            ];
+                        break;
                         default:
                             if($option_pina_sidebar == 'yes'){
                                 $args_last_post = [
@@ -330,8 +363,8 @@
                                     'order' => 'DESC',
                                     'meta_key' => 'wpb_post_views_count',
                                     'orderby' => 'meta_value_num',
-                                    'posts_per_page' => $new_val_count_posts_sidebar-1,
-                                    'post__not_in' => [$post_id_page->ID]
+                                    'posts_per_page' => $new_val_count_posts_sidebar-$count_selected_posts,
+                                    'post__not_in' => $posts_selected
                                 ];
                             }else{
                                 $args_last_post = [
@@ -349,7 +382,6 @@
                     $popularpost = new WP_Query($args_last_post);
                     // array( 'posts_per_page' => 5, 'meta_key' => 'wpb_post_views_count', 'orderby' => 'meta_value_num', 'order' => 'DESC', 'post__not_in' => [49] ) 
 
-
                     if($popularpost->have_posts() || $option_sidebar_post_count >= 1):
                 ?>
             <section id="most-read">
@@ -357,13 +389,19 @@
 
                 <div class="most-read-news">
                     <?php if($option_pina_sidebar == "yes"):
+                    
+                    
+
+                    for($i = 0; $i < $count_selected_posts; $i++):
                         $args_pinado_post_sidebar = [
+                            //'post__in' => get_option('show_lista_posts_sidebar'),
                             'post_type' => 'post',
-                            'p' => $post_id_page->ID
+                            'p' => $posts_selected[$i]
                         ];
                         $result_pinado_post_sidebar = new WP_Query($args_pinado_post_sidebar);
 
-                        if($result_pinado_post_sidebar->have_posts()): while($result_pinado_post_sidebar->have_posts()):
+                        if($result_pinado_post_sidebar->have_posts()):
+                            //while($result_pinado_post_sidebar->have_posts()):
                             $result_pinado_post_sidebar->the_post();
                     ?>
                         <div class="most-read-item">
@@ -374,11 +412,19 @@
                                 <a href="<?php the_permalink(); ?>" class="item-link"></a>
                             </div>
                         </div>
-                    <?php endwhile; endif; wp_reset_query(); wp_reset_postdata(); ?>
+                    <?php /*endwhile;*/ endif; wp_reset_query(); wp_reset_postdata(); ?>
+                    
+                    <?php endfor; ?>
+                    
                     <?php endif; ?>
+
                     <?php
-                        if($option_sidebar_post_count > 1 || $option_pina_sidebar == 'no'):
-                        while ( $popularpost->have_posts() ) : $popularpost->the_post();            
+                        if(($count_selected_posts >= $option_sidebar_post_count) && $option_pina_sidebar == 'yes'):
+                            echo "";
+                        
+                        else: if($option_sidebar_post_count > 1 || $option_pina_sidebar != 'yes'):
+                            
+                            while( $popularpost->have_posts() ) : $popularpost->the_post();            
                     ?>
 
                     <div class="most-read-item">
@@ -390,7 +436,7 @@
                         </div>
                     </div>
 
-                    <?php endwhile; wp_reset_query(); wp_reset_postdata();  endif; ?> 
+                    <?php endwhile; wp_reset_query(); wp_reset_postdata();  endif; endif; ?> 
 
                 </div>
             </section>
@@ -430,7 +476,17 @@
 
                 <div class="content">
 
-                    <?php if(have_posts()): while(have_posts()): the_post(); ?>
+                    <?php 
+                        $args_ultimos_posts = [
+                            'post_type' => 'post',
+                        ];
+
+                        $result_ultimos_posts = new WP_Query($args_ultimos_posts);
+
+                        
+                    ?>
+
+                    <?php if($result_ultimos_posts->have_posts()): while($result_ultimos_posts->have_posts()): $result_ultimos_posts->the_post(); ?>
 
                     <div class="latest-posts-item" data-categoria="<?= get_the_category()[0]->slug; ?>">
                         <?php 
@@ -442,7 +498,17 @@
                         <div class="text">
                             <?= the_category() ?>
                             <h4 class="title"><?= get_the_title(); ?></h4>
-                            <p class="post-summary"><?= get_first_paragraph(); ?></p>
+                            <p class="post-summary">
+                            <?php
+                                    $resumo = get_post_meta(get_the_ID(), 'meta_resumo_post', true);
+
+                                    if($resumo != ""){
+                                        echo $resumo." ...";
+                                    }else{
+                                        echo get_first_paragraph();
+                                    }
+                                ?>
+                            </p>
                             <div class="author">
                                 <?php $mail_user = strval(get_the_author_meta('user_email', false)); ?>
                                 <img src="<?= get_avatar_url($mail_user, '32', '', '', null) ?>">
@@ -457,7 +523,7 @@
                     <script>
                         //document.querySelectorAll(".latest-posts-item .text .post-summary").style.display = "none";
                     </script>
-                    <?php endwhile; endif; ?>
+                    <?php endwhile; endif;  wp_reset_query(); wp_reset_postdata(); ?>
 
                 </div>
 
