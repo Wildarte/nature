@@ -25,11 +25,31 @@ function add_new_menu_items(){
 
     add_submenu_page(
         "theme-options", //Required. Slug of top level menu item
-        "Ads", //Required. Text to be displayed in title.
-        "Ads", //Required. Text to be displayed in menu.
+        "Ads Home Page", //Required. Text to be displayed in title.
+        "Ads Home Page", //Required. Text to be displayed in menu.
         "manage_options", //Required. The required capability of users.
         "options_ads", //Required. A unique identifier to the sub menu item.
         "callback_options_ads", //Optional. This callback outputs the content of the page associated //with this menu item.
+        "" //Optional. The URL of the menu item icon
+    );
+
+    add_submenu_page(
+        "theme-options", //Required. Slug of top level menu item
+        "Ads Página Pesquisa", //Required. Text to be displayed in title.
+        "Ads Página Pesquisa", //Required. Text to be displayed in menu.
+        "manage_options", //Required. The required capability of users.
+        "options_ads_search", //Required. A unique identifier to the sub menu item.
+        "callback_options_ads_search", //Optional. This callback outputs the content of the page associated //with this menu item.
+        "" //Optional. The URL of the menu item icon
+    );
+
+    add_submenu_page(
+        "theme-options", //Required. Slug of top level menu item
+        "Ads Página Categoria", //Required. Text to be displayed in title.
+        "Ads Página Categoria", //Required. Text to be displayed in menu.
+        "manage_options", //Required. The required capability of users.
+        "options_ads_category", //Required. A unique identifier to the sub menu item.
+        "callback_options_ads_category", //Optional. This callback outputs the content of the page associated //with this menu item.
         "" //Optional. The URL of the menu item icon
     );
 
@@ -96,7 +116,7 @@ function callback_options_ads(){
     ?>
     <div>
         <?php settings_errors(); ?>
-        <h1>Configuração dos anúncios</h1>
+        <h1>Configuração dos anúncios da página Home</h1>
         <form method="post" action="options.php">
             <?php
             
@@ -549,7 +569,8 @@ function display_fields_ads_sidebar(){
     add_settings_section("section_ads_sidebar", "", "display_option_ads_sidebar", "options_ads");
 
     add_settings_field("show_img_ads_sidebar", "Imagem Ads", "display_img_ads_sidebar", "options_ads", "section_ads_sidebar");
-    add_settings_field("show_title_ads_sidebar", "Title Ads", "display_title_ads_sidebar", "options_ads", "section_ads_sidebar");
+    add_settings_field("show_title_ads_sidebar", "Título Ads", "display_title_ads_sidebar", "options_ads", "section_ads_sidebar");
+    add_settings_field("show_color_title_ads_sidebar", "Cor do título Ads", "display_color_title_ads_sidebar", "options_ads", "section_ads_sidebar");
     add_settings_field("show_text_ads_sidebar", "Texto Ads", "display_text_ads_sidebar", "options_ads", "section_ads_sidebar");
     add_settings_field("show_link_ads_sidebar", "Link Ads", "display_link_ads_sidebar", "options_ads", "section_ads_sidebar");
     add_settings_field("show_cta_ads_sidebar", "CTA Ads", "display_cta_ads_sidebar", "options_ads", "section_ads_sidebar");
@@ -561,6 +582,7 @@ function display_fields_ads_sidebar(){
     register_setting("ads_section", "show_img_ads_sidebar");
     register_setting("ads_section", "show_title_ads_sidebar");
     register_setting("ads_section", "show_text_ads_sidebar");
+    register_setting("ads_section", "show_color_title_ads_sidebar");
     register_setting("ads_section", "show_link_ads_sidebar");
     register_setting("ads_section", "show_cta_ads_sidebar");
     register_setting("ads_section", "show_color_txt_cta_ads_sidebar");
@@ -591,7 +613,7 @@ function display_img_ads_sidebar(){
     
         <div class='image-preview-wrapper'>
             <img style="max-width: 200px" id='image-preview' src='<?php echo wp_get_attachment_url( get_option( 'show_img_ads_sidebar' ) ); ?>' width='200'>
-        </div>
+        </div> A imagem deve ter no máximo 300px de largura
          
         <input style="display: block" id="upload_image_button2" type="button" class="button" value="<?php _e( 'Atualizar imagem' ); ?>" />
         <input type='hidden' name='show_img_ads_sidebar' id='show_img_ads_sidebar' value='<?php echo get_option( 'show_img_ads_sidebar' ); ?>'>
@@ -647,6 +669,35 @@ function display_title_ads_sidebar(){
     $val_title_ads_sidebar = get_option('show_title_ads_sidebar');
     ?>
         <input type="text" name="show_title_ads_sidebar" id="show_title_ads_sidebar" value="<?= $val_title_ads_sidebar != "" ? $val_title_ads_sidebar : ""; ?>" style="width: 400px;">
+    <?php
+}
+function display_color_title_ads_sidebar(){
+    $option_color_title_sidebar = get_option('show_color_title_ads_sidebar');
+    ?>
+        <style>
+            .btn_reset_color_txt_ads_sidebar{
+                display: inline;
+                border: none;
+                height: 27px;
+                width: 27px;
+                padding: 2px;
+                border: 1px solid #333;
+                border-radius: 50%;
+                color: #000;
+                font-size: 1.4em;
+                font-weight: 600;
+            }
+            .btn_reset_color_txt_ads_sidebar:hover{
+                cursor: pointer;
+            }
+        </style>
+        <input type="color" name="show_color_title_ads_sidebar" id="show_color_title_ads_sidebar" value="<?= $option_color_title_sidebar != "" ? $option_color_title_sidebar : "#3B4157"; ?>">
+        <span class="btn_reset_color_txt_ads_sidebar">&#8635;</span>
+        <script>
+            document.querySelector(".btn_reset_color_txt_ads_sidebar").addEventListener("click", function(){
+                document.getElementById("show_color_title_ads_sidebar").value = "#3B4157";
+            });
+        </script>
     <?php
 }
 function display_text_ads_sidebar(){
@@ -774,6 +825,7 @@ function display_fields_ads_footer(){
 
     add_settings_field("show_img_ads_footer", "Imagem Ads", "display_img_ads_footer", "options_ads", "section_ads_footer");
     add_settings_field("show_title_ads_footer", "Title Ads", "display_title_ads_footer", "options_ads", "section_ads_footer");
+    add_settings_field("show_color_title_ads_footer", "Cor do título Ads", "display_color_title_ads_footer", "options_ads", "section_ads_footer");
     add_settings_field("show_text_ads_footer", "Texto Ads", "display_text_ads_footer", "options_ads", "section_ads_footer");
     add_settings_field("show_link_ads_footer", "Link Ads", "display_link_ads_footer", "options_ads", "section_ads_footer");
     add_settings_field("show_cta_ads_footer", "CTA Ads", "display_cta_ads_footer", "options_ads", "section_ads_footer");
@@ -784,6 +836,7 @@ function display_fields_ads_footer(){
 
     register_setting("ads_section", "show_img_ads_footer");
     register_setting("ads_section", "show_title_ads_footer");
+    register_setting("ads_section", "show_color_title_ads_footer");
     register_setting("ads_section", "show_text_ads_footer");
     register_setting("ads_section", "show_link_ads_footer");
     register_setting("ads_section", "show_cta_ads_footer");
@@ -814,7 +867,7 @@ function display_img_ads_footer(){
         
         <div class='image-preview-wrapper'>
             <img style="max-width: 100px" id='image-preview2' src='<?php echo wp_get_attachment_url( get_option( 'show_img_ads_footer' ) ); ?>' width='200'>
-        </div>
+        </div> A imagem deve ter no máximo 60px de largura <br>
         
         <input id="upload_image_button3" type="button" class="button" value="<?php _e( 'Atualizar imagem' ); ?>" />
         <input type='hidden' name='show_img_ads_footer' id='show_img_ads_footer' value='<?php echo get_option( 'show_img_ads_footer' ); ?>'>
@@ -869,6 +922,35 @@ $my_saved_attachment_post_id = get_option( 'media_selector_attachment_id', 0 );
 function display_title_ads_footer(){
     ?>
         <input type="text" name="show_title_ads_footer" id="show_title_ads_footer" value="<?= get_option('show_title_ads_footer'); ?>">
+    <?php
+}
+function display_color_title_ads_footer(){
+    $option_color_title_footer = get_option('show_color_title_ads_footer');
+    ?>
+        <style>
+            .btn_reset_color_txt_ads_footer{
+                display: inline;
+                border: none;
+                height: 27px;
+                width: 27px;
+                padding: 2px;
+                border: 1px solid #333;
+                border-radius: 50%;
+                color: #000;
+                font-size: 1.4em;
+                font-weight: 600;
+            }
+            .btn_reset_color_txt_ads_footer:hover{
+                cursor: pointer;
+            }
+        </style>
+        <input type="color" name="show_color_title_ads_footer" id="show_color_title_ads_footer" value="<?= $option_color_title_footer != "" ? $option_color_title_footer : "#ffffff"; ?>">
+        <span class="btn_reset_color_txt_ads_footer">&#8635;</span>
+        <script>
+            document.querySelector(".btn_reset_color_txt_ads_footer").addEventListener("click", function(){
+                document.getElementById("show_color_title_ads_footer").value = "#ffffff";
+            });
+        </script>
     <?php
 }
 function display_color_txt_cta_ads_footer(){
@@ -1562,86 +1644,6 @@ function display_sidebar_post_keyword(){
         
     <?php
 }
-/*
-function display_sidebar_post_select_multiple(){
-    $option_sidebar_post4 = get_option('show_sidebar_post');
-    $posts_multiple = get_option('show_sidebar_post_select_multiple');
-    //echo "contagem de posts multiples: ".count($posts_multiple)."<br>";
-    if($posts_multiple > 1){
-        $count_posts_multiple = count($posts_multiple);
-    }
-    ?>
- 
-        <div class="mySelect" id="mySelect" style="border: 1px solid #999; padding: 10px; border-radius: 5px; display: <?= $option_sidebar_post4 == "pinados" ? "block" : "none" ?>">
-            <p><strong>Fixar Posts de forma livre</strong></p>
-            <select id="show_sidebar_post_select_multiple" name="show_sidebar_post_select_multiple[]" data-max="10" multiple="multiple" style="">
-                
-            <?php
-                $args_post_select_multiple = [
-                    'post_type' => 'post',
-                    'order' => 'DESC',
-                    'posts_per_page' => -1
-                ];
-                $result_post_slide = new WP_query($args_post_select_multiple);
-                $n = 0;
-            if($result_post_slide->have_posts()):
-                
-                while($result_post_slide->have_posts()): $result_post_slide->the_post(); ?>
-                
-                    <option value="<?= get_the_ID(); ?>" <?php if(get_the_ID() == $posts_multiple[$n]){ echo "selected"; $n++; } ?> ><?= the_title(); ?></option>
-                    
-
-            <?php endwhile; endif; wp_reset_query(); wp_reset_postdata(); ?>
-               
-                
-
-            </select>
-            <h4>Posts Fixados</h4>
-            <?php
-                $posts = get_option('show_lista_posts_sidebar');
-                $args_last_post = [
-                    'post__in' => $posts,
-                    //'post_name__in' => $posts,
-                    'post_type' => 'post',
-                    'posts_per_page' => 10
-                ];
-
-                $popularpost = new WP_Query($args_last_post);
-
-                if( $popularpost->have_posts()):
-                            
-                    while( $popularpost->have_posts() ):
-                        $popularpost->the_post();
-                        
-                        echo "Post: ". get_the_title() ."<br>";
-                    endwhile;
-                    
-                else:
-                    echo "nada";
-                endif;
-
-            ?>
-        </div>
-        <!-- 
-        <select class="slim-select" name="show_sidebar_post_select_multiple[]" multiple="multiple" disabled>
-        <?php
-                $args_post_select_multiple = [
-                    'post_type' => 'post',
-                    'order' => 'DESC',
-                    'posts_per_page' => -1
-                ];
-                $result_post_slide = new WP_query($args_post_select_multiple);
-            if($result_post_slide->have_posts()): while($result_post_slide->have_posts()): $result_post_slide->the_post(); ?>
-                <option value="<?= the_title(); ?>" ><?= the_title(); ?></option>
-            <?php endwhile; endif; wp_reset_query(); wp_reset_postdata(); ?>
-        </select>
-         -->
-        
-            
-           
-    <?php
-}
-*/
 
 function display_pina_sidebar_post(){
     $val_pina_sidebar = get_option("show_pina_sidebar_post");
@@ -1846,6 +1848,7 @@ function display_sidebar_post_count(){
 function display_header_options_content(){
     echo "Aqui ficam as configurações gerais do site";
 }
-
+require 'ads/adsSearch.php';
+require 'ads/adsCategory.php';
 
 ?>

@@ -43,7 +43,13 @@
 body.with-sidebar h1{
     margin-top: 80px;
 }
+.owl-stage{
+    align-items: flex-start;
+}
 
+#whatsapp .btn{
+    font-weight: 500;
+}
 @keyframes is-rotating {
     to {
         transform: rotate(1turn);
@@ -65,6 +71,17 @@ body.with-sidebar h1{
     }
     #latest-posts .latest-posts-item .text{
         width: 70%;
+    }
+    #whatsapp{
+        padding: 1rem 2rem;
+    }
+    #whatsapp p{
+        max-width: unset;
+    }
+}
+@media(max-width: 991px){
+    #whatsapp{
+        margin-top: 80px;
     }
 }
 @media(max-width: 767px){
@@ -93,6 +110,10 @@ body.with-sidebar h1{
         padding: 0;
         align-self: unset;
     }
+    .related-posts-container .post:hover .image img{
+        height: inherit;
+    }
+    
 }
 @media(max-width: 600px){
     .news-carousel .news-item .item-head .banner{

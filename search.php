@@ -28,7 +28,7 @@
             </section>
 
             <?php 
-                $show_ad_sidebar = get_option('show_onoff_ads_sidebar');
+                $show_ad_sidebar = get_option('show_onoff_ads_sidebar_search');
                 if($show_ad_sidebar != "on"):
                     include 'inc/adsidebar.php';
                 endif;
@@ -203,14 +203,14 @@
 
         <section id="cards">
             <?php 
-                $show_ad_footer = get_option('show_onoff_ads_footer');
+                $show_ad_footer = get_option('show_onoff_ads_footer_search');
                 if($show_ad_footer != "on"):
                     include 'inc/adfooter.php';
                 endif;
             ?>
 
             <?php 
-                $show_ad_sidebar = get_option('show_onoff_ads_sidebar');
+                $show_ad_sidebar = get_option('show_onoff_ads_sidebar_search');
                 if($show_ad_sidebar != "on"):
                     include 'inc/allsuplements.php';
                 endif;
