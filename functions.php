@@ -261,8 +261,8 @@
                             
                         </div>
 
-                        <a class="link" href="<?php the_permalink(); ?>"></a>
                     </div>
+                    <a class="link" href="<?php the_permalink(); ?>"></a>
                 </div>
             <?php endwhile; ?>
             <?php

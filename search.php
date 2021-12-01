@@ -1,5 +1,14 @@
 <?php get_header(); $s = $_GET['s'];?>
-
+<style>
+    #latest-posts{
+        padding-top: 60px;
+    }
+    @media(max-width: 540px){
+        #latest-posts{
+        padding-top: 0px;
+    }
+    }
+</style>
         <aside>
             <section id="categories">
                 <h2 style="margin-top: unset;">Explore por categoria</h2>
@@ -27,7 +36,7 @@
 
         </aside>
 
-        <main>
+        <main style="width: 100%;">
 
         <?php
 
@@ -41,12 +50,12 @@
             
             if($count_posts > 0): ?>
 
-            <section id="search-results">
+            <section id="search-results" s>
                 <h2>Resultados da busca por “<?= $s; ?>”</h2>
                 <p>Foram encontrados <b class="results-count"><?= $count_posts; ?></b> posts para sua pesquisa.</p>
             </section>
 
-            <section id="latest-posts" style="background-color: transparent; padding-top: 8px">
+            <section id="latest-posts" style="background-color: transparent;">
                 
 
                 <div class="content">
@@ -81,8 +90,9 @@
                                 <time> <?= the_date();  ?> às <?= the_time(); ?></time>
                             </div>
 
-                            <a class="link" href="<?php the_permalink(); ?>"></a>
+                            
                         </div>
+                        <a class="link" href="<?php the_permalink(); ?>"></a>
                     </div>
 
                     <?php
@@ -125,7 +135,7 @@
                 <p>Mas talvez você goste desse conteúdo:</p>
             </section>
 
-            <section id="latest-posts" >
+            <section id="latest-posts"  style="background-color: transparent;">
                 
 
                 <div class="content">
@@ -160,8 +170,9 @@
                                 <time> <?= the_date();  ?> às <?= the_time(); ?></time>
                             </div>
 
-                            <a class="link" href="<?php the_permalink(); ?>"></a>
+                            
                         </div>
+                        <a class="link" href="<?php the_permalink(); ?>"></a>
                     </div>
 
                     <?php

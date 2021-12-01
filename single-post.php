@@ -8,13 +8,13 @@
                 <div class="article-head">
                     <p class="category-tag">Diário da Saúde Natural</p>
                     
-                    <h1><?= get_the_title(); ?></h1>
+                    <h1 style="margin-top: 0;"><?= get_the_title(); ?></h1>
 
                     <div class="author">
                         <?php $mail_user = strval(get_the_author_meta('user_email', false)); ?>
                         <img style="border-radius: 50%" src="<?= get_avatar_url($mail_user, '32', '', '', null) ?>">
                         <p class="name"><?= get_the_author(); ?></p>
-                        <time><?= the_date();  ?> às <?= the_time(); ?></time>
+                        <time><?= the_date('j \d\e M \d\e Y');  ?> às <?= the_time(); ?></time>
                     </div>
 
                     <img class="banner mobile-tablet" src="<?= get_the_post_thumbnail_url(null, 'medium'); ?>">

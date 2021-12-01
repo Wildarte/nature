@@ -453,7 +453,7 @@
             ?>
         </aside>
 
-        <main>
+        <main style="width: 100%;">
             <section id="latest-posts">
                 <h2>Últimas postagens</h2>
                 <div class="tab">
@@ -517,8 +517,9 @@
                                 
                             </div>
 
-                            <a class="link" href="<?php the_permalink(); ?>"></a>
+                            
                         </div>
+                        <a class="link" href="<?php the_permalink(); ?>"></a>
                     </div>
                     <script>
                         //document.querySelectorAll(".latest-posts-item .text .post-summary").style.display = "none";

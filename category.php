@@ -13,8 +13,9 @@
 
         <h1><?= $cat; ?></h1>
         
-        <main>
-            <section id="latest-posts">
+        <main style="width:100%">
+            <section id="latest-posts" style="background-color: transparent;">
+                <!-- 
                 <div class="tab">
 
                     <?php
@@ -27,7 +28,7 @@
                         }         
                     ?>
                 </div>
-
+                -->
 
                 <div class="content">
                     <?php
@@ -68,8 +69,9 @@
                                 <time> <?php the_time("d/m/Y");  ?> às <?= the_time("H:m"); ?> </time>
                             </div>
 
-                            <a class="link" href="#"></a>
+                            
                         </div>
+                        <a class="link" href="<?php the_permalink(); ?>"></a>
                     </div>
 
                     <?php endwhile; endif; ?>

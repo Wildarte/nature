@@ -1458,7 +1458,7 @@ ul.post-categories li a{
   transition: all .15s ease-in-out;
 }
 
-#latest-posts .latest-posts-item .text:hover .title {
+#latest-posts .latest-posts-item:hover .text h4.title {
   color: var(--orange);
 }
 
@@ -1825,7 +1825,7 @@ ul.post-categories li a{
     padding-left: 0;
   }
   body.with-sidebar aside section:first-of-type h2 {
-    margin-top: calc(var(--section-title-margin-bottom) + 30px);
+    margin-top: calc(var(--section-title-margin-bottom) + 50px);
   }
   body.with-sidebar aside h2 {
     margin: 0;
