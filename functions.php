@@ -67,7 +67,7 @@
 
     //add custom length to excerpt
     function my_excerpt_length($length){
-        return 22;
+        return 20;
     }
     add_filter('excerpt_length', 'my_excerpt_length');
     
@@ -249,7 +249,7 @@
                             if($resumo != ""){
                                 echo $resumo." ...";
                             }else{
-                                echo get_first_paragraph();
+                                echo get_the_excerpt();
                             }
                         ?>
                         </p>

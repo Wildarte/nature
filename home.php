@@ -175,7 +175,7 @@
                                             if($resumo != ""){
                                                 echo $resumo." ...";
                                             }else{
-                                                echo get_first_paragraph();
+                                                echo get_the_excerpt();
                                             }
                                         ?>
                                         </p>
@@ -219,7 +219,7 @@
                                     if($resumo != ""){
                                         echo $resumo." ...";
                                     }else{
-                                        echo get_first_paragraph();
+                                        echo get_the_excerpt();
                                     }
                                 ?>
                             </p>
@@ -505,7 +505,7 @@
                                     if($resumo != ""){
                                         echo $resumo." ...";
                                     }else{
-                                        echo get_first_paragraph();
+                                        echo get_the_excerpt();
                                     }
                                 ?>
                             </p>

@@ -6,7 +6,7 @@
         <main>
             <article>
                 <div class="article-head">
-                    <p class="category-tag">Diário da Saúde Natural</p>
+                    <p class="category-tag"><?= get_the_category()[0]->name; ?></p>
                     
                     <h1 style="margin-top: 0;"><?= get_the_title(); ?></h1>
 
@@ -17,8 +17,18 @@
                         <time><?= the_date('j \d\e M \d\e Y');  ?> às <?= the_time(); ?></time>
                     </div>
 
-                    <img class="banner mobile-tablet" src="<?= get_the_post_thumbnail_url(null, 'medium'); ?>">
+                    <?php 
+                        $banner_image = get_the_post_thumbnail_url(null, 'normal');
+                        $banner_image == "" ? $banner_image = get_template_directory_uri().'/assets/img/thumb-default.jpg' : "";
+                    ?>
+                    
+                    <div class="banner_single_post" style="background-image: url('<?= $banner_image; ?>');">
+
+                    </div>
+                    <!--
+                    <img class="banner mobile-tablet" src="">
                     <img class="banner desktop" src="<?= get_the_post_thumbnail_url(null, 'large'); ?>">
+                    -->
                 </div>
 
                 <div class="article-body">
@@ -216,7 +226,7 @@
                                 <?php $mail_user = strval(get_the_author_meta('user_email', false)); ?>
                                 <img style="border-radius: 50%" src="<?= get_avatar_url($mail_user, '32', '', '', null) ?>" class="avatar">
                                 <p class="name"><?= get_the_author(); ?></p>
-                                <time> <?= the_date();  ?> às <?= the_time(); ?> </time>
+                                <time> <?= the_date('j \d\e M \d\e Y');  ?> às <?= the_time(); ?> </time>
                             </div>
                         </div>
                         <a href="<?php the_permalink(); ?>" class="link"></a>
