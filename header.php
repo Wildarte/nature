@@ -90,7 +90,7 @@
                     <div class="line-1">
                         <form action="<?= home_url(); ?>" class="search-form">
                             <label class="label-search">
-                                <input type="search" class="search" name="s" placeholder="Buscar">
+                                <input type="text" class="search" name="s" placeholder="Buscar">
                             </label>
 
                             <button type="submit">
@@ -136,7 +136,7 @@
                             <li>
                                 <form action="<?= home_url(); ?>" class="search-form">
                                     <label class="label-search">
-                                        <input type="search" name="s" class="search" placeholder="Buscar">
+                                        <input type="text" name="s" class="search" placeholder="Buscar">
                                     </label>
 
                                     <button type="submit">

@@ -1,7 +1,6 @@
 <?php
     get_header();
 ?>
-
         <header>
             <style>
                 .news-carousel .news-item .item-body ul.post-categories li a{
@@ -485,7 +484,7 @@
 
                         
                     ?>
-
+                    
                     <?php if($result_ultimos_posts->have_posts()): while($result_ultimos_posts->have_posts()): $result_ultimos_posts->the_post(); ?>
 
                     <div class="latest-posts-item" data-categoria="<?= get_the_category()[0]->slug; ?>">
@@ -545,6 +544,8 @@
             </section>
         </main>
 
+        
+       
         <section id="cards">
             
             <?php 
@@ -562,5 +563,5 @@
             ?>
         </section>
        
-
+        
 <?php get_footer(); ?>

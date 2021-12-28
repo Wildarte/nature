@@ -462,15 +462,24 @@ nav .search-form.not-empty input {
     display: flex;
   }
 
-
+  /* atualizacoes */
   /* add .menu */
   nav .desktop .content .line-2 .menu {
     padding: 1.25rem 1.25rem;
-    grid-area: line-2;
-    grid-template-areas: "link-1 link-2 link-3 link-4 link-5";
+    /*grid-area: line-2;*/
+    /*grid-template-areas: "link-1 link-2 link-3 link-4 link-5";*/
+    -webkit-box-pack: center;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    max-width: calc(var(--max-content-width) + 80px);
   }
+  nav .desktop .content .line-2 .menu li{
+    grid-area: link-5;
+    display: flex;
+    justify-content: center;
+    margin: 0 75px;
+  }
+  /* atualizacoes */
 
   /* remove .page-links and add .menu li a */
   nav .desktop .content .line-2 .menu li a {
@@ -1904,6 +1913,10 @@ ul.post-categories li a{
     -webkit-box-ordinal-group: 4;
         -ms-flex-order: 3;
             order: 3;
+
+    font-size: 1.125rem;
+    padding: 0.5rem;
+    max-width: 10rem;
   }
 }
 
@@ -2122,4 +2135,11 @@ header {
     color: #484B57;
     margin-bottom: 20px;
   }
+}
+
+footer .links .menu li a:hover{
+  text-decoration: underline;
+  color: #000!important;
+  opacity: 1!important;
+  transition: all .18s;
 }
