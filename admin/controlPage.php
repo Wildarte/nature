@@ -37,7 +37,7 @@ function add_new_menu_items(){
         "theme-options", //Required. Slug of top level menu item
         "Ads Página Pesquisa", //Required. Text to be displayed in title.
         "Ads Página Pesquisa", //Required. Text to be displayed in menu.
-        "manage_options", //Required. The required capability of users.
+        "administrator", //Required. The required capability of users.
         "options_ads_search", //Required. A unique identifier to the sub menu item.
         "callback_options_ads_search", //Optional. This callback outputs the content of the page associated //with this menu item.
         "" //Optional. The URL of the menu item icon
@@ -568,26 +568,31 @@ function display_select_mobile_category(){
 function display_fields_ads_sidebar(){
     add_settings_section("section_ads_sidebar", "", "display_option_ads_sidebar", "options_ads");
 
-    add_settings_field("show_img_ads_sidebar", "Imagem Ads", "display_img_ads_sidebar", "options_ads", "section_ads_sidebar");
-    add_settings_field("show_title_ads_sidebar", "Título Ads", "display_title_ads_sidebar", "options_ads", "section_ads_sidebar");
-    add_settings_field("show_color_title_ads_sidebar", "Cor do título Ads", "display_color_title_ads_sidebar", "options_ads", "section_ads_sidebar");
-    add_settings_field("show_text_ads_sidebar", "Texto Ads", "display_text_ads_sidebar", "options_ads", "section_ads_sidebar");
-    add_settings_field("show_link_ads_sidebar", "Link Ads", "display_link_ads_sidebar", "options_ads", "section_ads_sidebar");
-    add_settings_field("show_cta_ads_sidebar", "CTA Ads", "display_cta_ads_sidebar", "options_ads", "section_ads_sidebar");
-    add_settings_field("show_color_txt_cta_ads_sidebar", "Cor do texto do botão Ads", "display_color_txt_cta_ads_sidebar", "options_ads", "section_ads_sidebar");
-    add_settings_field("show_color_cta_ads_sidebar", "Cor de fundo do botão CTA", "display_color_cta_ads_sidebar", "options_ads", "section_ads_sidebar");
-    add_settings_field("show_color_ads_sidebar", "Cor de fundo do Banner", "display_color_ads_sidebar", "options_ads", "section_ads_sidebar");
+    add_settings_field("show_ads_html_sidebar_home", "Código HTML", "display_ads_html_sidebar_home", "options_ads", "section_ads_sidebar");
+
+    //códigos comentados para uso futuro
+    
+    //add_settings_field("show_img_ads_sidebar", "Imagem Ads", "display_img_ads_sidebar", "options_ads", "section_ads_sidebar");
+    //add_settings_field("show_title_ads_sidebar", "Título Ads", "display_title_ads_sidebar", "options_ads", "section_ads_sidebar");
+    //add_settings_field("show_color_title_ads_sidebar", "Cor do título Ads", "display_color_title_ads_sidebar", "options_ads", "section_ads_sidebar");
+    //add_settings_field("show_text_ads_sidebar", "Texto Ads", "display_text_ads_sidebar", "options_ads", "section_ads_sidebar");
+    //add_settings_field("show_link_ads_sidebar", "Link Ads", "display_link_ads_sidebar", "options_ads", "section_ads_sidebar");
+    //add_settings_field("show_cta_ads_sidebar", "CTA Ads", "display_cta_ads_sidebar", "options_ads", "section_ads_sidebar");
+    //add_settings_field("show_color_txt_cta_ads_sidebar", "Cor do texto do botão Ads", "display_color_txt_cta_ads_sidebar", "options_ads", "section_ads_sidebar");
+    //add_settings_field("show_color_cta_ads_sidebar", "Cor de fundo do botão CTA", "display_color_cta_ads_sidebar", "options_ads", "section_ads_sidebar");
+    //add_settings_field("show_color_ads_sidebar", "Cor de fundo do Banner", "display_color_ads_sidebar", "options_ads", "section_ads_sidebar");
     add_settings_field("show_onoff_ads_sidebar", "ON/OFF Ads", "display_onoff_ads_sidebar", "options_ads", "section_ads_sidebar");
 
-    register_setting("ads_section", "show_img_ads_sidebar");
-    register_setting("ads_section", "show_title_ads_sidebar");
-    register_setting("ads_section", "show_text_ads_sidebar");
-    register_setting("ads_section", "show_color_title_ads_sidebar");
-    register_setting("ads_section", "show_link_ads_sidebar");
-    register_setting("ads_section", "show_cta_ads_sidebar");
-    register_setting("ads_section", "show_color_txt_cta_ads_sidebar");
-    register_setting("ads_section", "show_color_cta_ads_sidebar");
-    register_setting("ads_section", "show_color_ads_sidebar");
+    register_setting("ads_section", "show_ads_html_sidebar_home");
+    //register_setting("ads_section", "show_img_ads_sidebar");
+    //register_setting("ads_section", "show_title_ads_sidebar");
+    //register_setting("ads_section", "show_text_ads_sidebar");
+    //register_setting("ads_section", "show_color_title_ads_sidebar");
+    //register_setting("ads_section", "show_link_ads_sidebar");
+    //register_setting("ads_section", "show_cta_ads_sidebar");
+    //register_setting("ads_section", "show_color_txt_cta_ads_sidebar");
+    //register_setting("ads_section", "show_color_cta_ads_sidebar");
+    //register_setting("ads_section", "show_color_ads_sidebar");
     register_setting("ads_section", "show_onoff_ads_sidebar");
 }
 add_action("admin_init", "display_fields_ads_sidebar");
@@ -595,6 +600,12 @@ add_action("admin_init", "display_fields_ads_sidebar");
 function display_option_ads_sidebar(){
     ?>
         <h2>Anúncio Sidebar</h2>
+    <?php
+}
+
+function display_ads_html_sidebar_home(){
+    ?>
+        <textarea style="background: #343434; color: #00bb11" name="show_ads_html_sidebar_home" id="show_ads_html_sidebar_home" cols="60" rows="20"><?= get_option('show_ads_html_sidebar_home') ?></textarea>
     <?php
 }
 function display_img_ads_sidebar(){
@@ -823,26 +834,29 @@ function display_onoff_ads_sidebar(){
 function display_fields_ads_footer(){
     add_settings_section("section_ads_footer", "", "display_option_ads_footer", "options_ads");
 
-    add_settings_field("show_img_ads_footer", "Imagem Ads", "display_img_ads_footer", "options_ads", "section_ads_footer");
-    add_settings_field("show_title_ads_footer", "Title Ads", "display_title_ads_footer", "options_ads", "section_ads_footer");
-    add_settings_field("show_color_title_ads_footer", "Cor do título Ads", "display_color_title_ads_footer", "options_ads", "section_ads_footer");
-    add_settings_field("show_text_ads_footer", "Texto Ads", "display_text_ads_footer", "options_ads", "section_ads_footer");
-    add_settings_field("show_link_ads_footer", "Link Ads", "display_link_ads_footer", "options_ads", "section_ads_footer");
-    add_settings_field("show_cta_ads_footer", "CTA Ads", "display_cta_ads_footer", "options_ads", "section_ads_footer");
-    add_settings_field("show_color_txt_cta_ads_footer", "Cor do texto do botão Ads", "display_color_txt_cta_ads_footer", "options_ads", "section_ads_footer");
-    add_settings_field("show_color_cta_ads_footer", "Cor de fundo do botão CTA", "display_color_cta_ads_footer", "options_ads", "section_ads_footer");
-    add_settings_field("show_color_ads_footer", "Cor de fundo do Banner", "display_color_ads_footer", "options_ads", "section_ads_footer");
+    add_settings_field("show_ads_html_footer_home", "Código HTML", "display_ads_html_footer_home", "options_ads", "section_ads_footer");
+
+    //add_settings_field("show_img_ads_footer", "Imagem Ads", "display_img_ads_footer", "options_ads", "section_ads_footer");
+    //add_settings_field("show_title_ads_footer", "Title Ads", "display_title_ads_footer", "options_ads", "section_ads_footer");
+    //add_settings_field("show_color_title_ads_footer", "Cor do título Ads", "display_color_title_ads_footer", "options_ads", "section_ads_footer");
+    //add_settings_field("show_text_ads_footer", "Texto Ads", "display_text_ads_footer", "options_ads", "section_ads_footer");
+    //add_settings_field("show_link_ads_footer", "Link Ads", "display_link_ads_footer", "options_ads", "section_ads_footer");
+    //add_settings_field("show_cta_ads_footer", "CTA Ads", "display_cta_ads_footer", "options_ads", "section_ads_footer");
+    //add_settings_field("show_color_txt_cta_ads_footer", "Cor do texto do botão Ads", "display_color_txt_cta_ads_footer", "options_ads", "section_ads_footer");
+    //add_settings_field("show_color_cta_ads_footer", "Cor de fundo do botão CTA", "display_color_cta_ads_footer", "options_ads", "section_ads_footer");
+    //add_settings_field("show_color_ads_footer", "Cor de fundo do Banner", "display_color_ads_footer", "options_ads", "section_ads_footer");
     add_settings_field("show_onoff_ads_footer", "ON/OFF Ads", "display_onoff_ads_footer", "options_ads", "section_ads_footer");
 
-    register_setting("ads_section", "show_img_ads_footer");
-    register_setting("ads_section", "show_title_ads_footer");
-    register_setting("ads_section", "show_color_title_ads_footer");
-    register_setting("ads_section", "show_text_ads_footer");
-    register_setting("ads_section", "show_link_ads_footer");
-    register_setting("ads_section", "show_cta_ads_footer");
-    register_setting("ads_section", "show_color_txt_cta_ads_footer");
-    register_setting("ads_section", "show_color_cta_ads_footer");
-    register_setting("ads_section", "show_color_ads_footer");
+    register_setting("ads_section", "show_ads_html_footer_home");
+    //register_setting("ads_section", "show_img_ads_footer");
+    //register_setting("ads_section", "show_title_ads_footer");
+    //register_setting("ads_section", "show_color_title_ads_footer");
+    //register_setting("ads_section", "show_text_ads_footer");
+    //register_setting("ads_section", "show_link_ads_footer");
+    //register_setting("ads_section", "show_cta_ads_footer");
+    //register_setting("ads_section", "show_color_txt_cta_ads_footer");
+    //register_setting("ads_section", "show_color_cta_ads_footer");
+    //register_setting("ads_section", "show_color_ads_footer");
     register_setting("ads_section", "show_onoff_ads_footer");
 }
 add_action("admin_init", "display_fields_ads_footer");
@@ -851,6 +865,11 @@ function display_option_ads_footer(){
     ?>
         <hr>
         <h2>Anúncio Footer</h2>
+    <?php
+}
+function display_ads_html_footer_home(){
+    ?>
+        <textarea style="background: #343434; color: #00bb11;" name="show_ads_html_footer_home" id="show_ads_html_footer_home" cols="60" rows="20"><?= get_option('show_ads_html_footer_home') ?></textarea>
     <?php
 }
 function display_img_ads_footer(){

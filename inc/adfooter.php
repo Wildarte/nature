@@ -35,7 +35,11 @@ if(is_search()){
 ?>
 
 
-<div class="card" style="background-color: <?= $bg_color; ?>;">
+<div class="card" >
+<?= get_option('show_ads_html_footer_home'); ?>
+
+
+<!-- 
     <div class="card-image">
         <img style="width: 42px;" src="<?= wp_get_attachment_image_url( $img_ads_footer, 'normal' ); ?>">
     </div>
@@ -45,4 +49,5 @@ if(is_search()){
     </div>
     <button class="btn" style="background-color: <?= $color_button; ?>; color: <?= $color_txt_button; ?>"><?= $cta; ?></button>
     <a href="<?= $link; ?>" class="link"></a>
+ -->
 </div>

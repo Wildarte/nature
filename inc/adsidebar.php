@@ -35,11 +35,18 @@ if(is_search()){
 ?>
 
 <section id="products">
-    <div class="all-suplements" style="background-color: <?= $bg_color; ?>">
+    <style>
+        
+       
+    </style>
+    <div class="all-suplements" style="background-color: <?= $bg_color; ?>; min-height: 180px">
+    <?= get_option('show_ads_html_sidebar_home') ?>
+    <!-- 
         <img style="width: 120px;" src="<?= wp_get_attachment_image_url( $img_ads_sidebar, 'normal' ); ?>">
         <h4 style="color: <?= $color_title; ?> "><?= $title; ?></h4>
         <p><?= $txt; ?></p>
         <button class="btn btn-blue" style="background-color: <?= $color_button; ?>; color: <?= $color_txt_button; ?>"><?= $cta; ?></button>
         <a href="<?= $link; ?>" class="link"></a>
+     -->
     </div>
 </section>

@@ -1969,14 +1969,14 @@ article .article-body img {
 }
 
 .related-posts-container .post .text .title {
-  font-size: 1.1875rem;
+  font-size: 1.875rem;
   line-height: 1.6875rem;
   text-align: left;
   margin-top: 0;
 }
 
 .related-posts-container .post .text .author {
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   font-size: 0.875rem;
   color: var(--dark-grey);
 }
@@ -2166,8 +2166,9 @@ img.desktop {
             flex-direction: row;
     -webkit-box-pack: space-evenly;
         -ms-flex-pack: space-evenly;
-            justify-content: space-evenly;
+            justify-content: space-between;
     padding: 1.875rem 3.125rem;
+    border-radius: 0.25rem;
   }
   #whatsapp p {
     text-align: left;
@@ -2192,7 +2193,7 @@ img.desktop {
   }
   #whatsapp {
     display: flex;
-    margin: 120px 20px 40px;
+    margin: 120px 10px 40px;
   }
   .related-posts-container {
     display: -webkit-box;

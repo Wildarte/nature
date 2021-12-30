@@ -40,9 +40,11 @@
     background-position-x: center;
     background-size: cover;
 }
+/*
 body.with-sidebar h1{
     margin-top: 80px;
 }
+*/
 .owl-stage{
     align-items: flex-start;
 }
@@ -67,6 +69,61 @@ article .article-head, article .article-body p{
         transform: rotate(1turn);
     }
 }
+/* add */
+.content-post-hover:hover h4.title {
+    color: var(--orange);
+}
+
+/* reset to style for ads */
+#cards .all-suplements, body.with-sidebar aside #products .all-suplements{
+    padding: 0;
+}
+body.with-sidebar aside #products .all-suplements img{
+    max-width: 100%;
+}
+body.with-sidebar aside #products .all-suplements h1,
+body.with-sidebar aside #products .all-suplements h2,
+body.with-sidebar aside #products .all-suplements h3,
+body.with-sidebar aside #products .all-suplements h4,
+body.with-sidebar aside #products .all-suplements h5,
+body.with-sidebar aside #products .all-suplements h6{
+    display: block;
+    width: 100%;
+    margin: 0;
+}
+body.with-sidebar aside #products .all-suplements h1{
+    font-size: 32px;
+}
+body.with-sidebar aside #products .all-suplements h2{
+   
+    text-transform: unset;
+}
+.all-suplements h1::after{
+    all: unset;
+}
+body.with-sidebar aside #products .all-suplements a{
+    color: #0000ff;
+}
+body.with-sidebar aside #products .all-suplements a:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/* reset style from cards */
+#cards .card{
+    background: unset;
+    padding: 0;
+    display: flex;
+}
+#cards .card *{
+    width: 100%;
+}
+#cards .card h1::after, #cards .card h2::after{
+    all: unset;
+}
+#cards .card h1{
+}
+
 /*
 @media (min-width: 375px){
     #latest-posts .latest-posts-item .image {
@@ -85,7 +142,8 @@ article .article-head, article .article-body p{
         width: 70%;
     }
     #whatsapp{
-        padding: 1rem 2rem;
+        padding: 1.25rem;
+        border-radius: 0.25rem;
     }
     #whatsapp p{
         max-width: unset;
@@ -94,6 +152,7 @@ article .article-head, article .article-body p{
 @media(max-width: 991px){
     #whatsapp{
         margin-top: 80px;
+        border-radius: 0.25rem;
     }
 }
 @media(max-width: 767px){

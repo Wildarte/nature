@@ -1044,6 +1044,7 @@ body.with-sidebar aside .categories {
   width: 100%;
   max-width: 305px;
   margin: auto;
+  margin-right: 0px; /*add*/
 }
 
 body.with-sidebar aside .categories .category {
@@ -1105,6 +1106,7 @@ body.with-sidebar aside #products .all-suplements {
           box-shadow: 0 3px 6px rgba(0, 0, 0, 0.27);
   text-align: center;
   position: relative;
+  margin-right: 22px; /* add */
 }
 
 body.with-sidebar aside #products .all-suplements:hover .btn {
@@ -1457,6 +1459,7 @@ ul.post-categories li a{
 
 #latest-posts .latest-posts-item .text {
   position: relative;
+  margin-left: 8px;
 }
 
 #latest-posts .latest-posts-item .text .title,
@@ -1467,9 +1470,6 @@ ul.post-categories li a{
   transition: all .15s ease-in-out;
 }
 
-#latest-posts .latest-posts-item:hover .text h4.title {
-  color: var(--orange);
-}
 
 #latest-posts .latest-posts-item .link {
   position: absolute;
@@ -1580,10 +1580,12 @@ ul.post-categories li a{
 }
 
 #cards .card button {
+  /*add retirei
   margin-top: 1.125rem;
   -webkit-box-ordinal-group: 4;
       -ms-flex-order: 3;
           order: 3;
+  */
 }
 
 #cards .card .link {
@@ -1618,7 +1620,7 @@ ul.post-categories li a{
   line-height: 1.6875rem;
   color: #3b4157;
 }
-
+/* add retirei
 #cards .all-suplements img {
   position: absolute;
   right: 0.625rem;
@@ -1627,7 +1629,7 @@ ul.post-categories li a{
   width: 28%;
   max-width: 6.875rem;
 }
-
+*/
 #cards .all-suplements button {
   margin-top: 1rem;
 }
@@ -1635,7 +1637,7 @@ ul.post-categories li a{
 #cards .all-suplements .orange {
   color: #EC6C27;
 }
-
+/*
 #cards .all-suplements a {
   position: absolute;
   top: 0;
@@ -1643,7 +1645,7 @@ ul.post-categories li a{
   width: 100%;
   height: 100%;
 }
-
+*/
 .owl-stage {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1849,7 +1851,14 @@ ul.post-categories li a{
     display: block;
   }
   body.with-sidebar aside #categories h2 {
-    text-transform: capitalize;
+    /* add */
+    /*text-transform: capitalize;*/
+    margin: auto;
+    margin-right: 0px;
+    width: 100%;
+    max-width: 305px;
+    padding-left: 0px;
+    text-align: left;
   }
   body.with-sidebar h1,
   body.with-sidebar h2.main-title {
@@ -1909,6 +1918,7 @@ ul.post-categories li a{
     font-size: 18px;
   }
   #cards .card button {
+    /*add retirei
     margin: 0 0 0 3.25rem;
     -webkit-box-ordinal-group: 4;
         -ms-flex-order: 3;
@@ -1917,6 +1927,7 @@ ul.post-categories li a{
     font-size: 1.125rem;
     padding: 0.5rem;
     max-width: 10rem;
+    */
   }
 }
 

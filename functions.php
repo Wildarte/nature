@@ -241,18 +241,22 @@
 
                     <div class="text">
                         <?= the_category(); ?>
-                        <h4 class="title"><?= get_the_title(); ?></h4>
-                        <p class="post-summary">
-                        <?php
-                            $resumo = get_post_meta(get_the_ID(), 'meta_resumo_post', true);
+                        <!-- add uma div que contém o título e o resumo e também o link para o post -->
+                        <div class="content-post-hover" style="position: relative;">
+                            <h4 class="title"><?= get_the_title(); ?></h4>
+                            <p class="post-summary">
+                            <?php
+                                $resumo = get_post_meta(get_the_ID(), 'meta_resumo_post', true);
 
-                            if($resumo != ""){
-                                echo $resumo." ...";
-                            }else{
-                                echo get_the_excerpt();
-                            }
-                        ?>
-                        </p>
+                                if($resumo != ""){
+                                    echo $resumo." ...";
+                                }else{
+                                    echo get_the_excerpt();
+                                }
+                            ?>
+                            </p>
+                            <a class="link" href="<?php the_permalink(); ?>"></a>
+                        </div>
                         <div class="author">
                             <?php $mail_user = strval(get_the_author_meta('user_email', false)); ?>
                             <img src="<?= get_avatar_url($mail_user, '32', '', '', null) ?>">
@@ -262,7 +266,7 @@
                         </div>
 
                     </div>
-                    <a class="link" href="<?php the_permalink(); ?>"></a>
+                    
                 </div>
             <?php endwhile; ?>
             <?php
@@ -286,6 +290,7 @@
         endfor;
         return $text_return . ' ...';
     }
+
 
     
 ?>
