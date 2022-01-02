@@ -69,6 +69,26 @@ article .article-head, article .article-body p{
         transform: rotate(1turn);
     }
 }
+body.with-sidebar aside .categories .category{
+    display: flex;
+    justify-content: flex-start;
+}
+body.with-sidebar aside .categories .category{
+    position: relative;
+}
+body.with-sidebar aside .categories .category img.icon_category{
+    height: 26px;
+    margin-right: 15px;
+}
+body.with-sidebar aside .categories .category img.icon_next{
+    position: absolute;
+    right: 18px;
+}
+body.with-sidebar aside .categories .category span{
+    display: flex;
+    justify-self: flex-start;
+    margin-left: 10px;
+}
 /* add */
 .content-post-hover:hover h4.title {
     color: var(--orange);
