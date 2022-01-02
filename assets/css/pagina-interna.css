@@ -1853,6 +1853,10 @@ div.author img {
         -ms-flex-order: 3;
             order: 3;
   }
+  .related-posts-container .post:hover .image img{
+    height: 9.5rem;
+    transition: all .2s;
+  }
 }
 
 @media (min-width: 1168px) {
@@ -1969,7 +1973,7 @@ article .article-body img {
 }
 
 .related-posts-container .post .text .title {
-  font-size: 1.875rem;
+  font-size: 1.1875rem;
   line-height: 1.6875rem;
   text-align: left;
   margin-top: 0;
@@ -2017,10 +2021,7 @@ article .article-body img {
   -webkit-transform: scale(.99);
           transform: scale(.999);
 }
-.related-posts-container .post:hover .image img{
-  height: 9.5rem;
-  transition: all .2s;
-}
+
 
 .related-posts-container .owl-nav {
   display: none;

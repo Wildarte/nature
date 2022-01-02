@@ -10,6 +10,8 @@ if(is_search()){
     $color_button = get_option('show_color_cta_ads_sidebar_search');
     $cta = get_option('show_cta_ads_sidebar_search');
     $link = get_option('show_link_ads_sidebar_search');
+
+    $html = get_option('show_ads_html_sidebar_search');
 }elseif(is_category()){
     $bg_color = get_option('show_color_ads_sidebar_category');
     $img_ads_sidebar = get_option('show_img_ads_sidebar_category');
@@ -20,6 +22,8 @@ if(is_search()){
     $color_button = get_option('show_color_cta_ads_sidebar_category');
     $cta = get_option('show_cta_ads_sidebar_category');
     $link = get_option('show_link_ads_sidebar_category');
+
+    $html = get_option('show_ads_html_sidebar_category');
 }else{
     $bg_color = get_option('show_color_ads_sidebar');
     $img_ads_sidebar = get_option('show_img_ads_sidebar');
@@ -30,6 +34,8 @@ if(is_search()){
     $color_button = get_option('show_color_cta_ads_sidebar');
     $cta = get_option('show_cta_ads_sidebar');
     $link = get_option('show_link_ads_sidebar');
+
+    $html = get_option('show_ads_html_sidebar_home');
 }
 
 ?>
@@ -39,8 +45,8 @@ if(is_search()){
         
        
     </style>
-    <div class="all-suplements" style="background-color: <?= $bg_color; ?>; min-height: 180px">
-    <?= get_option('show_ads_html_sidebar_home') ?>
+    <div class="all-suplements" style="background-color: <?php //$bg_color; ?>; min-height: 180px">
+    <?= $html; ?>
     <!-- 
         <img style="width: 120px;" src="<?= wp_get_attachment_image_url( $img_ads_sidebar, 'normal' ); ?>">
         <h4 style="color: <?= $color_title; ?> "><?= $title; ?></h4>

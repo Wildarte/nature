@@ -1,6 +1,19 @@
+
+<?php
+
+if(is_search()){
+    $html = get_option('show_ads_html_sidebar_search');
+}elseif(is_category()){
+
+    $html = get_option('show_ads_html_sidebar_category');
+}else{
+    $html = get_option('show_ads_html_sidebar_home');
+}
+
+?>
 <div class="all-suplements">
 
-<?php //get_option('show_ads_html_sidebar_home') ?>
+<?= $html; ?>
 <!-- 
     <h4><?= get_option('show_title_ads_sidebar') ?></h4>
     <p><?= get_option('show_text_ads_sidebar') ?></p>

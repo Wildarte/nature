@@ -453,14 +453,31 @@
         </aside>
 
         <main style="width: 100%;">
+            <style>
+                .tab h4:nth-child(1){
+                    /*text-align: left!important;*/
+                    margin-left: 0px!important;
+                    padding-left: 0px!important;
+                    justify-content: left!important;
+                    
+                }
+                .tab h4:nth-child(3){
+                    /*text-align: right!important;*/
+                    margin-right: 0px!important;
+                    padding-right: 0px!important;
+                    justify-content: right!important;
+                }
+            </style>
             <section id="latest-posts">
                 <h2>Últimas postagens</h2>
+                
                 <div class="tab">
                     <?php
 
                         $terms = get_terms([
                             'taxonomy' => 'category',
-                            'hide_empty' => false
+                            'hide_empty' => false,
+                            'orderby' => 'term_id'
                         ]);
                         foreach($terms as $term){
                             

@@ -10,6 +10,8 @@ if(is_search()){
     $color_button = get_option('show_color_cta_ads_footer_search');
     $cta = get_option('show_cta_ads_footer_search');
     $link = get_option('show_link_ads_footer_search');
+
+    $html = get_option('show_ads_html_footer_search');
 }elseif(is_category()){
     $bg_color = get_option('show_color_ads_footer_category');
     $img_ads_footer = get_option('show_img_ads_footer_category');
@@ -20,6 +22,8 @@ if(is_search()){
     $color_button = get_option('show_color_cta_ads_footer_category');
     $cta = get_option('show_cta_ads_footer_category');
     $link = get_option('show_link_ads_footer_category');
+
+    $html = get_option('show_ads_html_footer_category');
 }else{
     $bg_color = get_option('show_color_ads_footer');
     $img_ads_footer = get_option('show_img_ads_footer');
@@ -30,13 +34,15 @@ if(is_search()){
     $color_button = get_option('show_color_cta_ads_footer');
     $cta = get_option('show_cta_ads_footer');
     $link = get_option('show_link_ads_footer');
+
+    $html = get_option('show_ads_html_footer_home');
 }
 
 ?>
 
 
 <div class="card" >
-<?= get_option('show_ads_html_footer_home'); ?>
+<?= $html; ?>
 
 
 <!-- 

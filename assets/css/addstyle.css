@@ -101,12 +101,8 @@ body.with-sidebar aside #products .all-suplements h2{
 .all-suplements h1::after{
     all: unset;
 }
-body.with-sidebar aside #products .all-suplements a{
-    color: #0000ff;
-}
 body.with-sidebar aside #products .all-suplements a:hover{
     cursor: pointer;
-    text-decoration: underline;
 }
 
 /* reset style from cards */
@@ -148,6 +144,9 @@ body.with-sidebar aside #products .all-suplements a:hover{
     #whatsapp p{
         max-width: unset;
     }
+    #latest-posts .tab h4 {
+        padding: 0.5rem 1.65rem;
+    }
 }
 @media(max-width: 991px){
     #whatsapp{
@@ -180,9 +179,6 @@ body.with-sidebar aside #products .all-suplements a:hover{
         margin: 6px 5px 4px!important;
         padding: 0;
         align-self: unset;
-    }
-    .related-posts-container .post:hover .image img{
-        height: inherit;
     }
     
 }

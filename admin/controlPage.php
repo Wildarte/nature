@@ -604,8 +604,10 @@ function display_option_ads_sidebar(){
 }
 
 function display_ads_html_sidebar_home(){
+    $html = get_option('show_ads_html_sidebar_home');
     ?>
-        <textarea style="background: #343434; color: #00bb11" name="show_ads_html_sidebar_home" id="show_ads_html_sidebar_home" cols="60" rows="20"><?= get_option('show_ads_html_sidebar_home') ?></textarea>
+        <textarea style="background: #343434; color: #00bb11" name="show_ads_html_sidebar_home" id="show_ads_html_sidebar_home" cols="60" rows="20"><?= $html; ?></textarea>
+        
     <?php
 }
 function display_img_ads_sidebar(){

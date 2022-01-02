@@ -31,6 +31,113 @@
                     -->
                 </div>
 
+                <style>
+                    .article-body ul, .article-body ol{
+                        margin: 64px 0;
+                        margin-left: 64px;
+                    }
+                    .article-body ul{
+                        list-style: disc;
+                    }
+                    .article-body ul li, .article-body ol li{
+                        font-size: 1.4375rem;
+                        color: var(--dark-grey);
+                        line-height: .5rem;
+                        margin-top: 2.1875rem;
+                        margin-bottom: 2.1875rem;
+                    }
+                    .article-body table, .article-body table td{
+                        border: 1px solid #bebebe;
+                        border-collapse: collapse;
+                        padding: 5px;
+                        background-color: #fff;
+                        font-size: 1.4375rem;
+                        color: var(--dark-grey);
+                    }
+                    .article-body h1{
+                        margin: 0;
+                        padding: 0;
+                        font-size: 31px;
+                    }
+                    .article-body h2, .article-body h2 strong{
+                        margin: 0;
+                        padding: 0;
+                        font-size: 23px;
+                    }
+                    .article-body h1::after, .article-body h2::after{
+                        display: none;
+                    }
+                    .article-body a{
+                        color: #1592E6;
+                        text-decoration: underline;
+                    }
+                    .article-body img{
+                        width: 100%;
+                        height: auto;
+                    }
+                    .article-body blockquote{
+                        background-color: #fff;
+                        border: 3px solid #ccc;
+                        padding: 20px;
+                        display: flex;
+                        justify-content: center;
+                        flex-wrap: wrap;
+                    }
+                    .article-body blockquote .head-quote{
+                        width: 100%;
+                        display: flex;
+                        justify-content: space-between;
+                    }
+                    .article-body blockquote .head-quote img{
+                        width: 40px;
+                        margin: 0;
+                    }
+                    .article-body blockquote p{
+                        text-align: center;
+                        width: 100%;
+                        margin: 12px;
+                        opacity: 0.8;
+                    }
+                    .article-body blockquote cite{
+                        margin: 10px auto;
+                        text-align: center;
+                        width: 100%;
+                        color: #565656;
+                        font-weight: 600;
+                        font-size: 1.1em;
+                    }
+                    @media(max-width: 415px){
+                        .article-body ul, .article-body ol{
+                            margin: 24px 0;
+                            margin-left: 18px;
+                        }
+                        .article-body ul li, .article-body ol li{
+                            font-size: 1.125rem;
+                            line-height: .475rem;
+                            color: var(--dark-grey);
+                            margin-top: 1.5625rem;
+                            margin-bottom: 1.5625rem;
+                        }
+                        .article-body table, .article-body table td{
+                            padding: 4px;
+                            font-size: 1rem;
+                        }
+                        .article-body h1{
+                        margin: 0;
+                        padding: 0;
+                        font-size: 23px;
+                        }
+                        .article-body h2, .article-body h2 strong{
+                            margin: 0;
+                            padding: 0;
+                            font-size: 20px;
+                        }
+                        .article-body blockquote .head-quote img{
+                            width: 24px;
+                        }
+                    }
+                </style>
+
                 <div class="article-body">
                     <style>
                         .nl-container p{
@@ -40,7 +147,13 @@
                     </style>
                     <?php the_content(); ?>
 
-                   
+                   <script>
+                       const quotes = document.querySelectorAll('.article-body blockquote');
+
+                        quotes.forEach((item) => {
+                            item.insertAdjacentHTML('afterbegin', '<div class="head-quote"><img src="<?= get_template_directory_uri(); ?>/assets/img/icons/quote-left.png"><img src="<?= get_template_directory_uri(); ?>/assets/img/icons/quote-right.png"></div>');
+                        });
+                   </script>
                 </div>
             </article>
     
