@@ -70,7 +70,7 @@
                                 <?php $mail_user = strval(get_the_author_meta('user_email', false)); ?>
                                 <img src="<?= get_avatar_url($mail_user, '32', '', '', null) ?>">
                                 <p class="name"><?= get_the_author(); ?></p>
-                                <time> <?php the_time("d/m/Y");  ?> às <?= the_time("H:m"); ?> </time>
+                                <time> <?php echo date_post(get_the_date('d-m-Y'), get_the_time('H:i:s')); ?> </time>
                             </div>
 
                             

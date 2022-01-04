@@ -237,6 +237,7 @@
                         $thumb = get_the_post_thumbnail_url(null, 'thumbnail');
                         $thumb == "" ? $thumb = get_template_directory_uri().'/assets/img/thumb-default.jpg' : "";
                     ?>
+                    
                     <div class="image" style="background-position: center; background-size: cover; background-image: url('<?= $thumb; ?>')"></div>
 
                     <div class="text">
@@ -261,7 +262,7 @@
                             <?php $mail_user = strval(get_the_author_meta('user_email', false)); ?>
                             <img src="<?= get_avatar_url($mail_user, '32', '', '', null) ?>">
                             <p class="name"><?= get_the_author(); ?></p>
-                            <time> <?php the_time("d/m/Y");  ?> às <?= the_time("H:m"); ?> </time>
+                            <time> <?php echo date_post(get_the_date('d-m-Y'), get_the_time('H:i:s'));  ?> </time>
                             
                         </div>
 
@@ -291,6 +292,73 @@
         return $text_return . ' ...';
     }
 
+
+    function date_post($dt_post, $hr_post){
+        date_default_timezone_set('America/Sao_Paulo'); //pega o horario de sao paulo
+        $date_return = "";
+        $hora_post =  $hr_post; //get_the_time('H:i:s'); //pega a hora do post
+        $hora_atual = date('H:i:s'); //pega a hora atual
+        
+        $data_post = $dt_post; //get_the_date('d-m-Y'); //pega a data do post
+        $data_hoje = date('d-m-Y'); //pega a data de hoje
+        
+
+        //se a data do post for igual a data de hoje entao quer dizer que o post foi publicado no mesmo dia entao a função vai trabalhar com horas e minutos
+        if($data_post == $data_hoje){
+
+            $datetime1 = new DateTime($hora_post); //cria um objeto DataTime com a hora do post
+            $datetime2 = new DateTime($hora_atual);//cria um objeto DataTime com a hora atual
+            
+            $interval = $datetime1->diff($datetime2); //subtrai a hora atual pela hora do post
+
+            //se a hora do post for maior que zero
+            if($interval->format('%H') > 0){
+
+                //se hora for maior que 1 vai retornar o horário o horario do post seguido pela palavra hora
+                if($interval->format('%H') > 1){
+                    $date_return = "Há ".$interval->format('%h')." horas";
+
+                //se a hora for maior que 1 vai retornar o horário do post seguido pela palavra horas
+                }else{
+                    $date_return = $interval->format('%H')." hora";
+                }
+
+
+            //se a hora do post nao ofor maior que zero
+            }elseif($interval->format('%i') > 0){
+
+                //retorna o horário do post em minutos
+                $date_return = $interval->format('%i')." minutos";
+
+            //se nao retorna o horário do post em  segundos   
+            }elseif($interval->format('%s') > 0){
+                $date_return = $interval->format('%s')." segundos";
+            }
+
+
+        //se a data do post nao for igual a data de hoje
+        }else{
+
+            $data1 = new DateTime($data_post); //cria um objeto DataTime com a data do post
+            $data2 = new DateTime($data_hoje); //cria um objeto DataTime com a data de hoje
+
+            $return_data = $data1->diff($data2); //subtrai a data de hoje pela data do post
+
+            //se o resultado da subtração das datas for igual a 1
+            if($return_data->format('%d') == 1){
+
+                // entao a data do post foi ontem
+                $date_return = "Ontem às ".get_the_time();
+
+            //se a subtração das datas dos posts nao for igual a 1 entao vai retornar a data do post normal
+            }else{
+                $date_return = get_the_date('d/m/Y');
+            }
+            
+        }
+
+        return $date_return;
+    }
 
     
 ?>

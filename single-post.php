@@ -339,7 +339,9 @@
                                 <?php $mail_user = strval(get_the_author_meta('user_email', false)); ?>
                                 <img style="border-radius: 50%" src="<?= get_avatar_url($mail_user, '32', '', '', null) ?>" class="avatar">
                                 <p class="name"><?= get_the_author(); ?></p>
-                                <time> <?= the_date('j \d\e M \d\e Y');  ?> às <?= the_time(); ?> </time>
+                               
+                                <time> <?= date_post(get_the_date('d-m-Y'), get_the_time('H:i:s')); //the_date('j \d\e M \d\e Y');  ?> </time>
+                                
                             </div>
                         </div>
                         <a href="<?php the_permalink(); ?>" class="link"></a>

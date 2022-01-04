@@ -127,7 +127,7 @@ body.with-sidebar aside #products .all-suplements a:hover{
 
 /* reset style from cards */
 #cards .card{
-    background: unset;
+    /*background: unset;*/
     padding: 0;
     display: flex;
 }
@@ -231,8 +231,14 @@ body.with-sidebar aside #products .all-suplements a:hover{
 
 @media(max-width: 379px){
     #latest-posts .latest-posts-item .image{
-        width: 90px;
-        height: 90px;
+        max-width: 120px;
+        height: 120px;
+    }
+}
+@media(max-width: 374px){
+    #latest-posts .latest-posts-item .image{
+        width: 75px;
+        height: 75px;
     }
 }
 @media(max-width: 320px){

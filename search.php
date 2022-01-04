@@ -17,11 +17,27 @@
                 <?php
                     $terms = get_terms([
                         'taxonomy' => 'category',
-                        'hide_empty' => false
+                        'hide_empty' => false,
+                        'orderby' => 'term_id'
                     ]);
                     foreach($terms as $term){
-                        echo "<a class='category' href='".get_category_link($term->term_id). "'>".$term->name."<img src='".get_template_directory_uri()."/assets/img/icons/next.svg'></a>";        
-                    }         
+                        $link_icon = "";
+                        switch($term->slug):
+                            case "carta-ao-homem":
+                                $link_icon = "sexo-masculino.png";
+                            break;
+                            case "saude-natural":
+                                $link_icon = "folha-delineada-forma-natural.png";
+                            break;
+                            case "viva-sem-dores":
+                                $link_icon = "coluna.png";
+                            break;
+                            default:
+                                echo "";
+                        endswitch;
+                            ?>
+                        <a class='category <?= $current_cat[0]->name == $term->name ? 'active' : '' ?>' href='<?= get_category_link($term->term_id); ?>'><img class="icon_category" src="<?= get_template_directory_uri() ?>/assets/img/icons/<?= $link_icon; ?>"><span><?= $term->name; ?></span><img class="icon_next" src='<?= get_template_directory_uri(); ?>/assets/img/icons/next.svg'></a>      
+                   <?php }         
                 ?>
 
                 </div>
@@ -91,7 +107,7 @@
                                 <?php $mail_user = strval(get_the_author_meta('user_email', false)); ?>
                                 <img src="<?= get_avatar_url($mail_user, '32', '', '', null) ?>">
                                 <p class="name"><?= get_the_author(); ?></p>
-                                <time> <?= the_date();  ?> às <?= the_time(); ?></time>
+                                <time> <?php echo date_post(get_the_date('d-m-Y'), get_the_time('H:i:s')); ?></time>
                             </div>
 
                             
@@ -174,7 +190,7 @@
                                 <?php $mail_user = strval(get_the_author_meta('user_email', false)); ?>
                                 <img src="<?= get_avatar_url($mail_user, '32', '', '', null) ?>">
                                 <p class="name"><?= get_the_author(); ?></p>
-                                <time> <?= the_date();  ?> às <?= the_time(); ?></time>
+                                <time> <?php echo date_post(get_the_date('d-m-Y'), get_the_time('H:i:s')); ?></time>
                             </div>
 
                             

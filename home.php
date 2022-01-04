@@ -183,7 +183,7 @@
                                         <?php $mail_user = strval(get_the_author_meta('user_email', false)); ?>
                                             <img src="<?= get_avatar_url($mail_user, '32', '', '', null) ?>" class="avatar">
                                             <p class="name"><?= get_the_author(); ?></p>
-                                            <time> <?php the_time("d/m/Y");  ?> às <?= the_time("H:m"); ?> </time>
+                                            <time> <?php echo date_post(get_the_date('d-m-Y'), get_the_time('H:i:s'));  ?> </time>
                                         </div>
 
                                         <a href="<?= the_permalink(); ?>"></a>
@@ -227,7 +227,7 @@
                             <?php $mail_user = strval(get_the_author_meta('user_email', false)); ?>
                                 <img src="<?= get_avatar_url($mail_user, '32', '', '', null) ?>" class="avatar">
                                 <p class="name"><?= get_the_author(); ?></p>
-                                <time> <?php the_time("d/m/Y");  ?> às <?= the_time("H:m"); ?> </time>
+                                <time> <?php echo date_post(get_the_date('d-m-Y'), get_the_time('H:i:s'));  ?> </time>
                             </div>
 
                             <a href="<?= the_permalink(); ?>"></a>
@@ -407,7 +407,7 @@
                             <div class="item-number"></div>
                             <div class="item-body">
                                 <h4 class="title"><?php the_title(); ?></h4>
-                                <div class="author">Por <?= get_the_author(); ?> - <?php the_time('j \d\e F \d\e Y');  ?></div>
+                                <div class="author">Por <?= get_the_author(); ?> - <?php echo date_post(get_the_date('d-m-Y'), get_the_time('H:i:s'));  ?></div>
                                 <a href="<?php the_permalink(); ?>" class="item-link"></a>
                             </div>
                         </div>
@@ -430,7 +430,7 @@
                         <div class="item-number"></div>
                         <div class="item-body">
                             <h4 class="title"><?php the_title(); ?></h4>
-                            <div class="author">Por <?= get_the_author(); ?> - <?php the_time('j \d\e F \d\e Y');  ?></div>
+                            <div class="author">Por <?= get_the_author(); ?> - <?php echo date_post(get_the_date('d-m-Y'), get_the_time('H:i:s'));  ?></div>
                             <a href="<?php the_permalink(); ?>" class="item-link"></a>
                         </div>
                     </div>
@@ -509,6 +509,7 @@
                             $thumb = get_the_post_thumbnail_url(null, 'thumbnail');
                             $thumb == "" ? $thumb = get_template_directory_uri().'/assets/img/thumb-default.jpg' : "";
                         ?>
+                        
                         <div class="image" style="background-position: center; background-size: cover; background-image: url('<?= $thumb; ?>')"></div>
 
                         <div class="text">
@@ -534,7 +535,7 @@
                                 <?php $mail_user = strval(get_the_author_meta('user_email', false)); ?>
                                 <img src="<?= get_avatar_url($mail_user, '32', '', '', null) ?>">
                                 <p class="name"><?= get_the_author(); ?></p>
-                                <time> <?php the_time("d/m/Y");  ?> às <?= the_time("H:m"); ?> </time>
+                                <time> <?= date_post(get_the_date('d-m-Y'), get_the_time('H:i:s')); ?> </time>
                                 
                             </div>
 
