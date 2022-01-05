@@ -1935,6 +1935,8 @@ ul.post-categories li a{
   body.with-sidebar h1,
   body.with-sidebar h2.main-title {
     width: var(--max-content-width);
+    line-height: 1.5;
+    margin-top: -7px;
   }
 }
 

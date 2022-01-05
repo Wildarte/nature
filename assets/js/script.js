@@ -43,6 +43,9 @@ $('.strip .close').on('click', function() {
     if(document.querySelector("main article.article-post")){
         document.querySelector("main article.article-post").style.paddingTop = 0;
     }
+    if(document.querySelector("header.header-home")){
+        document.querySelector(".with-sidebar").style.paddingTop = 0;
+    }
 })
 
 

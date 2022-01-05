@@ -1,7 +1,7 @@
 <?php
     get_header();
 ?>
-        <header>
+        <header class="header-home">
             <style>
                 .news-carousel .news-item .item-body ul.post-categories li a{
                          position: unset;
@@ -13,7 +13,7 @@
                         }
             </style>
             
-            <h2 class="main-title">Conteúdo</h2>
+            <h2 class="main-title" style="margin-left: -20px">Conteúdo</h2>
             <div class="news-carousel">
             <style>
                         .owl-stage{
@@ -585,6 +585,14 @@
                 endif;
             ?>
         </section>
-       
+        <script>
+            const pop = document.querySelector('.strip');
+            const pop_show = pop.style.display;
+            let pop_height = pop.clientHeight;
+            const art = document.querySelector(".with-sidebar");
+            art.setAttribute('style','');
+            art.style.paddingTop = pop_height+"px";
+            console.log(pop_height);
+        </script>
         
 <?php get_footer(); ?>
