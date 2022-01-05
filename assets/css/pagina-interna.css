@@ -1974,7 +1974,7 @@ article .article-body img {
 
 .related-posts-container .post .text .title {
   font-size: 1.1875rem;
-  line-height: 1.6875rem;
+  line-height: 1.7875rem;
   text-align: left;
   margin-top: 0;
 }
@@ -2046,11 +2046,11 @@ article .article-body img {
 #whatsapp p {
   max-width: 17.5rem;
   color: var(--white);
-  font-size: 1.125rem;
+  font-size: 1.25rem;
   font-weight: 300;
-  line-height: 1.9375rem;
+  line-height: 1.6875rem;
   text-align: center;
-  font-weight: 500;
+  font-weight: 400;
 }
 
 #whatsapp .btn {
@@ -2065,7 +2065,7 @@ article .article-body img {
       -ms-flex-align: center;
           align-items: center;
   width: 100%;
-  max-width: 16.25rem;
+  max-width: 17rem;
   margin-top: 0.875rem;
   padding: 0.8125rem 0.5rem;
   border: none;

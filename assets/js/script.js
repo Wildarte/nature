@@ -39,6 +39,10 @@ $('.strip .close').on('click', function() {
     $('.strip').slideUp(50);
 
     $('body').removeClass('topbar-open');
+    
+    if(document.querySelector("main article.article-post")){
+        document.querySelector("main article.article-post").style.paddingTop = 0;
+    }
 })
 
 

@@ -3,8 +3,28 @@
 
 <?php if(have_posts()): while(have_posts()): the_post(); ?>
 <?php wpb_set_post_views(get_the_ID()); ?>
+<style>
+    /* atualizacoes */
+  /* add .menu */
+  nav .desktop .content .line-2 .menu {
+    padding: 1.25rem 1.25rem;
+    /*grid-area: line-2;*/
+    /*grid-template-areas: "link-1 link-2 link-3 link-4 link-5";*/
+    -webkit-box-pack: center;
+    display: flex;
+    justify-content: center;
+    max-width: calc(var(--max-content-width) + 80px);
+  }
+  nav .desktop .content .line-2 .menu li{
+    grid-area: link-5;
+    display: flex;
+    justify-content: center;
+    margin: 0 75px;
+  }
+  /* atualizacoes */
+</style>
         <main>
-            <article>
+            <article class="article-post">
                 <div class="article-head">
                     <p class="category-tag"><?= get_the_category()[0]->name; ?></p>
                     
@@ -14,7 +34,7 @@
                         <?php $mail_user = strval(get_the_author_meta('user_email', false)); ?>
                         <img style="border-radius: 50%" src="<?= get_avatar_url($mail_user, '32', '', '', null) ?>">
                         <p class="name"><?= get_the_author(); ?></p>
-                        <time><?= the_date('j \d\e M \d\e Y');  ?> às <?= the_time(); ?></time>
+                        <time><?= date_post(get_the_date('d-m-Y'), get_the_time('H:i:s')); ?></time>
                     </div>
 
                     <?php 
@@ -49,7 +69,7 @@
                     .article-body table, .article-body table td{
                         border: 1px solid #bebebe;
                         border-collapse: collapse;
-                        padding: 5px;
+                        padding: 10px;
                         background-color: #fff;
                         font-size: 1.4375rem;
                         color: var(--dark-grey);
@@ -58,11 +78,17 @@
                         margin: 0;
                         padding: 0;
                         font-size: 31px;
+                        line-height: 3rem;
                     }
-                    .article-body h2, .article-body h2 strong{
+                    .article-body h2, .article-body h2 strong,
+                    .article-body h3, .article-body h3 strong,
+                    .article-body h4, .article-body h4 strong,
+                    .article-body h5, .article-body h5 strong,
+                    .article-body h6, .article-body h6 strong{
                         margin: 0;
                         padding: 0;
                         font-size: 23px;
+                        line-height: 2.2rem;
                     }
                     .article-body h1::after, .article-body h2::after{
                         display: none;
@@ -77,7 +103,7 @@
                     }
                     .article-body blockquote{
                         background-color: #fff;
-                        border: 3px solid #ccc;
+                        border: 1px solid #ccc;
                         padding: 20px;
                         display: flex;
                         justify-content: center;
@@ -89,7 +115,7 @@
                         justify-content: space-between;
                     }
                     .article-body blockquote .head-quote img{
-                        width: 40px;
+                        width: 32px;
                         margin: 0;
                     }
                     .article-body blockquote p{
@@ -106,6 +132,15 @@
                         font-weight: 600;
                         font-size: 1.1em;
                     }
+                    @media(max-width: 768px){
+                        .article-body h2, .article-body h2 strong,
+                        .article-body h3, .article-body h3 strong,
+                        .article-body h4, .article-body h4 strong,
+                        .article-body h5, .article-body h5 strong,
+                        .article-body h6, .article-body h6 strong{
+                            font-size: 18px;
+                        }
+                    }
                     @media(max-width: 415px){
                         .article-body ul, .article-body ol{
                             margin: 24px 0;
@@ -119,7 +154,7 @@
                             margin-bottom: 1.5625rem;
                         }
                         .article-body table, .article-body table td{
-                            padding: 4px;
+                            padding: 10px;
                             font-size: 1rem;
                         }
                         .article-body h1{
@@ -127,13 +162,26 @@
                         padding: 0;
                         font-size: 23px;
                         }
-                        .article-body h2, .article-body h2 strong{
+                        .article-body h2, .article-body h2 strong,
+                        .article-body h3, .article-body h3 strong,
+                        .article-body h4, .article-body h4 strong,
+                        .article-body h5, .article-body h5 strong,
+                        .article-body h6, .article-body h6 strong{
                             margin: 0;
                             padding: 0;
-                            font-size: 20px;
+                            font-size: 16px;
                         }
                         .article-body blockquote .head-quote img{
                             width: 24px;
+                        }
+                    }
+                    @media(max-width: 375px){
+                        .article-body h2, .article-body h2 strong,
+                        .article-body h3, .article-body h3 strong,
+                        .article-body h4, .article-body h4 strong,
+                        .article-body h5, .article-body h5 strong,
+                        .article-body h6, .article-body h6 strong{
+                            font-size: 14px;
                         }
                     }
                 </style>
@@ -358,10 +406,18 @@
                 <p>Receba nossas recomendações de saúde direto no celular.</p>
                 <a href="<?= get_option('show_rodape_whatsapp'); ?>" class="btn btn-whatsapp">
                     <img src="<?= get_template_directory_uri(); ?>/assets/img/icons/whatsapp.svg">
-                    Whatsapp da Doutor Nature
+                    Whatsapp Doutor Nature
                 </a>
             </section>
         </main>
-
+        <script>
+            const pop = document.querySelector('.strip');
+            const pop_show = pop.style.display;
+            let pop_height = pop.clientHeight;
+            const art = document.querySelector("main article.article-post");
+            art.setAttribute('style','');
+            art.style.paddingTop = pop_height+"px";
+            console.log(pop_height);
+        </script>
 <?php endwhile; endif; ?>
 <?php get_footer(); ?>

@@ -1,5 +1,9 @@
 <?php get_header(); $cat = get_category(get_query_var('cat'))->name; $cat_slug = get_category(get_query_var('cat'))->slug ?>
-
+<style>
+    aside #categories h2{
+        margin-top: 150px!important;
+    }
+</style>
         <aside>
             <?php include 'inc/asideCategory.php'; ?>
 
@@ -11,7 +15,7 @@
             ?>
         </aside>
 
-        <h1><?= $cat; ?></h1>
+        <h1 style="margin-top: 100px;"><?= $cat; ?></h1>
         
         <main style="width:100%">
             <section id="latest-posts" style="background-color: transparent;">

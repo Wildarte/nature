@@ -320,7 +320,7 @@
 
                 //se a hora for maior que 1 vai retornar o horário do post seguido pela palavra horas
                 }else{
-                    $date_return = $interval->format('%H')." hora";
+                    $date_return = "Há ".$interval->format('%H')." hora";
                 }
 
 
@@ -328,11 +328,11 @@
             }elseif($interval->format('%i') > 0){
 
                 //retorna o horário do post em minutos
-                $date_return = $interval->format('%i')." minutos";
+                $date_return = "Há ".$interval->format('%i')." minutos";
 
             //se nao retorna o horário do post em  segundos   
             }elseif($interval->format('%s') > 0){
-                $date_return = $interval->format('%s')." segundos";
+                $date_return = "Há ".$interval->format('%s')." segundos";
             }
 
 

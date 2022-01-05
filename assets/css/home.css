@@ -922,7 +922,7 @@ aside {
 
 header,
 section {
-  padding: 3.75rem var(--body-padding);
+  padding: 6.75rem var(--body-padding)/*3.75rem var(--body-padding)*/;
   overflow: auto;
 }
 
@@ -1459,7 +1459,7 @@ ul.post-categories li a{
 
 #latest-posts .latest-posts-item .text {
   position: relative;
-  margin-left: 8px;
+  /*margin-left: 8px;*/
 }
 
 #latest-posts .latest-posts-item .text .title,
