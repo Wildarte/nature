@@ -1,7 +1,7 @@
 <?php
     get_header();
 ?>
-        <header class="header-home">
+        <header class="header-home" style="padding-top: 6.75rem;">
             <style>
                 .news-carousel .news-item .item-body ul.post-categories li a{
                          position: unset;
@@ -468,7 +468,7 @@
                     justify-content: right!important;
                 }
             </style>
-            <section id="latest-posts">
+            <section id="latest-posts" style="padding-top: 0;">
                 <h2>Últimas postagens</h2>
                 
                 <div class="tab">

@@ -401,13 +401,21 @@
 
                 </div>
             </section>
-
-            <section id="whatsapp">
+            <style>
+                .link_whatsapp{
+                    position: absolute;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                }
+            </style>
+            <section id="whatsapp" style="position: relative;">
                 <p>Receba nossas recomendações de saúde direto no celular.</p>
-                <a href="<?= get_option('show_rodape_whatsapp'); ?>" class="btn btn-whatsapp">
+                <a href="" class="btn btn-whatsapp">
                     <img src="<?= get_template_directory_uri(); ?>/assets/img/icons/whatsapp.svg">
                     Whatsapp Doutor Nature
                 </a>
+                <a class="link_whatsapp" href="<?= get_option('show_rodape_whatsapp'); ?>"></a>
             </section>
         </main>
         <script>

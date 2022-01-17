@@ -922,7 +922,7 @@ aside {
 
 header,
 section {
-  padding: 6.75rem var(--body-padding)/*3.75rem var(--body-padding)*/;
+  padding: 3.75rem var(--body-padding)/*3.75rem var(--body-padding)*/;
   overflow: auto;
 }
 
@@ -1502,7 +1502,7 @@ ul.post-categories li a{
 }
 #latest-posts .see-more, #latest-posts .see-less{
   display: flex;
-  margin: 50px auto;
+  margin: 50px auto 0px;
   border: none;
   background-color: transparent;
   font-size: 23px;
@@ -1836,7 +1836,7 @@ ul.post-categories li a{
     padding-left: 0;
   }
   body.with-sidebar aside section:first-of-type h2 {
-    margin-top: calc(var(--section-title-margin-bottom) + 50px);
+    margin-top: calc(var(--section-title-margin-bottom) + 90px);
   }
   body.with-sidebar aside h2 {
     margin: 0;

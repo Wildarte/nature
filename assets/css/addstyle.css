@@ -57,7 +57,9 @@ body.with-sidebar h1{
     font-size: 0.9375rem;
     border-radius: 4px;
 }
-
+#whatsapp:hover .btn {
+    background-color: #70c97f;
+  }
 .banner_single_post{
     width: 100%;
     height: 260px;
@@ -144,8 +146,14 @@ body.with-sidebar aside #products .all-suplements a:hover{
     all: unset;
 }
 #cards .card h1{
-}
 
+}
+body.with-sidebar aside .categories .category.active img{
+    opacity: 1!important;
+}
+body.with-sidebar aside .categories .category.active svg{
+    background-color: #FF594E;
+}
 /*
 @media (min-width: 375px){
     #latest-posts .latest-posts-item .image {
